@@ -234,7 +234,21 @@ function iniciarSolicitacao() {
         return;
     }
     
-    // Otherwise, show the regular form for other actions
+    // For other actions, show search interface first to select a property
+    if (contratar === 'regularizar' || contratar === 'formalizar') {
+        // Store process information for later use
+        localStorage.setItem('processoTipo', formalizar);
+        localStorage.setItem('processoModalidade', activeTab);
+        localStorage.setItem('processoAcao', contratar);
+        localStorage.setItem('processoValor', valor || '');
+        localStorage.setItem('processoAtoFormal', atoFormal || '');
+        
+        // Show property search interface
+        mostrarPesquisaImoveis();
+        return;
+    }
+    
+    // Default case: show the regular form
     // Show form section with animation
     formSection.style.display = 'block';
     formSection.classList.add('fade-in');
@@ -475,4 +489,275 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Executando initPortalButton novamente após timeout');
         initPortalButton();
     }, 500);
+});
+
+// ==============================================
+// SEÇÃO DE RESULTADOS DE PESQUISA
+// ==============================================
+
+// Dados mock para simular resultados de pesquisa
+const mockImoveis = [
+    {
+        codigo: 'IMV001',
+        denominacao: 'Edifício Central',
+        local: 'Centro - São Paulo/SP',
+        status: 'disponivel',
+        locadores: 'João Silva, Maria Santos'
+    },
+    {
+        codigo: 'IMV002', 
+        denominacao: 'Complexo Empresarial Norte',
+        local: 'Barra Funda - São Paulo/SP',
+        status: 'ocupado',
+        locadores: 'Empresa ABC Ltda'
+    },
+    {
+        codigo: 'IMV003',
+        denominacao: 'Prédio Administrativo Sul',
+        local: 'Vila Olímpia - São Paulo/SP', 
+        status: 'manutencao',
+        locadores: '-'
+    },
+    {
+        codigo: 'IMV004',
+        denominacao: 'Centro de Distribuição',
+        local: 'Guarulhos - SP',
+        status: 'disponivel',
+        locadores: 'Transportadora XYZ'
+    },
+    {
+        codigo: 'IMV005',
+        denominacao: 'Loja Comercial Centro',
+        local: 'Centro - Rio de Janeiro/RJ',
+        status: 'reservado',
+        locadores: 'Comercial Rio Ltda'
+    },
+    {
+        codigo: 'IMV006',
+        denominacao: 'Galpão Industrial',
+        local: 'Duque de Caxias - RJ',
+        status: 'disponivel',
+        locadores: '-'
+    }
+];
+
+let currentPage = 1;
+let itemsPerPage = 10;
+let filteredImoveis = [];
+
+// Função principal para mostrar a seção de pesquisa
+function mostrarPesquisaImoveis() {
+    const searchSection = document.getElementById('search-results-section');
+    const formSection = document.getElementById('form-section');
+    
+    // Esconder formulário se estiver visível
+    if (formSection) {
+        formSection.style.display = 'none';
+    }
+    
+    // Mostrar seção de pesquisa
+    searchSection.style.display = 'block';
+    searchSection.classList.add('fade-in');
+    
+    // Scroll suave para a seção
+    searchSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+    });
+    
+    // Inicializar com estrutura da tabela visível
+    mostrarEstruturaTabela();
+}
+
+// Função para mostrar a estrutura da tabela (headers) antes da pesquisa
+function mostrarEstruturaTabela() {
+    const tableContainer = document.getElementById('table-container');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const resultsMeta = document.getElementById('results-meta');
+    const noResults = document.getElementById('no-results');
+    const pagination = document.getElementById('pagination');
+    
+    // Mostrar tabela vazia com headers
+    tableContainer.style.display = 'block';
+    
+    // Esconder outros elementos
+    loadingIndicator.style.display = 'none';
+    resultsMeta.style.display = 'none';
+    noResults.style.display = 'none';
+    pagination.style.display = 'none';
+    
+    // Limpar tbody
+    const tbody = document.getElementById('results-tbody');
+    tbody.innerHTML = '';
+}
+
+// Função para buscar imóveis
+function buscarImoveis() {
+    const searchInput = document.getElementById('search-imovel').value.toLowerCase();
+    const statusFilter = document.getElementById('status-filter').value;
+    
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const tableContainer = document.getElementById('table-container');
+    const resultsMeta = document.getElementById('results-meta');
+    const noResults = document.getElementById('no-results');
+    const pagination = document.getElementById('pagination');
+    
+    // Mostrar loading
+    loadingIndicator.style.display = 'flex';
+    tableContainer.style.display = 'none';
+    resultsMeta.style.display = 'none';
+    noResults.style.display = 'none';
+    pagination.style.display = 'none';
+    
+    // Simular delay de pesquisa
+    setTimeout(() => {
+        // Filtrar dados
+        filteredImoveis = mockImoveis.filter(imovel => {
+            const matchSearch = !searchInput || 
+                imovel.codigo.toLowerCase().includes(searchInput) ||
+                imovel.denominacao.toLowerCase().includes(searchInput) ||
+                imovel.local.toLowerCase().includes(searchInput);
+                
+            const matchStatus = !statusFilter || imovel.status === statusFilter;
+            
+            return matchSearch && matchStatus;
+        });
+        
+        // Esconder loading
+        loadingIndicator.style.display = 'none';
+        
+        if (filteredImoveis.length > 0) {
+            // Mostrar resultados
+            currentPage = 1;
+            renderResultados();
+            tableContainer.style.display = 'block';
+            resultsMeta.style.display = 'flex';
+            pagination.style.display = 'flex';
+        } else {
+            // Mostrar mensagem de sem resultados
+            noResults.style.display = 'block';
+        }
+    }, 1500); // 1.5 segundos de loading para simular busca real
+}
+
+// Função para renderizar os resultados na tabela
+function renderResultados() {
+    const tbody = document.getElementById('results-tbody');
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const pageResults = filteredImoveis.slice(startIndex, endIndex);
+    
+    tbody.innerHTML = '';
+    
+    pageResults.forEach(imovel => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><strong>${imovel.codigo}</strong></td>
+            <td>${imovel.denominacao}</td>
+            <td>${imovel.local}</td>
+            <td><span class="status-tag ${imovel.status}">${getStatusLabel(imovel.status)}</span></td>
+            <td>${imovel.locadores}</td>
+            <td>
+                <div class="table-actions">
+                    <button class="btn-action primary" onclick="visualizarImovel('${imovel.codigo}')">
+                        <i class="fas fa-eye"></i> Ver
+                    </button>
+                    ${imovel.status === 'disponivel' ? 
+                        `<button class="btn-action secondary" onclick="selecionarImovel('${imovel.codigo}')">
+                            <i class="fas fa-check"></i> Selecionar
+                        </button>` : ''
+                    }
+                </div>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+    
+    // Atualizar informações de paginação
+    updatePaginationInfo();
+}
+
+// Função para obter label do status
+function getStatusLabel(status) {
+    const labels = {
+        'disponivel': 'Disponível',
+        'ocupado': 'Ocupado', 
+        'manutencao': 'Manutenção',
+        'reservado': 'Reservado'
+    };
+    return labels[status] || status;
+}
+
+// Função para atualizar informações de paginação
+function updatePaginationInfo() {
+    const totalPages = Math.ceil(filteredImoveis.length / itemsPerPage);
+    const paginationInfo = document.getElementById('pagination-info');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    
+    paginationInfo.textContent = `Página ${currentPage} de ${totalPages}`;
+    
+    btnPrev.disabled = currentPage <= 1;
+    btnNext.disabled = currentPage >= totalPages;
+}
+
+// Funções de navegação
+function previousPage() {
+    if (currentPage > 1) {
+        currentPage--;
+        renderResultados();
+    }
+}
+
+function nextPage() {
+    const totalPages = Math.ceil(filteredImoveis.length / itemsPerPage);
+    if (currentPage < totalPages) {
+        currentPage++;
+        renderResultados();
+    }
+}
+
+// Função para mudar itens por página
+function changeItemsPerPage() {
+    const select = document.getElementById('items-per-page');
+    itemsPerPage = parseInt(select.value);
+    currentPage = 1;
+    renderResultados();
+}
+
+// Função para limpar filtros
+function limparFiltros() {
+    document.getElementById('search-imovel').value = '';
+    document.getElementById('status-filter').value = '';
+    mostrarEstruturaTabela();
+}
+
+// Funções de ação da tabela
+function visualizarImovel(codigo) {
+    alert(`Visualizando detalhes do imóvel: ${codigo}`);
+}
+
+function selecionarImovel(codigo) {
+    const imovel = mockImoveis.find(i => i.codigo === codigo);
+    if (confirm(`Deseja selecionar o imóvel "${imovel.denominacao}" (${codigo})?`)) {
+        alert(`Imóvel ${codigo} selecionado! Redirecionando para formulário de solicitação...`);
+        // Aqui você pode redirecionar para o formulário ou próxima etapa
+    }
+}
+
+// ==============================================
+// INTEGRAÇÃO COM FUNÇÃO PRINCIPAL
+// ==============================================
+
+// Event listeners para a seção de pesquisa
+document.addEventListener('DOMContentLoaded', function() {
+    // Buscar com Enter no campo de pesquisa
+    const searchInput = document.getElementById('search-imovel');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                buscarImoveis();
+            }
+        });
+    }
 });

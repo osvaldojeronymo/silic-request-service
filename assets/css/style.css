@@ -451,9 +451,319 @@ body {
 }
 
 /* ==============================================
-   RESPONSIVIDADE
+   SEÇÃO DE RESULTADOS DE PESQUISA
    ============================================== */
 
+.search-results-section {
+    padding: 60px 0;
+    background: var(--gray-50);
+}
+
+.search-results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.search-results-header h2 {
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-clear-filters {
+    background: var(--white);
+    border: 1px solid var(--gray-300);
+    color: var(--gray-600);
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-clear-filters:hover {
+    background: var(--gray-100);
+    border-color: var(--gray-400);
+    color: var(--gray-700);
+}
+
+/* Filtros de Pesquisa */
+.search-filters {
+    background: var(--white);
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 30px;
+}
+
+.filter-row {
+    display: flex;
+    gap: 16px;
+    align-items: end;
+}
+
+.filter-group {
+    flex: 1;
+}
+
+.search-input-filter {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--gray-300);
+    border-radius: 6px;
+    font-size: 14px;
+    transition: var(--transition-fast);
+}
+
+.search-input-filter:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+}
+
+.btn-search-table {
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.btn-search-table:hover {
+    background: var(--primary-light);
+    transform: translateY(-1px);
+}
+
+/* Informações dos Resultados */
+.results-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.loading-indicator {
+    color: var(--gray-600);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.loading-indicator i {
+    color: var(--primary);
+}
+
+.results-meta {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-size: 14px;
+    color: var(--gray-600);
+}
+
+.results-meta select {
+    padding: 6px 10px;
+    border: 1px solid var(--gray-300);
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Tabela de Resultados */
+.table-container {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 30px;
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.results-table th {
+    background: var(--gray-100);
+    color: var(--gray-700);
+    font-weight: 600;
+    font-size: 14px;
+    padding: 16px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.results-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--gray-200);
+    font-size: 14px;
+}
+
+.results-table tbody tr:hover {
+    background: var(--gray-50);
+}
+
+.results-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Status Tags */
+.status-tag {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-tag.disponivel {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-tag.ocupado {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status-tag.manutencao {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-tag.reservado {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+/* Ações da Tabela */
+.table-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-action {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: var(--transition-fast);
+}
+
+.btn-action.primary {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.btn-action.primary:hover {
+    background: var(--primary-light);
+}
+
+.btn-action.secondary {
+    background: var(--gray-100);
+    color: var(--gray-700);
+}
+
+.btn-action.secondary:hover {
+    background: var(--gray-200);
+}
+
+/* Sem Resultados */
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+}
+
+.no-results-content i {
+    font-size: 3rem;
+    color: var(--gray-400);
+    margin-bottom: 20px;
+}
+
+.no-results-content h3 {
+    color: var(--gray-700);
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+}
+
+.no-results-content p {
+    color: var(--gray-600);
+    font-size: 14px;
+}
+
+/* Paginação */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--white);
+    padding: 20px 24px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-pagination {
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-pagination:hover:not(:disabled) {
+    background: var(--primary-light);
+}
+
+.btn-pagination:disabled {
+    background: var(--gray-300);
+    color: var(--gray-500);
+    cursor: not-allowed;
+}
+
+.pagination-tags {
+    display: flex;
+    gap: 12px;
+}
+
+.pagination-tags .tag {
+    background: var(--gray-100);
+    color: var(--gray-600);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Responsividade */
 @media (max-width: 768px) {
     .nav-container {
         flex-direction: column;
@@ -517,6 +827,39 @@ body {
     .footer-content {
         grid-template-columns: 1fr;
         gap: 32px;
+    }
+    
+    .search-results-header {
+        flex-direction: column;
+        gap: 20px;
+        align-items: stretch;
+    }
+    
+    .filter-row {
+        flex-direction: column;
+    }
+    
+    .results-info {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+    }
+    
+    .table-container {
+        overflow-x: auto;
+    }
+    
+    .results-table {
+        min-width: 600px;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .pagination-tags {
+        order: -1;
     }
 }
 

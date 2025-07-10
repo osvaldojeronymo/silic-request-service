@@ -151,6 +151,101 @@
             </div>
         </section>
 
+        <!-- Search Results Section -->
+        <section class="search-results-section" id="search-results-section" style="display: none;">
+            <div class="container">
+                <div class="search-results-header">
+                    <h2><i class="fas fa-search"></i> Buscar e Filtrar Imóveis</h2>
+                    <button class="btn-clear-filters" onclick="limparFiltros()">
+                        <i class="fas fa-times"></i>
+                        Limpar Filtros
+                    </button>
+                </div>
+                
+                <div class="search-filters">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <input type="text" id="search-imovel" placeholder="Digite código, denominação ou local do imóvel..." class="search-input-filter">
+                        </div>
+                        <div class="filter-group">
+                            <select id="status-filter" class="search-input-filter">
+                                <option value="">Todos os status</option>
+                                <option value="disponivel">Disponível</option>
+                                <option value="ocupado">Ocupado</option>
+                                <option value="manutencao">Em Manutenção</option>
+                                <option value="reservado">Reservado</option>
+                            </select>
+                        </div>
+                        <button class="btn-search-table" onclick="buscarImoveis()">
+                            <i class="fas fa-search"></i>
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="results-info">
+                    <div class="loading-indicator" id="loading-indicator" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        Carregando dados...
+                    </div>
+                    
+                    <div class="results-meta" id="results-meta" style="display: none;">
+                        <span>Itens por página: 
+                            <select id="items-per-page" onchange="changeItemsPerPage()">
+                                <option value="10" selected>10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                            </select>
+                        </span>
+                        <span id="pagination-info">Página 1 de 1</span>
+                    </div>
+                </div>
+
+                <div class="table-container" id="table-container" style="display: none;">
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Denominação</th>
+                                <th>Local</th>
+                                <th>Status</th>
+                                <th>Locadores</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-tbody">
+                            <!-- Os resultados serão inseridos aqui dinamicamente -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="no-results" id="no-results" style="display: none;">
+                    <div class="no-results-content">
+                        <i class="fas fa-search"></i>
+                        <h3>Nenhum resultado encontrado</h3>
+                        <p>Tente ajustar os filtros de pesquisa ou verifique os termos utilizados.</p>
+                    </div>
+                </div>
+
+                <div class="pagination" id="pagination" style="display: none;">
+                    <button class="btn-pagination" id="btn-prev" onclick="previousPage()" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                        Anterior
+                    </button>
+                    <div class="pagination-tags" id="pagination-tags">
+                        <span class="tag">Primeira</span>
+                        <span class="tag">Anterior</span>
+                        <span class="tag">Próxima</span>
+                        <span class="tag">Última</span>
+                    </div>
+                    <button class="btn-pagination" id="btn-next" onclick="nextPage()">
+                        Próxima
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
         <!-- Form Section -->
         <section class="form-section" id="form-section" style="display: none;">
             <div class="container">
