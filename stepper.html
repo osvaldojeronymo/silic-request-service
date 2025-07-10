@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caixa - Processo de Contratação</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="stepper.css">
+    <link rel="stylesheet" href="validation.css">
+    <link rel="stylesheet" href="documentation.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="logo-caixa.svg" alt="Caixa" class="logo">
+                </div>
+                <div class="nav-text">
+                    <h1 class="system-title">SILIC 2.0 - CAIXA</h1>
+                    <p class="system-subtitle">Protótipo</p>
+                </div>
+                <div class="dev-toggle" style="margin-left: auto;">
+                    <button id="dev-mode-toggle" onclick="toggleDevelopmentMode()" 
+                            style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.8rem; cursor: pointer; transition: all 0.3s ease;">
+                        🚀 DEV MODE: ON
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Process Header -->
+        <section class="process-header">
+            <div class="container">
+                <div class="process-info">
+                    <button class="back-button" onclick="voltarFormulario()">
+                        <i class="fas fa-arrow-left"></i>
+                        Voltar
+                    </button>
+                    <div class="process-title">
+                        <h1>Contratação - <span id="tipo-processo">Nova Unidade</span></h1>
+                        <p class="process-subtitle">Locação</p>
+                    </div>
+                    <div class="licitacao-toggle">
+                        <label class="toggle-label">
+                            <span class="toggle-text">Precedida de Licitação</span>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="licitacao-toggle" onchange="toggleLicitacao()">
+                                <span class="slider"></span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stepper Section -->
+        <section class="stepper-section">
+            <div class="container">
+                <div class="stepper-container">
+                    <div class="stepper" id="stepper">
+                        <!-- Steps will be dynamically generated -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Section -->
+        <section class="content-section">
+            <div class="container">
+                <div class="step-content" id="step-content">
+                    <!-- Step content will be dynamically loaded -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <section class="navigation-section">
+            <div class="container">
+                <div class="step-navigation">
+                    <button class="btn-secondary" id="prev-btn" onclick="previousStep()" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                        Anterior
+                    </button>
+                    <button class="btn-primary" id="next-btn" onclick="nextStep()">
+                        Próxima
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SILIC 2.0</h3>
+                    <p>Soluções para todos os momentos.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Modalidades</h4>
+                    <ul>
+                        <li><a href="#">Locação</a></li>
+                        <li><a href="#">Cessão</a></li>
+                        <li><a href="#">Comodato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="#">0800 726 0101</a></li>
+                        <li><a href="#">atendimento@caixa.gov.br</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Include Documentation Modal -->
+    <div id="documentation-modal" class="doc-modal">
+        <div class="doc-modal-content">
+            <!-- Header -->
+            <div class="doc-modal-header">
+                <h2 class="doc-modal-title">Documentos do Imóvel e Locadores</h2>
+                <button class="doc-close-btn" onclick="closeDocumentationModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="doc-modal-body">
+                <!-- Property Information -->
+                <div class="doc-property-info">
+                    <!-- Content populated by JavaScript -->
+                </div>
+
+                <!-- Property Documents Section -->
+                <div class="doc-section">
+                    <h3 class="doc-section-title">
+                        <i class="fas fa-folder"></i>
+                        Documentos do Imóvel
+                    </h3>
+                    <div id="property-documents" class="doc-grid">
+                        <!-- Content populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Technical Report Section -->
+                <div class="doc-section">
+                    <h3 class="doc-section-title">
+                        <i class="fas fa-chart-line"></i>
+                        Relatório Técnico do Imóvel
+                    </h3>
+                    <div class="doc-technical-report">
+                        <div class="doc-form-grid">
+                            <div class="doc-form-group">
+                                <label class="doc-form-label">Área a ser Contratada (m²)</label>
+                                <input type="text" id="tech-area" class="doc-form-input" placeholder="Ex: 1250.50">
+                            </div>
+                            <div class="doc-form-group">
+                                <label class="doc-form-label">Valor Total da Obra (R$)</label>
+                                <input type="text" id="tech-totalValue" class="doc-form-input" placeholder="Ex: 150000,00">
+                            </div>
+                        </div>
+                        <div class="doc-form-grid">
+                            <div class="doc-form-group">
+                                <label class="doc-form-label">Valor da Obra - CAIXA (R$)</label>
+                                <input type="text" id="tech-caixaValue" class="doc-form-input" placeholder="Ex: 90000,00">
+                            </div>
+                            <div class="doc-form-group">
+                                <label class="doc-form-label">Valor da Obra - LOCADOR (R$)</label>
+                                <input type="text" id="tech-tenantValue" class="doc-form-input" placeholder="Ex: 60000,00">
+                            </div>
+                        </div>
+                        <div class="doc-form-grid">
+                            <div class="doc-form-group">
+                                <label class="doc-form-label">Prazo Total da Obra (meses)</label>
+                                <input type="text" id="tech-totalDuration" class="doc-form-input" placeholder="Ex: 18">
+                            </div>
+                            <div class="doc-form-group">
+                                <label class="doc-form-label">Prazo CAIXA (meses)</label>
+                                <input type="text" id="tech-caixaDuration" class="doc-form-input" placeholder="Ex: 12">
+                            </div>
+                        </div>
+                        <div class="doc-form-grid">
+                            <div class="doc-form-group">
+                                <label class="doc-form-label">Prazo LOCADOR (meses)</label>
+                                <input type="text" id="tech-tenantDuration" class="doc-form-input" placeholder="Ex: 6">
+                            </div>
+                            <div class="doc-form-group">
+                                <!-- Empty for grid alignment -->
+                            </div>
+                        </div>
+                        <div class="doc-modal-footer" style="background: transparent; border: none; padding: 1rem 0; justify-content: flex-start;">
+                            <button class="doc-btn doc-btn-secondary" onclick="clearDocumentation()">
+                                <i class="fas fa-eraser"></i> Limpar
+                            </button>
+                            <button class="doc-btn doc-btn-warning" onclick="saveReport()">
+                                <i class="fas fa-save"></i> Salvar Relatório
+                            </button>
+                            <button class="doc-btn doc-btn-success" onclick="validateData()">
+                                <i class="fas fa-check"></i> Validar Dados
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tenants Section -->
+                <div class="doc-section">
+                    <h3 class="doc-section-title">
+                        <i class="fas fa-users"></i>
+                        Documentos dos Locadores
+                    </h3>
+                    <div class="doc-people-section">
+                        <div id="tenants-section">
+                            <!-- Content populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Section -->
+                <div class="doc-section">
+                    <h3 class="doc-section-title">
+                        <i class="fas fa-chart-bar"></i>
+                        Resumo Geral de Documentos
+                    </h3>
+                    <div class="doc-summary">
+                        <div class="doc-summary-item entregues">
+                            <div class="doc-summary-number">6</div>
+                            <div class="doc-summary-label">Entregues</div>
+                        </div>
+                        <div class="doc-summary-item pendentes">
+                            <div class="doc-summary-number">1</div>
+                            <div class="doc-summary-label">Pendentes</div>
+                        </div>
+                        <div class="doc-summary-item analise">
+                            <div class="doc-summary-number">1</div>
+                            <div class="doc-summary-label">Em Análise</div>
+                        </div>
+                        <div class="doc-summary-item rejeitados">
+                            <div class="doc-summary-number">0</div>
+                            <div class="doc-summary-label">Rejeitados</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="doc-modal-footer">
+                <button class="doc-btn doc-btn-secondary" onclick="closeDocumentationModal()">
+                    <i class="fas fa-times"></i> Fechar
+                </button>
+                <button class="doc-btn doc-btn-primary" onclick="generateReport()">
+                    <i class="fas fa-file-pdf"></i> Gerar Relatório
+                </button>
+                <button class="doc-btn doc-btn-success" onclick="updateStatus()">
+                    <i class="fas fa-sync"></i> Atualizar Status
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="stepper.js"></script>
+    <script src="validation.js"></script>
+    <script src="documentation.js"></script>
+</body>
+</html>

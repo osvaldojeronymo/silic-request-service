@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caixa - Serviços de Solicitação</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="logo-caixa.svg" alt="Caixa" class="logo">
+                </div>
+                <div class="nav-text">
+                    <h1 class="system-title">SILIC 2.0 - CAIXA</h1>
+                    <p class="system-subtitle">Protótipo</p>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Encontre a modalidade ideal para suas necessidades</h1>
+                <p class="hero-subtitle">Soluções completas para locação, cessão e comodato de imóveis de uso</p>
+                
+                <!-- Search Form -->
+                <div class="search-form">
+                    <div class="search-tabs">
+                        <button class="tab-button active" data-tab="locacao">
+                            <i class="fas fa-home"></i>
+                            Locação
+                        </button>
+                        <button class="tab-button" data-tab="cessao">
+                            <i class="fas fa-handshake"></i>
+                            Cessão
+                        </button>
+                        <button class="tab-button" data-tab="comodato">
+                            <i class="fas fa-exchange-alt"></i>
+                            Comodato
+                        </button>
+                    </div>
+
+                    <div class="search-container">
+                        <div class="search-fields">
+                            <div class="field-group contratar">
+                                <label for="contratar">Solicitar</label>
+                                <select id="contratar" class="search-input">
+                                    <option value="">Selecione a ação</option>
+                                    <option value="contratar">Contratação</option>
+                                    <option value="regularizar">Regularização</option>
+                                    <option value="formalizar">Formalização</option>
+                                </select>
+                                <div class="suggestions" id="contratar-suggestions"></div>
+                            </div>
+                            
+                            <div class="field-group formalizar">
+                                <label for="formalizar">Tipo</label>
+                                <select id="formalizar" class="search-input">
+                                    <option value="">Selecione o tipo</option>
+                                    <option value="pessoa-fisica">Pessoa Física</option>
+                                    <option value="pessoa-juridica">Pessoa Jurídica</option>
+                                </select>
+                            </div>
+
+                            <div class="field-group valor" id="campo-valor" style="display: none;">
+                                <label for="valor">Valor</label>
+                                <input type="text" id="valor" placeholder="R$ 0,00" class="search-input money-input">
+                            </div>
+
+                            <div class="field-group ato-formal" id="campo-ato-formal" style="display: none;">
+                                <label for="ato-formal">Ato Formal</label>
+                                <select id="ato-formal" class="search-input">
+                                    <option value="">Selecione o ato</option>
+                                    <option value="prorrogacao">Prorrogação</option>
+                                    <option value="rescisao">Rescisão</option>
+                                    <option value="alteracao-titularidade">Alteração de Titularidade</option>
+                                    <option value="acrescimo-supressao-area">Acréscimo/Supressão de Área</option>
+                                    <option value="recebimento-imovel">Recebimento de Imóvel</option>
+                                    <option value="antecipacao-parcela">Antecipação de Parcela</option>
+                                    <option value="revisao-aluguel">Revisão do Aluguel</option>
+                                    <option value="reajuste-aluguel">Reajuste do Aluguel</option>
+                                    <option value="apostilamento">Apostilamento</option>
+                                </select>
+                            </div>
+
+                            <div class="field-group tipo-contratacao" id="campo-tipo-contratacao" style="display: none;">
+                                <label for="tipo-contratacao">Tipo de Contratação</label>
+                                <select id="tipo-contratacao" class="search-input">
+                                    <option value="">Selecione o tipo</option>
+                                    <option value="nova-unidade">Nova unidade</option>
+                                    <option value="mudanca-endereco">Mudança de endereço</option>
+                                </select>
+                            </div>
+
+                            <button class="search-button" type="button" onclick="iniciarSolicitacao()">
+                                <i class="fas fa-play"></i>
+                                <span>Iniciar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services-section">
+            <div class="container">
+                <h2 class="section-title">Nossas Modalidades</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h3>Locação</h3>
+                        <p>Escolha as melhores condições para suas necessidades.</p>
+                        <button class="btn-service">Saiba Mais</button>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Cessão</h3>
+                        <p>Processo simplificado e seguro para suas necessidades.</p>
+                        <button class="btn-service">Saiba Mais</button>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h3>Comodato</h3>
+                        <p>Soluções em comodato com toda a segurança e confiabilidade.</p>
+                        <button class="btn-service">Saiba Mais</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <section class="form-section" id="form-section" style="display: none;">
+            <div class="container">
+                <div class="form-container">
+                    <h2>Solicitar Modalidade</h2>
+                    <form id="service-form" class="service-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nome">Nome Completo</label>
+                                <input type="text" id="nome" name="nome" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cpf">CPF</label>
+                                <input type="text" id="cpf" name="cpf" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">E-mail</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="telefone">Telefone</label>
+                                <input type="tel" id="telefone" name="telefone" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="servico-detalhes">Detalhes da Modalidade</label>
+                            <textarea id="servico-detalhes" name="servico-detalhes" rows="4" placeholder="Descreva detalhadamente a modalidade que você precisa..."></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" onclick="cancelarSolicitacao()">Cancelar</button>
+                            <button type="submit" class="btn-primary">Enviar Solicitação</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SILIC 2.0</h3>
+                    <p>Soluções para todos os momentos.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Modalidades</h4>
+                    <ul>
+                        <li><a href="#">Locação</a></li>
+                        <li><a href="#">Cessão</a></li>
+                        <li><a href="#">Comodato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="#">0800 726 0101</a></li>
+                        <li><a href="#">atendimento@caixa.gov.br</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

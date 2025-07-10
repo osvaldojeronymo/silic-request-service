@@ -1,0 +1,407 @@
+// DOM Elements
+const searchTabs = document.querySelectorAll('.tab-button');
+const formSection = document.getElementById('form-section');
+const serviceForm = document.getElementById('service-form');
+const contratarInput = document.getElementById('contratar');
+const valorInput = document.getElementById('valor');
+const cpfInput = document.getElementById('cpf');
+const telefoneInput = document.getElementById('telefone');
+const campoValor = document.getElementById('campo-valor');
+const campoAtoFormal = document.getElementById('campo-ato-formal');
+const atoFormalSelect = document.getElementById('ato-formal');
+const campoTipoContratacao = document.getElementById('campo-tipo-contratacao');
+const tipoContratacaoSelect = document.getElementById('tipo-contratacao');
+
+// Variável para controlar a aba ativa
+let activeTab = 'locacao';
+
+// Lógica para alternar campos conforme seleção
+contratarInput.addEventListener('change', function() {
+    const selectedAction = this.value;
+    
+    // Esconder todos os campos opcionais primeiro
+    campoValor.style.display = 'none';
+    campoAtoFormal.style.display = 'none';
+    campoTipoContratacao.style.display = 'none';
+    
+    // Limpar valores
+    valorInput.value = '';
+    atoFormalSelect.value = '';
+    tipoContratacaoSelect.value = '';
+    
+    if (selectedAction === 'formalizar') {
+        // Mostrar campo "Ato Formal"
+        campoAtoFormal.style.display = 'block';
+    } else if (selectedAction === 'contratar') {
+        // Para todas as abas na ação "Contratação", mostrar "Tipo de Contratação"
+        campoTipoContratacao.style.display = 'block';
+    } else if (selectedAction === 'regularizar') {
+        // Sempre mostrar campo "Valor" para regularização
+        campoValor.style.display = 'block';
+    }
+});
+
+// Tab Switching Functionality
+searchTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        // Remove active class from all tabs
+        searchTabs.forEach(t => t.classList.remove('active'));
+        // Add active class to clicked tab
+        tab.classList.add('active');
+        
+        // Update active tab variable
+        activeTab = tab.dataset.tab;
+        
+        // Reset form when changing tabs
+        resetFormFields();
+        
+        // Update form based on selected tab
+        updateFormForTab(tab.dataset.tab);
+    });
+});
+
+// Reset form fields when changing tabs
+function resetFormFields() {
+    contratarInput.value = '';
+    campoValor.style.display = 'none';
+    campoAtoFormal.style.display = 'none';
+    campoTipoContratacao.style.display = 'none';
+    valorInput.value = '';
+    atoFormalSelect.value = '';
+    tipoContratacaoSelect.value = '';
+}
+
+// Update form based on selected tab
+function updateFormForTab(tabType) {
+    // Form is now standardized with select options
+    // No need to update placeholders or suggestions
+}
+
+// Update suggestions based on service type (no longer needed with select)
+function updateSuggestions(serviceType) {
+    // Function kept for compatibility but no longer used
+}
+
+// Autocomplete functionality (removed since we now use select)
+// contratarInput.addEventListener('input', function() {
+//     // Autocomplete code removed
+// });
+
+// Select suggestion (removed since we now use select)
+// function selectSuggestion(suggestion) {
+//     // Function removed
+// }
+
+// Close suggestions when clicking outside (removed since we now use select)
+// document.addEventListener('click', function(e) {
+//     // Function removed
+// });
+
+// Money input formatting
+valorInput.addEventListener('input', function() {
+    let value = this.value.replace(/\D/g, '');
+    value = (value / 100).toFixed(2);
+    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    value = value.replace('.', ',');
+    this.value = 'R$ ' + value;
+});
+
+// CPF input formatting
+cpfInput.addEventListener('input', function() {
+    let value = this.value.replace(/\D/g, '');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    this.value = value;
+});
+
+// Phone input formatting
+telefoneInput.addEventListener('input', function() {
+    let value = this.value.replace(/\D/g, '');
+    if (value.length <= 10) {
+        value = value.replace(/(\d{2})(\d)/, '($1) $2');
+        value = value.replace(/(\d{4})(\d)/, '$1-$2');
+    } else {
+        value = value.replace(/(\d{2})(\d)/, '($1) $2');
+        value = value.replace(/(\d{5})(\d)/, '$1-$2');
+    }
+    this.value = value;
+});
+
+// Main action function
+function iniciarSolicitacao() {
+    const contratar = document.getElementById('contratar').value;
+    const formalizar = document.getElementById('formalizar').value;
+    const valor = document.getElementById('valor').value;
+    const atoFormal = document.getElementById('ato-formal').value;
+    const tipoContratacao = document.getElementById('tipo-contratacao').value;
+    
+    // Validation
+    if (!contratar) {
+        alert('Por favor, selecione uma ação.');
+        return;
+    }
+    
+    if (!formalizar) {
+        alert('Por favor, selecione o tipo.');
+        return;
+    }
+    
+    // Validação específica para cada ação
+    if (contratar === 'contratar' && !tipoContratacao) {
+        alert('Por favor, selecione o tipo de contratação.');
+        return;
+    }
+    
+    if (contratar === 'regularizar' && !valor) {
+        alert('Por favor, informe o valor.');
+        return;
+    }
+    
+    if (contratar === 'formalizar' && !atoFormal) {
+        alert('Por favor, selecione o ato formal.');
+        return;
+    }
+    
+    // If it's a "contratar" action, redirect to stepper page
+    if (contratar === 'contratar') {
+        // Store process information for stepper page
+        localStorage.setItem('processoTipo', tipoContratacao);
+        localStorage.setItem('processoModalidade', activeTab);
+        localStorage.setItem('processoAcao', contratar);
+        
+        window.location.href = `stepper.html?tipo=${tipoContratacao}&modalidade=${activeTab}`;
+        return;
+    }
+    
+    // Otherwise, show the regular form for other actions
+    // Show form section with animation
+    formSection.style.display = 'block';
+    formSection.classList.add('fade-in');
+    
+    // Scroll to form
+    formSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+    });
+    
+    // Pre-fill some form data with proper action labels
+    const acaoLabels = {
+        'contratar': 'Contratar',
+        'regularizar': 'Regularizar', 
+        'formalizar': 'Formalizar'
+    };
+    
+    const tipoLabels = {
+        'pessoa-fisica': 'Pessoa Física',
+        'pessoa-juridica': 'Pessoa Jurídica'
+    };
+    
+    const atoFormalLabels = {
+        'prorrogacao': 'Prorrogação',
+        'rescisao': 'Rescisão',
+        'alteracao-titularidade': 'Alteração de Titularidade',
+        'acrescimo-supressao-area': 'Acréscimo/Supressão de Área',
+        'recebimento-imovel': 'Recebimento de Imóvel',
+        'antecipacao-parcela': 'Antecipação de Parcela',
+        'revisao-aluguel': 'Revisão do Aluguel',
+        'reajuste-aluguel': 'Reajuste do Aluguel',
+        'apostilamento': 'Apostilamento'
+    };
+    
+    const tipoContratacaoLabels = {
+        'nova-unidade': 'Nova unidade',
+        'mudanca-endereco': 'Mudança de endereço'
+    };
+    
+    const servicoDetalhes = document.getElementById('servico-detalhes');
+    let detalhes = `Ação: ${acaoLabels[contratar]}\nTipo: ${tipoLabels[formalizar]}`;
+    
+    if (tipoContratacao && contratar === 'contratar') {
+        detalhes += `\nTipo de Contratação: ${tipoContratacaoLabels[tipoContratacao]}`;
+    }
+    
+    if (valor && contratar === 'regularizar') {
+        detalhes += `\nValor estimado: ${valor}`;
+    }
+    
+    if (atoFormal && contratar === 'formalizar') {
+        detalhes += `\nAto Formal: ${atoFormalLabels[atoFormal]}`;
+    }
+    
+    servicoDetalhes.value = detalhes;
+}
+
+// Cancel form function
+function cancelarSolicitacao() {
+    formSection.style.display = 'none';
+    formSection.classList.remove('fade-in');
+    
+    // Scroll back to search form
+    document.querySelector('.search-form').scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'center'
+    });
+}
+
+// Form submission
+serviceForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Get form data
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+    
+    // Validate required fields
+    const requiredFields = ['nome', 'cpf', 'email', 'telefone'];
+    const missingFields = requiredFields.filter(field => !data[field]?.trim());
+    
+    if (missingFields.length > 0) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+    }
+    
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.email)) {
+        alert('Por favor, informe um e-mail válido.');
+        return;
+    }
+    
+    // Validate CPF
+    if (!validateCPF(data.cpf)) {
+        alert('Por favor, informe um CPF válido.');
+        return;
+    }
+    
+    // Show loading state
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    submitButton.textContent = 'Enviando...';
+    submitButton.disabled = true;
+    submitButton.classList.add('loading');
+    
+    // Simulate form submission
+    setTimeout(() => {
+        alert('Solicitação enviada com sucesso! Entraremos em contato em breve.');
+        
+        // Reset form
+        this.reset();
+        cancelarSolicitacao();
+        
+        // Reset button
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+        submitButton.classList.remove('loading');
+    }, 2000);
+});
+
+// CPF validation function
+function validateCPF(cpf) {
+    cpf = cpf.replace(/[^\d]+/g, '');
+    
+    if (cpf.length !== 11 || !/^\d{11}$/.test(cpf)) {
+        return false;
+    }
+    
+    // Check for repeated digits
+    if (/^(\d)\1{10}$/.test(cpf)) {
+        return false;
+    }
+    
+    // Validate check digits
+    let sum = 0;
+    for (let i = 0; i < 9; i++) {
+        sum += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+    let checkDigit = 11 - (sum % 11);
+    if (checkDigit === 10 || checkDigit === 11) {
+        checkDigit = 0;
+    }
+    if (checkDigit !== parseInt(cpf.charAt(9))) {
+        return false;
+    }
+    
+    sum = 0;
+    for (let i = 0; i < 10; i++) {
+        sum += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+    checkDigit = 11 - (sum % 11);
+    if (checkDigit === 10 || checkDigit === 11) {
+        checkDigit = 0;
+    }
+    return checkDigit === parseInt(cpf.charAt(10));
+}
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Add scroll animations
+function animateOnScroll() {
+    const elements = document.querySelectorAll('.service-card, .form-container');
+    
+    elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < window.innerHeight - elementVisible) {
+            element.classList.add('fade-in');
+        }
+    });
+}
+
+// Initialize scroll animations
+window.addEventListener('scroll', animateOnScroll);
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Set initial suggestions
+    updateSuggestions('locacao');
+    
+    // Initialize scroll animations
+    animateOnScroll();
+    
+    // Garantir estado inicial correto dos campos
+    const campoValor = document.getElementById('campo-valor');
+    const campoAtoFormal = document.getElementById('campo-ato-formal');
+    
+    if (campoValor) campoValor.style.display = 'none';
+    if (campoAtoFormal) campoAtoFormal.style.display = 'none';
+    
+    // Add CSS for suggestion items
+    const style = document.createElement('style');
+    style.textContent = `
+        .suggestion-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.2s ease;
+        }
+        
+        .suggestion-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+        
+        .suggestions {
+            max-height: 200px;
+            overflow-y: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+    `;
+    document.head.appendChild(style);
+});
