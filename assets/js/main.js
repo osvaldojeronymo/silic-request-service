@@ -20,6 +20,44 @@ function voltarAoPortal() {
     }
 }
 
+// Função para controlar a visibilidade do botão "Voltar ao Portal"
+function initPortalButton() {
+    console.log('initPortalButton chamada');
+    
+    // Aguardar um momento para garantir que o DOM esteja pronto
+    setTimeout(function() {
+        const voltarBtn = document.getElementById('voltarPortalBtn');
+        const hasPortalParam = window.location.search.includes('from=portal');
+        const referrer = document.referrer;
+        const comeFromPortal = referrer.includes('silic-portal') || hasPortalParam;
+        
+        console.log('URL atual:', window.location.href);
+        console.log('Parâmetros:', window.location.search);
+        console.log('hasPortalParam:', hasPortalParam);
+        console.log('referrer:', referrer);
+        console.log('comeFromPortal:', comeFromPortal);
+        console.log('voltarBtn encontrado:', !!voltarBtn);
+        
+        if (voltarBtn) {
+            if (comeFromPortal) {
+                // Usuário veio do portal - mostrar botão com força bruta
+                console.log('Mostrando botão');
+                voltarBtn.style.display = 'inline-flex';
+                voltarBtn.style.visibility = 'visible';
+                voltarBtn.style.opacity = '1';
+                voltarBtn.classList.add('show');
+            } else {
+                // Acesso direto - esconder botão
+                console.log('Escondendo botão');
+                voltarBtn.style.display = 'none';
+                voltarBtn.classList.remove('show');
+            }
+        } else {
+            console.error('Botão #voltarPortalBtn não encontrado!');
+        }
+    }, 10);
+}
+
 // DOM Elements
 const searchTabs = document.querySelectorAll('.tab-button');
 const formSection = document.getElementById('form-section');
@@ -371,16 +409,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // Add scroll animations
 function animateOnScroll() {
-    const elements = document.querySelectorAll('.service-card, .form-container');
+    // TEMPORARIAMENTE DESABILITADO PARA DEBUG
+    // const elements = document.querySelectorAll('.service-card, .form-container');
     
-    elements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
+    // elements.forEach(element => {
+    //     const elementTop = element.getBoundingClientRect().top;
+    //     const elementVisible = 150;
         
-        if (elementTop < window.innerHeight - elementVisible) {
-            element.classList.add('fade-in');
-        }
-    });
+    //     if (elementTop < window.innerHeight - elementVisible) {
+    //         element.classList.add('fade-in');
+    //     }
+    // });
 }
 
 // Initialize scroll animations
@@ -391,8 +430,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set initial suggestions
     updateSuggestions('locacao');
     
-    // Initialize scroll animations
-    animateOnScroll();
+    // Initialize scroll animations - TEMPORARIAMENTE DESABILITADO
+    // animateOnScroll();
     
     // Garantir estado inicial correto dos campos
     const campoValor = document.getElementById('campo-valor');
@@ -426,4 +465,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(style);
+    
+    // Inicializar controle do botão "Voltar ao Portal" quando a página carregar
+    console.log('Chamando initPortalButton no DOMContentLoaded');
+    initPortalButton();
+    
+    // Executar novamente após um pequeno delay para garantir
+    setTimeout(function() {
+        console.log('Executando initPortalButton novamente após timeout');
+        initPortalButton();
+    }, 500);
 });

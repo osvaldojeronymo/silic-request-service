@@ -1,0 +1,550 @@
+/* ==============================================
+   SILIC 2.0 - Sistema de Solicitações CAIXA
+   CSS Consolidado - Funcional e Organizado
+   ============================================== */
+
+/* CSS Variables - Design System */
+:root {
+    /* Cores principais CAIXA */
+    --primary: #003366;
+    --primary-light: #0056b3;
+    --primary-dark: #002244;
+    --accent: #F39200;
+    --accent-hover: #E67E22;
+    
+    /* Escala de cinzas */
+    --white: #ffffff;
+    --gray-50: #f8f9fa;
+    --gray-100: #f7f7f7;
+    --gray-200: #e7e7e7;
+    --gray-300: #ddd;
+    --gray-400: #b0b0b0;
+    --gray-500: #717171;
+    --gray-600: #666;
+    --gray-700: #333;
+    --gray-800: #222;
+    --gray-900: #111;
+    
+    /* Estados */
+    --success: #28a745;
+    --warning: #ffc107;
+    --error: #dc3545;
+    
+    /* Sombras */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.15);
+    
+    /* Transições */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.6s ease;
+}
+
+/* ==============================================
+   RESET E ESTILOS BASE
+   ============================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--gray-700);
+    background-color: var(--white);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ==============================================
+   HEADER E NAVEGAÇÃO
+   ============================================== */
+
+.header {
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 0;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar {
+    padding: 0 24px;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 80px;
+    gap: 20px;
+}
+
+.nav-logo .logo {
+    height: 40px;
+    width: auto;
+}
+
+.nav-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    z-index: 1001;
+    position: relative;
+}
+
+.system-title {
+    color: var(--white);
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.system-subtitle {
+    color: var(--white);
+    font-size: 14px;
+    margin: 0;
+    opacity: 0.9;
+    line-height: 1.2;
+}
+
+.btn-voltar-portal {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    text-decoration: none;
+}
+
+.btn-voltar-portal:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-voltar-portal i {
+    transition: transform var(--transition-normal);
+}
+
+.btn-voltar-portal:hover i {
+    transform: translateX(-3px);
+}
+
+/* ==============================================
+   SEÇÃO HERO - GARANTINDO VISIBILIDADE
+   ============================================== */
+
+/* Main Content */
+.main-content {
+    min-height: calc(100vh - 80px);
+}
+
+.hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: var(--white);
+    padding: 100px 20px 120px;
+    text-align: center;
+    min-height: 500px;
+    display: block !important;
+    visibility: visible !important;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 48px;
+    opacity: 0.9;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ==============================================
+   FORMULÁRIO DE BUSCA
+   ============================================== */
+
+.search-form {
+    background: var(--white);
+    border-radius: 32px;
+    padding: 24px;
+    max-width: 850px;
+    margin: 0 auto;
+    color: var(--gray-700);
+    box-shadow: var(--shadow-xl);
+}
+
+.search-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    justify-content: center;
+}
+
+.tab-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gray-100);
+    border: none;
+    border-radius: 22px;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all var(--transition-normal);
+    color: var(--gray-500);
+}
+
+.tab-button:hover {
+    background: var(--gray-200);
+}
+
+.tab-button.active {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.search-container {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.search-fields {
+    display: flex;
+    background: white;
+}
+
+.field-group {
+    flex: 1;
+    padding: 16px 20px;
+    border-right: 1px solid #ddd;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.field-group:last-child {
+    border-right: none;
+}
+
+.field-group label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.search-input {
+    border: none;
+    font-size: 14px;
+    color: #666;
+    background: transparent;
+    width: 100%;
+}
+
+.search-button {
+    background: var(--accent);
+    border: none;
+    border-radius: 12px;
+    padding: 12px 20px;
+    color: var(--primary);
+    cursor: pointer;
+    margin: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all var(--transition-normal);
+    min-height: 48px;
+    white-space: nowrap;
+}
+
+.search-button:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.search-button i {
+    font-size: 16px;
+}
+
+.search-button span {
+    font-weight: 600;
+}
+
+/* SEÇÕES DE SERVIÇOS */
+.services-section {
+    padding: 80px 20px;
+    background: #f8f9fa;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #003366;
+    margin-bottom: 48px;
+    font-weight: bold;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.service-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #003366, #0056b3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+}
+
+.service-icon i {
+    font-size: 32px;
+    color: white;
+}
+
+.service-card h3 {
+    font-size: 1.5rem;
+    color: #003366;
+    margin-bottom: 16px;
+}
+
+.service-card p {
+    color: #666;
+    margin-bottom: 24px;
+}
+
+.btn-service {
+    background: #F39200;
+    color: #003366;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* FOOTER */
+.footer {
+    background: #003366;
+    color: white;
+    padding: 60px 20px 20px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-section h3,
+.footer-section h4 {
+    margin-bottom: 20px;
+    color: #F39200;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+    color: #F39200;
+}
+
+/* Form Validation Styles */
+.form-group input.invalid,
+.form-group select.invalid,
+.form-group textarea.invalid {
+    border-color: var(--error);
+    border-width: 2px;
+    box-shadow: 0 0 0 0.125rem rgba(220, 53, 69, 0.25);
+}
+
+.form-group .error-message {
+    color: var(--error);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+.form-group.has-error .error-message {
+    display: block;
+}
+
+.form-group.has-error input,
+.form-group.has-error select,
+.form-group.has-error textarea {
+    border-color: var(--error);
+}
+
+/* ==============================================
+   RESPONSIVIDADE
+   ============================================== */
+
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        height: auto;
+        padding: 16px 0;
+        gap: 12px;
+    }
+    
+    .nav-text {
+        text-align: center;
+    }
+    
+    .nav-actions {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .btn-voltar-portal {
+        display: inline-flex;
+        visibility: visible;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .search-form {
+        margin: 0 16px;
+        padding: 20px;
+        border-radius: 20px;
+    }
+    
+    .search-fields {
+        flex-direction: column;
+    }
+    
+    .field-group {
+        border-right: none;
+        border-bottom: 1px solid var(--gray-300);
+        min-height: 60px;
+    }
+    
+    .field-group:last-child {
+        border-bottom: none;
+    }
+    
+    .search-button {
+        margin: 16px 0 0 0;
+        width: 100%;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 60px 16px 80px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .tab-button {
+        font-size: 12px;
+        padding: 10px 16px;
+    }
+    
+    .tab-button span {
+        display: none;
+    }
+}
+
+/* Botão oculto por padrão - será mostrado via JavaScript quando apropriado */
+#voltarPortalBtn {
+    display: none !important;
+}
+
+/* Quando mostrado via JavaScript, aplicar estes estilos */
+#voltarPortalBtn.show {
+    display: inline-flex !important;
+}
