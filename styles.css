@@ -33,7 +33,7 @@ body {
 
 .nav-container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
@@ -50,6 +50,43 @@ body {
     display: flex;
     flex-direction: column;
     gap: 2px;
+    flex: 1;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+}
+
+.btn-voltar-portal {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-voltar-portal:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-voltar-portal i {
+    transition: transform 0.3s ease;
+}
+
+.btn-voltar-portal:hover i {
+    transform: translateX(-3px);
 }
 
 .system-title {
@@ -496,7 +533,25 @@ body {
     color: #ccc;
 }
 
-/* Responsive Design */
+/* Responsividade para o header */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 0;
+        gap: 15px;
+    }
+    
+    .nav-text {
+        text-align: center;
+    }
+    
+    .btn-voltar-portal {
+        font-size: 13px;
+        padding: 8px 16px;
+    }
+}
+
 @media (max-width: 768px) {
     .nav-menu {
         display: none;

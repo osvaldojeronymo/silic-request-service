@@ -1,3 +1,25 @@
+// Função para voltar ao portal SILIC
+function voltarAoPortal() {
+    // URL do portal principal
+    const portalUrl = 'https://osvaldojeronymo.github.io/silic-portal-imoveis/';
+    
+    // Verifica se veio do portal (usando referrer ou parâmetro)
+    const referrer = document.referrer;
+    const hasPortalParam = window.location.search.includes('from=portal');
+    
+    if (referrer.includes('silic-portal') || hasPortalParam) {
+        // Voltou do portal, pode usar history.back() ou window.close()
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            window.location.href = portalUrl;
+        }
+    } else {
+        // Acesso direto, redireciona para o portal
+        window.location.href = portalUrl;
+    }
+}
+
 // DOM Elements
 const searchTabs = document.querySelectorAll('.tab-button');
 const formSection = document.getElementById('form-section');
