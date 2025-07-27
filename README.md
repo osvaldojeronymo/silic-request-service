@@ -135,7 +135,7 @@ desen-request-service/
 - [ ] Exportação PDF real
 - [ ] Integração com sistemas CAIXA
 
-## �Deploy
+## Deploy
 
 ### **Repositório Público (Demo)**
 - **Nome**: `show-request-service`
