@@ -1,59 +1,57 @@
-# SILIC 2.0 - Sistema de Solicitação de Serviços Imobiliários CAIXA
+# SILIC 2.0 - Sistema de Solicitação de Serviços
 
-![CAIXA](logo-caixa.svg)
+## Descrição
 
-## 📋 Descrição
+Sistema web moderno para solicitação de serviços, desenvolvido com foco em usabilidade, responsividade e conformidade com as normas institucionais.
 
-Sistema web moderno para solicitação de serviços imobiliários da CAIXA, desenvolvido com foco em usabilidade, responsividade e conformidade com as normas institucionais.
+## Funcionalidades Principais
 
-## ✨ Funcionalidades Principais
-
-### 🏢 **Modalidades de Contratação**
+### **Modalidades de Contratação**
 - **Locação** - Aluguel de imóveis
-- **Cessão** - Transferência de direitos
-- **Comodato** - Empréstimo gratuito
+- **Cessão** - Ocupação de espaços com ou sem ônus
+- **Comodato** - Ocupação de espaço por meio de empréstimo gratuito
 
-### 📝 **Formulário Dinâmico**
+### **Formulário Dinâmico**
 - Campos adaptativos conforme modalidade selecionada
 - Validação em tempo real
 - Campos obrigatórios destacados
 - Formatação automática (valores, matrículas, etc.)
 
-### 🔄 **Stepper de Etapas**
+### **Stepper de Etapas**
 - **Processo Licitatório** - Dados da licitação
 - **Documentação** - Gestão de documentos
 - **Compliance** - Análise de conformidade
-- **Análise Jurídica** - Pareceres legais
-- **Financeiro** - Dados orçamentários
+- **Análise Jurídica** - Notas Jurídicas
+- **Financeiro** - Dados orçamentários e financeiros
 
-### ✅ **Sistema de Validação**
+### **Sistema de Validação**
 - Validação de campos obrigatórios
 - Padrões normativos (ex: matrícula C999999)
 - Sistema de justificativas para exceções
 - Upload de documentos comprobatórios
 - Pontos de atenção automáticos
 
-### 📄 **Gestão de Documentos**
+### **Gestão de Documentos**
 - Interface avançada inspirada em sistemas corporativos
 - Status de documentos (Entregue, Pendente, Em Análise, Rejeitado)
 - Relatório técnico integrado
 - Gestão de múltiplos locadores
 - Resumo visual com contadores
 
-### 📊 **Relatórios**
+### **Relatórios**
 - Geração de relatório consolidado
-- Formato PDF/A-1 (mock)
+- Formato PDF/A-1
 - Timestamp e identificação do usuário
 - Classificação #INTERNO.CAIXA
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - **HTML5** - Estrutura semântica
 - **CSS3** - Estilos responsivos e modernos
 - **JavaScript ES6+** - Lógica de negócio
 - **Font Awesome** - Ícones profissionais
 
-## 🎨 Design System
+## Design System
 
 ### **Paleta de Cores CAIXA**
 - **Azul Institucional**: `#1e4a72`
@@ -65,11 +63,11 @@ Sistema web moderno para solicitação de serviços imobiliários da CAIXA, dese
 - **Hierarquia**: H1-H6 bem definida
 - **Legibilidade**: Contraste otimizado
 
-## 🚀 Modo de Desenvolvimento
+## Modo de Desenvolvimento
 
 O sistema inclui um **Modo Desenvolvedor** para facilitar testes:
 
-- ✅ **Toggle no header** (🚀 DEV MODE)
+- ✅ **Toggle no header** (DEV MODE)
 - ✅ **Bypass de validações** obrigatórias
 - ✅ **Banner visual** quando ativo
 - ✅ **Logs no console** para debug
@@ -79,11 +77,11 @@ O sistema inclui um **Modo Desenvolvedor** para facilitar testes:
 2. **Clique no botão** no header para alternar
 3. **Desative para produção** alterando `DEVELOPMENT_MODE = false`
 
-## 📁 Estrutura de Arquivos
+## Estrutura de Arquivos
 
 ```
 desen-request-service/
-├── index.html                 # Formulário principal
+├── index.html                # Formulário principal
 ├── stepper.html              # Interface de etapas
 ├── styles.css                # Estilos principais
 ├── stepper.css               # Estilos do stepper
@@ -93,11 +91,11 @@ desen-request-service/
 ├── stepper.js                # Lógica do stepper
 ├── validation.js             # Sistema de validação
 ├── documentation.js          # Gestão de documentos
-├── logo-caixa.svg           # Logo institucional
-└── README.md                # Esta documentação
+├── logo-caixa.svg            # Logo institucional
+└── README.md                 # Esta documentação
 ```
 
-## 🔧 Como Executar
+## Como Executar
 
 ### **Desenvolvimento Local**
 1. Clone o repositório
@@ -115,9 +113,9 @@ desen-request-service/
 - **Formulário Principal**: `index.html`
 - **Interface de Etapas**: `stepper.html`
 
-## 📋 Checklist de Funcionalidades
+## Checklist de Funcionalidades
 
-### ✅ **Implementado**
+### **Implementado**
 - [x] Formulário dinâmico por modalidade
 - [x] Stepper com navegação entre etapas
 - [x] Sistema de validação completo
@@ -129,7 +127,7 @@ desen-request-service/
 - [x] Upload de arquivos (mock)
 - [x] Geração de relatórios (mock)
 
-### 🔄 **Em Desenvolvimento**
+### **Em Desenvolvimento**
 - [ ] Integração com APIs reais
 - [ ] Autenticação de usuários
 - [ ] Persistência de dados
@@ -137,7 +135,7 @@ desen-request-service/
 - [ ] Exportação PDF real
 - [ ] Integração com sistemas CAIXA
 
-## 🌐 Deploy
+## �Deploy
 
 ### **Repositório Público (Demo)**
 - **Nome**: `show-request-service`
@@ -149,18 +147,15 @@ desen-request-service/
 - **URL**: `https://github.com/[seu-usuario]/desen-request-service`
 - **Finalidade**: Desenvolvimento interno
 
-## 📞 Suporte
+## Suporte
 
 Para dúvidas ou sugestões:
-- **Email**: atendimento@caixa.gov.br
-- **Telefone**: 0800 726 0101
+- **Email**: osvaldo.j.neto@caixa.gov.br
 
-## 📝 Licença
+## Licença
 
 Este projeto é propriedade da **CAIXA ECONÔMICA FEDERAL** e destina-se exclusivamente ao uso interno da instituição.
 
 ---
 
 **SILIC 2.0** - Soluções para todos os momentos.
-
-*Desenvolvido com ❤️ para a CAIXA*
