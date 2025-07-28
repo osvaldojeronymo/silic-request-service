@@ -106,7 +106,7 @@
                                 </select>
                             </div>
 
-                            <button class="search-button" type="button" onclick="iniciarSolicitacao()">
+                            <button class="search-button" type="button" onclick="abrirStepper()">
                                 <i class="fas fa-play"></i>
                                 <span>Iniciar</span>
                             </button>
@@ -315,6 +315,86 @@
         </div>
     </footer>
 
+    <!-- Stepper Modal -->
+    <div id="stepper-modal-overlay" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.45);z-index:2000;align-items:center;justify-content:center;">
+      <div id="stepper-modal-content" style="background:white;border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,0.18);max-width:760px;width:98vw;max-height:96vh;overflow:auto;position:relative;">
+        <button id="close-stepper-modal" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:1.8rem;color:#888;cursor:pointer;z-index:10;" title="Fechar">&times;</button>
+        <div id="stepper-modal-inner"></div>
+      </div>
+    </div>
+
     <script src="assets/js/main.js"></script>
+    <script>
+function abrirStepper() {
+    // Verifica se Locação está selecionado
+    const tabLocacao = document.querySelector('.tab-button[data-tab="locacao"]');
+    const isLocacao = tabLocacao && tabLocacao.classList.contains('active');
+    const contratar = document.getElementById('contratar').value;
+    const formalizar = document.getElementById('formalizar').value;
+    let tipoContratacao = '';
+    const campoTipoContratacao = document.getElementById('campo-tipo-contratacao');
+    if (campoTipoContratacao && campoTipoContratacao.style.display !== 'none') {
+        tipoContratacao = document.getElementById('tipo-contratacao').value;
+    }
+    if (!tipoContratacao) tipoContratacao = 'nova-unidade';
+
+    if (
+        isLocacao &&
+        contratar === 'contratar' &&
+        formalizar === 'pessoa-juridica' &&
+        tipoContratacao === 'nova-unidade'
+    ) {
+        // Exibe modal e carrega conteúdo do stepper.html
+        const overlay = document.getElementById('stepper-modal-overlay');
+        const inner = document.getElementById('stepper-modal-inner');
+        overlay.style.display = 'flex';
+        inner.innerHTML = '<div style="padding:48px;text-align:center;"><i class="fas fa-spinner fa-spin fa-2x"></i><br>Carregando...</div>';
+        // Monta a query igual ao fluxo antigo
+        const url = `pages/stepper.html?tipoContratacao=${encodeURIComponent(tipoContratacao)}&tipoPessoa=${encodeURIComponent(formalizar)}`;
+        fetch(url)
+          .then(r => r.text())
+          .then(html => {
+            // Extrai só o conteúdo relevante (após o header)
+            const temp = document.createElement('div');
+            temp.innerHTML = html;
+            // Remove header duplicado
+            const main = temp.querySelector('main') || temp.querySelector('.cloud-main') || temp.querySelector('.search-form');
+            if (main) {
+              inner.innerHTML = '';
+              inner.appendChild(main.cloneNode(true));
+            } else {
+              inner.innerHTML = html;
+            }
+            // Executa scripts do stepper
+            const scripts = temp.querySelectorAll('script');
+            scripts.forEach(s => {
+              if (s.textContent) {
+                try { eval(s.textContent); } catch(e){}
+              }
+            });
+          });
+    } else {
+        alert('Selecione: Locação, Contratação, Pessoa Jurídica e Nova unidade para iniciar este fluxo.');
+    }
+}
+
+// Fecha o modal do stepper
+document.addEventListener('DOMContentLoaded', function() {
+  const overlay = document.getElementById('stepper-modal-overlay');
+  const closeBtn = document.getElementById('close-stepper-modal');
+  if (closeBtn) {
+    closeBtn.onclick = function() {
+      overlay.style.display = 'none';
+      document.getElementById('stepper-modal-inner').innerHTML = '';
+    };
+  }
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) {
+      overlay.style.display = 'none';
+      document.getElementById('stepper-modal-inner').innerHTML = '';
+    }
+  });
+});
+    </script>
 </body>
 </html>
