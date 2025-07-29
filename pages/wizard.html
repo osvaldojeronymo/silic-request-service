@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Wizard - Nova Unidade Pessoa Jurídica</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+<body>
+  <div class="modal-overlay">
+  <div class="modal-overlay">
+    <div class="br-wizard" style="background: var(--primary); border-radius: 18px; border: 1.5px solid var(--gray-200); box-shadow: 0 4px 24px rgba(0,0,0,0.10); max-width: 600px; margin: 32px auto;">
+      <div class="wizard-steps">
+        <div class="wizard-step" id="step-1">
+          <div class="wizard-icon"><i class="fas fa-gavel"></i></div>
+          <div class="wizard-label">Processo Licitatório</div>
+        </div>
+        <div class="wizard-step" id="step-2">
+          <div class="wizard-icon"><i class="fas fa-file-alt"></i></div>
+          <div class="wizard-label">Segundo Passo</div>
+        </div>
+        <div class="wizard-step" id="step-3">
+          <div class="wizard-icon"><i class="fas fa-check"></i></div>
+          <div class="wizard-label">Confirmação</div>
+        </div>
+      </div>
+      <form class="wizard-form" autocomplete="off">
+        <div class="wizard-panel" id="panel-1" active>
+          <div class="wizard-panel-content">
+            <div style="display:flex;flex-direction:column;gap:18px;">
+              <div>
+                <label for="tipoUnidade" style="font-weight:600;">Tipo de Unidade</label><br>
+                <select id="tipoUnidade" name="tipoUnidade" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid var(--gray-200);font-size:1rem;">
+                  <option value="">Selecione</option>
+                  <option value="Rede Varejo">Rede Varejo</option>
+                  <option value="Demais unidades">Demais unidades</option>
+                </select>
+              </div>
+              <div class="wizard-form-row">
+                <div>
+                  <label for="editalId" style="font-weight:600;">Identificação do Edital</label><br>
+                  <input type="text" id="editalId" name="editalId" placeholder="Ex: 123/2025" style="padding:8px 10px;border-radius:8px;border:1.5px solid var(--gray-200);font-size:1rem;">
+                </div>
+                <div>
+                  <label for="repCaixa" style="font-weight:600;">Representante CAIXA</label><br>
+                  <input type="text" id="repCaixa" name="repCaixa" placeholder="Ex: 123456 - João Silva" style="padding:8px 10px;border-radius:8px;border:1.5px solid var(--gray-200);font-size:1rem;">
+                </div>
+              </div>
+              <div class="wizard-form-row">
+                <div>
+                  <label for="valorMin" style="font-weight:600;">Valor Mínimo Ofertado</label><br>
+                  <input type="text" id="valorMin" name="valorMin" placeholder="Ex: R$ 100.000,00" style="padding:8px 10px;border-radius:8px;border:1.5px solid var(--gray-200);font-size:1rem;">
+                </div>
+                <div>
+                  <label for="valorMax" style="font-weight:600;">Valor Máximo Ofertado</label><br>
+                  <input type="text" id="valorMax" name="valorMax" placeholder="Ex: R$ 200.000,00" style="padding:8px 10px;border-radius:8px;border:1.5px solid var(--gray-200);font-size:1rem;">
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <div>
+                  <label style="font-weight:600;"><i class="fas fa-upload" style="margin-right:6px;"></i> Edital/Minuta do Contrato/Termo de Cessão</label><br>
+                  <input type="file" id="uploadEdital" name="uploadEdital" style="margin-top:6px;">
+                  <div style="font-size:0.97rem;color:#b3b3b3;margin-top:2px;">Selecione um arquivo PDF ou DOCX</div>
+                </div>
+                <div>
+                  <label style="font-weight:600;"><i class="fas fa-upload" style="margin-right:6px;"></i> Análise do Edital/Minuta/Termo</label><br>
+                  <input type="file" id="uploadAnalise" name="uploadAnalise" style="margin-top:6px;">
+                  <div style="font-size:0.97rem;color:#b3b3b3;margin-top:2px;">Selecione um arquivo PDF ou DOCX</div>
+                </div>
+                <div>
+                  <label style="font-weight:600;"><i class="fas fa-upload" style="margin-right:6px;"></i> Comprovação de Status de Vencedora</label><br>
+                  <input type="file" id="uploadStatus" name="uploadStatus" style="margin-top:6px;">
+                  <div style="font-size:0.97rem;color:#b3b3b3;margin-top:2px;">Selecione um arquivo PDF ou DOCX</div>
+                </div>
+              </div>
+              <div class="wizard-panel-btn" style="margin-top:18px; padding:0;">
+                <button type="button" class="br-button wizard-btn-next btn btn-primary">Próximo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wizard-panel" id="panel-2">
+          <div class="wizard-panel-content">
+            <div style="display:flex;flex-direction:column;gap:18px;">
+              <div>
+                <b>Conteúdo do segundo passo.</b><br>Envie os documentos necessários.
+              </div>
+              <div class="wizard-panel-btn" style="margin-top:18px; padding:0;">
+                <button type="button" class="br-button wizard-btn-prev btn btn-secondary">Anterior</button>
+                <button type="button" class="br-button wizard-btn-next btn btn-primary">Próximo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wizard-panel" id="panel-3">
+          <div class="wizard-panel-content">
+            <div style="display:flex;flex-direction:column;gap:18px;align-items:center;">
+              <div style="text-align:center;">
+                <b>Confirmação final.</b><br>Revise e conclua o processo.<br><br>
+                <span style="font-size:1.1rem;color:var(--primary-dark);font-weight:500;">O que deseja fazer agora?</span>
+              </div>
+              <div class="wizard-panel-btn" style="margin-top:18px; padding:0;display:flex;gap:16px;justify-content:center;">
+                <button type="button" class="br-button wizard-btn-prev btn btn-secondary">Anterior</button>
+                <a href="https://osvaldojeronymo.github.io/silic-request-service/" class="btn btn-primary" style="text-decoration:none;">Solicitar nova demanda</a>
+                <a href="https://osvaldojeronymo.github.io/silic-portal-imoveis/" class="btn btn-secondary" style="text-decoration:none;">Finalizar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    // Wizard navigation logic para novo stepper visual
+    const wizardSteps = document.querySelectorAll('.wizard-step');
+    const panels = document.querySelectorAll('.wizard-panel');
+    function goToStep(idx) {
+      wizardSteps.forEach((step, i) => {
+        step.classList.toggle('active', i === idx);
+        step.classList.toggle('completed', i < idx);
+      });
+      panels.forEach((panel, i) => {
+        panel.toggleAttribute('active', i === idx);
+      });
+    }
+    wizardSteps.forEach((step, idx) => {
+      step.addEventListener('click', () => goToStep(idx));
+    });
+    document.querySelectorAll('.wizard-btn-next').forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        const current = [...panels].findIndex(p => p.hasAttribute('active'));
+        if (current < panels.length - 1) goToStep(current + 1);
+      });
+    });
+    document.querySelectorAll('.wizard-btn-prev').forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        const current = [...panels].findIndex(p => p.hasAttribute('active'));
+        if (current > 0) goToStep(current - 1);
+      });
+    });
+    document.querySelectorAll('.wizard-btn-finish').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        alert('Processo finalizado!');
+      });
+    });
+    // Inicializa no primeiro passo
+    goToStep(0);
+  </script>

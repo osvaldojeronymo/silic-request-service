@@ -111,11 +111,45 @@
     box-sizing: border-box;
 }
 
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: var(--gray-700);
-    background-color: var(--white);
+}
+
+/* --- WIZARD CAIXA --- */
+.wizard-container {
+  background: var(--primary);
+  background-image: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+  border-radius: 18px;
+  border: 1.5px solid var(--gray-200);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  max-width: 600px;
+  width: auto;
+  margin: 32px auto;
+  padding: 0 0 32px 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+.wizard-panel-content {
+  background: #fff;
+  color: var(--primary);
+  font-size: 1.13rem;
+  padding: 36px 32px 32px 32px;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  margin: 32px 24px 0 24px;
+  min-height: 120px;
+  max-height: 340px;
+  overflow-y: auto;
+  animation: fadeIn 0.3s;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .container {
