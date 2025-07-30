@@ -1,22 +1,42 @@
+/* Forçar padding e centralização no overlay do modal wizard */
+#wizard-modal-overlay {
+  padding: 32px !important;
+  box-sizing: border-box;
+  align-items: center !important;
+  justify-content: center !important;
+}
+ #wizard-modal-content {
+   max-width: 800px;
+   width: 100%;
+   box-sizing: border-box;
+   border-radius: 20px;
+   padding: 0 !important;
+   margin: 0 auto;
+   display: flex;
+   flex-direction: column;
+   align-items: stretch;
+}
 /* --- Wizard Modal Styles --- */
 .wizard-container {
   background: #003366;
-  border-radius: 18px;
+  border-radius: 20px;
   border: 1.5px solid #e7e7e7;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-  max-width: 520px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  max-width: 800px;
+  min-width: 340px;
+  width: 96vw;
   margin: 0 auto;
-  padding: 0;
+  padding: 32px;
   display: flex;
   flex-direction: column;
-  min-height: 340px;
+  min-height: 380px;
 }
-.wizard-steps {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 24px 32px 0 32px;
-  gap: 8px;
+  .wizard-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 32px 0 32px;
+    gap: 8px;
 }
 .wizard-step {
   display: flex;
@@ -26,15 +46,7 @@
   position: relative;
 }
 .wizard-step:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  top: 18px;
-  right: -50%;
-  width: 100%;
-  height: 4px;
-  background: #e7e7e7;
-  z-index: 0;
-  border-radius: 2px;
+  display: none;
 }
 .wizard-step.active .wizard-icon {
   background: #F39200;
@@ -83,18 +95,19 @@
   color: rgba(255,255,255,0.65);
   font-weight: 500;
 }
-.wizard-content {
-  background: #0056b3;
-  color: #fff;
-  font-size: 1.08rem;
-  padding: 32px 36px 24px 36px;
-  border-radius: 0 0 18px 18px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  margin: 24px 24px 0 24px;
-  min-height: 80px;
-  max-height: 180px;
-  overflow-y: auto;
-  animation: fadeIn 0.3s;
+.wizard-container {
+  background: #003366;
+  border-radius: 18px;
+  border: 1.5px solid #e7e7e7;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  max-width: 700px;
+  width: 96vw;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  min-height: 340px;
+}
 }
 .wizard-form-row {
   display: flex;
@@ -274,39 +287,48 @@ body {
 }
 
 /* --- WIZARD CAIXA --- */
-.wizard-container {
-  background: var(--primary);
-  background-image: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
-  border-radius: 18px;
-  border: 1.5px solid var(--gray-200);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-  max-width: 600px;
-  width: auto;
-  margin: 32px auto;
-  padding: 0 0 32px 0;
-  display: flex;
-  flex-direction: column;
-  min-height: 520px;
-  align-items: stretch;
-  justify-content: flex-start;
+.wizard-content {
+  background: #0056b3;
+  color: #fff;
+  font-size: 1.08rem;
+  padding: 24px;
+/* Overlay do modal wizard: garantir distância mínima da borda da tela */
+#wizard-modal-overlay {
+  padding: 32px;
+  box-sizing: border-box;
+  align-items: center !important;
+  justify-content: center !important;
 }
-.wizard-panel-content {
-  background: #fff;
-  color: var(--primary);
-  font-size: 1.13rem;
-  padding: 36px 32px 32px 32px;
-  border-radius: 18px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  margin: 32px 24px 0 24px;
-  min-height: 120px;
-  max-height: 340px;
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  margin: 24px 0 0 0;
+  min-height: 180px;
+  max-height: 420px;
   overflow-y: auto;
   animation: fadeIn 0.3s;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  justify-content: space-between;
 }
-
+  align-items: stretch;
+  justify-content: flex-start;
+}
+#wizard-modal-content {
+  background: #F0F4F8;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  max-width: 420px;
+  width: 100%;
+  padding: 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+  min-width: 0;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+}
 .container {
     max-width: 1200px;
     margin: 0 auto;

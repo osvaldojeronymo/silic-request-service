@@ -52,6 +52,10 @@
               <div style="font-size:0.97rem;color:#b3b3b3;margin-top:2px;">Selecione um arquivo PDF ou DOCX</div>
             </div>
           </div>
+          <div style="display:flex;justify-content:space-between;margin-top:18px;gap:12px;">
+            <button type="button" id="btnCancelWizard" style="background:#eee;color:#003366;font-weight:600;padding:10px 24px;border:none;border-radius:8px;font-size:1.08rem;cursor:pointer;">Cancelar</button>
+            <button type="button" id="btnNextStep" style="background:#F39200;color:#003366;font-weight:700;padding:10px 28px;border:none;border-radius:8px;font-size:1.08rem;cursor:pointer;">Avançar</button>
+          </div>
         </form>
       ` },
       { label: 'Segundo Passo', icon: '<i class="fas fa-file-alt"></i>', content: '<b>Conteúdo do segundo passo.</b><br>Envie os documentos necessários.' },
@@ -70,6 +74,32 @@
       });
       // Content
       document.getElementById('wizardContent').innerHTML = steps[currentStep].content;
+      // Botão avançar
+      const btnNext = document.getElementById('btnNextStep');
+      if (btnNext) {
+        btnNext.onclick = function() {
+          if (currentStep < steps.length - 1) {
+            currentStep++;
+            renderWizard();
+          }
+        };
+      }
+      // Botão cancelar
+      const btnCancel = document.getElementById('btnCancelWizard');
+      if (btnCancel) {
+        btnCancel.onclick = function() {
+          // Fecha o modal wizard
+          const overlay = window.parent ? window.parent.document.getElementById('wizard-modal-overlay') : document.getElementById('wizard-modal-overlay');
+          if (overlay) {
+            overlay.style.display = 'none';
+            const inner = window.parent ? window.parent.document.getElementById('wizard-modal-inner') : document.getElementById('wizard-modal-inner');
+            if (inner) inner.innerHTML = '';
+          } else {
+            // fallback: tenta fechar via postMessage
+            window.parent && window.parent.postMessage({ action: 'closeWizardModal' }, '*');
+          }
+        };
+      }
     }
     renderWizard();
   </script>
