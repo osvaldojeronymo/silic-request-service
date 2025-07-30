@@ -1,0 +1,124 @@
+{
+  "documentacao": [
+    {
+      "categoria": "Justificativa da Contratação",
+      "aplicabilidade": ["Nova Unidade", "Mudança de Endereço", "Reforma"],
+      "documentos": [
+        {
+          "id": "CI_GEFIC_Nova_Unidade",
+          "titulo": "CI GEFIC - Deliberação para instalação de novas unidades",
+          "descricao": "Deliberação do Conselho Diretor para novas unidades, conforme AD199",
+          "obrigatorio": true,
+          "aplica": ["Nova Unidade"]
+        },
+        {
+          "id": "Parecer_GEFIC_Mudanca_Reforma",
+          "titulo": "Parecer GEFIC - Mudança de endereço ou reforma/ampliação",
+          "descricao": "Deliberação para mudança de endereço ou reforma/ampliação, conforme AD199",
+          "obrigatorio": true,
+          "aplica": ["Mudança de Endereço", "Reforma"]
+        },
+        {
+          "id": "Manifestacao_GELOG_Infraestrutura",
+          "titulo": "Manifestação GELOG - Necessidade de locação (infraestrutura)",
+          "descricao": "Análise técnica de infraestrutura justificando a locação",
+          "obrigatorio": true,
+          "aplica": ["Nova Unidade", "Mudança de Endereço", "Reforma"]
+        }
+      ]
+    },
+    {
+      "categoria": "Laudos Obrigatórios",
+      "aplicabilidade": ["Todas"],
+      "documentos": [
+        {
+          "id": "Laudo_Avaliacao",
+          "titulo": "Laudo de Avaliação",
+          "descricao": "Laudo obrigatório demonstrando preço de mercado",
+          "obrigatorio": true
+        }
+      ]
+    },
+    {
+      "categoria": "Documentação do Imóvel",
+      "aplicabilidade": ["Todas"],
+      "documentos": [
+        {
+          "id": "Matricula_Imovel",
+          "titulo": "Matrícula do Imóvel",
+          "descricao": "Emitida em até 60 dias pelo Cartório de Registro de Imóveis",
+          "obrigatorio": true
+        },
+        {
+          "id": "Certidao_IPTU",
+          "titulo": "Certidão Negativa de Tributos (IPTU)",
+          "descricao": "Certidão negativa atualizada emitida pelo Poder Público",
+          "obrigatorio": true
+        },
+        {
+          "id": "Averbacao_Habite_Se",
+          "titulo": "Averbação/Habite-se",
+          "descricao": "Averbação de edificação ou Habite-se para imóvel edificado",
+          "obrigatorio": true
+        }
+      ]
+    },
+    {
+      "categoria": "Documentação do Locador",
+      "aplicabilidade": ["Pessoa Física", "Pessoa Jurídica"],
+      "documentos": [
+        {
+          "id": "Doc_Identidade_Locador_PF",
+          "titulo": "Documento de Identidade - Pessoa Física",
+          "descricao": "CNH, RG, CPF, Passaporte ou Carteira Profissional",
+          "obrigatorio": true,
+          "aplica": ["Pessoa Física"]
+        },
+        {
+          "id": "Doc_Identidade_Locador_PJ",
+          "titulo": "Documentação Jurídica - Pessoa Jurídica",
+          "descricao": "CNPJ, Ato Constitutivo, Certidão da Junta Comercial",
+          "obrigatorio": true,
+          "aplica": ["Pessoa Jurídica"]
+        }
+      ]
+    },
+    {
+      "categoria": "Documentação do Representante Legal",
+      "aplicabilidade": ["Todas"],
+      "documentos": [
+        {
+          "id": "Procuracao",
+          "titulo": "Procuração Pública ou Particular",
+          "descricao": "Documento que confere poderes de representação",
+          "obrigatorio": true
+        },
+        {
+          "id": "Doc_Identidade_Procurador",
+          "titulo": "Documento de Identidade do Procurador",
+          "descricao": "CNH, RG, CPF, Passaporte ou Carteira Profissional",
+          "obrigatorio": true
+        }
+      ]
+    },
+    {
+      "categoria": "Dados Bancários e Terceiros",
+      "aplicabilidade": ["Todas"],
+      "documentos": [
+        {
+          "id": "Dados_Bancarios_Locador",
+          "titulo": "Dados Bancários para Crédito do Aluguel",
+          "descricao": "Conta em agência da CAIXA, nome da agência e número da conta",
+          "obrigatorio": true
+        },
+        {
+          "id": "Declaracao_Terceiro",
+          "titulo": "Declaração para Crédito em Nome de Terceiro",
+          "descricao": "Declaração formal autorizando crédito a terceiro, conforme contrato, dependência ou pensão",
+          "obrigatorio": false,
+          "aplica": ["Quando houver terceiros beneficiários"]
+        }
+      ]
+    }
+  ]
+}

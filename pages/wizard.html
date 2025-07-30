@@ -61,50 +61,31 @@
       { label: 'Documentação', icon: '<i class="fas fa-file-alt"></i>', content: `
         <form id="docForm" style="display:flex;flex-direction:column;gap:18px;">
           <div>
-            <label for="tipoUnidadeDoc" style="font-weight:600;">Tipo de Unidade</label><br>
-            <select id="tipoUnidadeDoc" name="tipoUnidadeDoc" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
+            <label for="tipoContratacaoDoc" style="font-weight:600;">Tipo de Contratação</label><br>
+            <select id="tipoContratacaoDoc" name="tipoContratacaoDoc" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
               <option value="">Selecione</option>
-              <option value="Rede Varejo">Rede Varejo</option>
-              <option value="Demais unidades">Demais unidades</option>
+              <option value="Nova Unidade">Nova Unidade</option>
+              <option value="Mudança de Endereço">Mudança de Endereço</option>
+              <option value="Reforma">Reforma</option>
             </select>
           </div>
-          <div class="wizard-form-row">
-            <div>
-              <label for="editalIdDoc" style="font-weight:600;">Identificação do Edital</label><br>
-              <input type="text" id="editalIdDoc" name="editalIdDoc" placeholder="Ex: 123/2025" style="padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
-            </div>
-            <div>
-              <label for="repCaixaDoc" style="font-weight:600;">Representante CAIXA</label><br>
-              <input type="text" id="repCaixaDoc" name="repCaixaDoc" placeholder="Ex: 123456 - João Silva" style="padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
-            </div>
+          <div>
+            <label for="tipoLocadorDoc" style="font-weight:600;">Tipo de Locador</label><br>
+            <select id="tipoLocadorDoc" name="tipoLocadorDoc" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
+              <option value="">Selecione</option>
+              <option value="Pessoa Física">Pessoa Física</option>
+              <option value="Pessoa Jurídica">Pessoa Jurídica</option>
+            </select>
           </div>
-          <div class="wizard-form-row">
-            <div>
-              <label for="valorMinDoc" style="font-weight:600;">Valor Mínimo Ofertado</label><br>
-              <input type="text" id="valorMinDoc" name="valorMinDoc" placeholder="Ex: R$ 100.000,00" style="padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
-            </div>
-            <div>
-              <label for="valorMaxDoc" style="font-weight:600;">Valor Máximo Ofertado</label><br>
-              <input type="text" id="valorMaxDoc" name="valorMaxDoc" placeholder="Ex: R$ 200.000,00" style="padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
-            </div>
+          <div>
+            <label for="terceirosDoc" style="font-weight:600;">Há terceiros beneficiários?</label><br>
+            <select id="terceirosDoc" name="terceirosDoc" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
+              <option value="">Selecione</option>
+              <option value="Sim">Sim</option>
+              <option value="Não">Não</option>
+            </select>
           </div>
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <div>
-              <label style="font-weight:600;"><i class="fas fa-upload" style="margin-right:6px;"></i> Edital/Minuta do Contrato/Termo de Cessão</label><br>
-              <input type="file" id="uploadEditalDoc" name="uploadEditalDoc" style="margin-top:6px;">
-              <div style="font-size:0.97rem;color:#b3b3b3;margin-top:2px;">Selecione um arquivo PDF ou DOCX</div>
-            </div>
-            <div>
-              <label style="font-weight:600;"><i class="fas fa-upload" style="margin-right:6px;"></i> Análise do Edital/Minuta/Termo</label><br>
-              <input type="file" id="uploadAnaliseDoc" name="uploadAnaliseDoc" style="margin-top:6px;">
-              <div style="font-size:0.97rem;color:#b3b3b3;margin-top:2px;">Selecione um arquivo PDF ou DOCX</div>
-            </div>
-            <div>
-              <label style="font-weight:600;"><i class="fas fa-upload" style="margin-right:6px;"></i> Comprovação de Status de Vencedora</label><br>
-              <input type="file" id="uploadStatusDoc" name="uploadStatusDoc" style="margin-top:6px;">
-              <div style="font-size:0.97rem;color:#b3b3b3;margin-top:2px;">Selecione um arquivo PDF ou DOCX</div>
-            </div>
-          </div>
+          <div id="documentosChecklist" style="margin-top:24px;"></div>
           <div style="display:flex;justify-content:space-between;margin-top:18px;gap:12px;">
             <button type="button" id="btnPrevStepDoc" style="background:#eee;color:#003366;font-weight:600;padding:10px 24px;border:none;border-radius:8px;font-size:1.08rem;cursor:pointer;">Voltar</button>
             <button type="button" id="btnNextStepDoc" style="background:#F39200;color:#003366;font-weight:700;padding:10px 28px;border:none;border-radius:8px;font-size:1.08rem;cursor:pointer;">Avançar</button>
@@ -224,9 +205,79 @@
         };
       }
       // Passo 2 - Documentação
+      if (currentStep === 1) {
+        // Carregar checklist JSON e montar UI dinâmica
+        let checklistData = null;
+        fetch('assets/js/documentacao.json')
+          .then(r => r.json())
+          .then(json => {
+            checklistData = json.documentacao;
+            const tipoContratacao = document.getElementById('tipoContratacaoDoc');
+            const tipoLocador = document.getElementById('tipoLocadorDoc');
+            const terceiros = document.getElementById('terceirosDoc');
+            const checklistDiv = document.getElementById('documentosChecklist');
+
+            function renderChecklist() {
+              if (!tipoContratacao.value || !tipoLocador.value || !terceiros.value) {
+                checklistDiv.innerHTML = '<div style="color:#888;font-size:1.05rem;">Selecione todas as opções acima para exibir os documentos necessários.</div>';
+                return;
+              }
+              // Filtragem condicional
+              const docsFiltrados = checklistData.map(cat => {
+                // Filtra documentos por "aplica" e contexto
+                const docs = (cat.documentos || []).filter(doc => {
+                  // Aplica por tipo de contratação
+                  if (doc.aplica && Array.isArray(doc.aplica)) {
+                    if (doc.aplica.includes(tipoContratacao.value)) return true;
+                    if (doc.aplica.includes(tipoLocador.value)) return true;
+                    if (terceiros.value === 'Sim' && doc.aplica.includes('Quando houver terceiros beneficiários')) return true;
+                    return false;
+                  }
+                  return true;
+                });
+                return { categoria: cat.categoria, documentos: docs };
+              }).filter(cat => cat.documentos.length > 0);
+
+              // Renderização agrupada por categoria
+              checklistDiv.innerHTML = docsFiltrados.map(cat => `
+                <div style='margin-bottom:18px;'>
+                  <div style='font-weight:700;color:#003366;font-size:1.08rem;margin-bottom:6px;'>${cat.categoria}</div>
+                  <ul style='margin:0 0 0 12px;padding:0;'>
+                    ${cat.documentos.map(doc => `
+                      <li style='margin-bottom:7px;'>
+                        <label style='display:flex;align-items:center;gap:8px;'>
+                          <input type='checkbox' data-doc-id='${doc.id}' ${doc.obrigatorio ? 'required' : ''} style='accent-color:#F39200;'>
+                          <span style='font-weight:600;'>${doc.titulo}</span>
+                          <span style='color:#888;font-size:0.97rem;'>${doc.descricao || ''}</span>
+                          ${doc.obrigatorio ? `<span style='color:#c00;font-size:0.97rem;'>(obrigatório)</span>` : '<span style="color:#888;font-size:0.97rem;">(opcional)</span>'}
+                        </label>
+                      </li>
+                    `).join('')}
+                  </ul>
+                </div>
+              `).join('');
+            }
+
+            tipoContratacao.addEventListener('change', renderChecklist);
+            tipoLocador.addEventListener('change', renderChecklist);
+            terceiros.addEventListener('change', renderChecklist);
+            renderChecklist();
+          });
+      }
       const btnNextDoc = document.getElementById('btnNextStepDoc');
       if (btnNextDoc) {
         btnNextDoc.onclick = function() {
+          // Validação automática dos obrigatórios
+          if (currentStep === 1) {
+            const checklistDiv = document.getElementById('documentosChecklist');
+            const required = checklistDiv ? checklistDiv.querySelectorAll('input[required]') : [];
+            let allChecked = true;
+            required.forEach(inp => { if (!inp.checked) allChecked = false; });
+            if (!allChecked) {
+              alert('Por favor, marque todos os documentos obrigatórios antes de avançar.');
+              return;
+            }
+          }
           if (currentStep < steps.length - 1) {
             currentStep++;
             renderWizard();
