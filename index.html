@@ -348,7 +348,7 @@ function acaoIniciarWizard() {
         tipo === 'pessoa-juridica' &&
         tipoContratacao === 'nova-unidade'
     ) {
-        abrirWizardHtml('wizard.html');
+        abrirWizardHtml('pages/wizard.html');
     } else {
         abrirStepper(); // comportamento padrão
     }
@@ -365,8 +365,18 @@ function abrirWizardHtml(url) {
       .then(html => {
         const temp = document.createElement('div');
         temp.innerHTML = html;
-        const main = temp.querySelector('main') || temp.querySelector('.wizard-container') || temp;
+        // Tenta pegar o conteúdo principal do wizard
+        let main = temp.querySelector('main') || temp.querySelector('.wizard-container');
+        if (!main) {
+          // Se não encontrar, tenta pegar o body do HTML importado
+          main = temp.querySelector('body');
+        }
+        if (!main) {
+          // Se ainda não encontrar, insere todo o conteúdo
+          main = temp;
+        }
         inner.innerHTML = '';
+        // Insere o conteúdo mantendo as classes e estrutura
         inner.appendChild(main.cloneNode(true));
         // Executa scripts do wizard
         const scripts = temp.querySelectorAll('script');
