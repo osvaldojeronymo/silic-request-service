@@ -361,7 +361,10 @@ function abrirWizardHtml(url) {
     overlay.style.display = 'flex';
     inner.innerHTML = '<div style="padding:48px;text-align:center;"><i class="fas fa-spinner fa-spin fa-2x"></i><br>Carregando...</div>';
     fetch(url)
-      .then(r => r.text())
+      .then(r => {
+        if (!r.ok) throw new Error('Arquivo não encontrado');
+        return r.text();
+      })
       .then(html => {
         const temp = document.createElement('div');
         temp.innerHTML = html;
@@ -376,15 +379,22 @@ function abrirWizardHtml(url) {
           main = temp;
         }
         inner.innerHTML = '';
-        // Insere o conteúdo mantendo as classes e estrutura
-        inner.appendChild(main.cloneNode(true));
-        // Executa scripts do wizard
-        const scripts = temp.querySelectorAll('script');
-        scripts.forEach(s => {
-          if (s.textContent) {
-            try { eval(s.textContent); } catch(e){}
-          }
-        });
+        if (main && main.innerHTML.trim()) {
+          // Insere o conteúdo mantendo as classes e estrutura
+          inner.appendChild(main.cloneNode(true));
+          // Executa scripts do wizard
+          const scripts = temp.querySelectorAll('script');
+          scripts.forEach(s => {
+            if (s.textContent) {
+              try { eval(s.textContent); } catch(e){}
+            }
+          });
+        } else {
+          inner.innerHTML = '<div style="padding:48px;text-align:center;color:#c00;">Erro: Conteúdo do wizard não encontrado.</div>';
+        }
+      })
+      .catch(err => {
+        inner.innerHTML = '<div style="padding:48px;text-align:center;color:#c00;">Erro ao carregar o wizard: ' + err.message + '</div>';
       });
 }
 // --- Integração dinâmica do Wizard ---
@@ -393,22 +403,32 @@ function abrirWizard() {
     const inner = document.getElementById('wizard-modal-inner');
     overlay.style.display = 'flex';
     inner.innerHTML = '<div style="padding:48px;text-align:center;"><i class="fas fa-spinner fa-spin fa-2x"></i><br>Carregando...</div>';
-    fetch('wizard-preview.html')
-      .then(r => r.text())
+    fetch('pages/wizard-preview.html')
+      .then(r => {
+        if (!r.ok) throw new Error('Arquivo não encontrado');
+        return r.text();
+      })
       .then(html => {
         const temp = document.createElement('div');
         temp.innerHTML = html;
         // Pega só o conteúdo principal do wizard
         const main = temp.querySelector('main') || temp.querySelector('.wizard-container') || temp;
         inner.innerHTML = '';
-        inner.appendChild(main.cloneNode(true));
-        // Executa scripts do wizard
-        const scripts = temp.querySelectorAll('script');
-        scripts.forEach(s => {
-          if (s.textContent) {
-            try { eval(s.textContent); } catch(e){}
-          }
-        });
+        if (main && main.innerHTML.trim()) {
+          inner.appendChild(main.cloneNode(true));
+          // Executa scripts do wizard
+          const scripts = temp.querySelectorAll('script');
+          scripts.forEach(s => {
+            if (s.textContent) {
+              try { eval(s.textContent); } catch(e){}
+            }
+          });
+        } else {
+          inner.innerHTML = '<div style="padding:48px;text-align:center;color:#c00;">Erro: Conteúdo do wizard não encontrado.</div>';
+        }
+      })
+      .catch(err => {
+        inner.innerHTML = '<div style="padding:48px;text-align:center;color:#c00;">Erro ao carregar o wizard: ' + err.message + '</div>';
       });
 }
 
@@ -418,15 +438,25 @@ function abrirDocumentationModal() {
     const inner = document.getElementById('documentation-modal-inner');
     overlay.style.display = 'flex';
     inner.innerHTML = '<div style="padding:32px;text-align:center;"><i class="fas fa-spinner fa-spin fa-2x"></i><br>Carregando documentação...</div>';
-    fetch('documentation-modal.html')
-      .then(r => r.text())
+    fetch('pages/documentation-modal.html')
+      .then(r => {
+        if (!r.ok) throw new Error('Arquivo não encontrado');
+        return r.text();
+      })
       .then(html => {
         const temp = document.createElement('div');
         temp.innerHTML = html;
         // Pega só o conteúdo principal
         const main = temp.querySelector('main') || temp.querySelector('.documentation-modal') || temp;
         inner.innerHTML = '';
-        inner.appendChild(main.cloneNode(true));
+        if (main && main.innerHTML.trim()) {
+          inner.appendChild(main.cloneNode(true));
+        } else {
+          inner.innerHTML = '<div style="padding:48px;text-align:center;color:#c00;">Erro: Conteúdo da documentação não encontrado.</div>';
+        }
+      })
+      .catch(err => {
+        inner.innerHTML = '<div style="padding:48px;text-align:center;color:#c00;">Erro ao carregar a documentação: ' + err.message + '</div>';
       });
 }
 
