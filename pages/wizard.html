@@ -57,6 +57,20 @@
       { label: 'Segundo Passo', icon: '<i class="fas fa-file-alt"></i>', content: '<b>Conteúdo do segundo passo.</b><br>Envie os documentos necessários.' },
       { label: 'Confirmação', icon: '<i class="fas fa-check"></i>', content: '<b>Confirmação final.</b><br>Revise e conclua o processo.' }
     ];
-</script>
-</main>
+    let currentStep = 0;
+    function renderWizard() {
+      // Steps
+      const stepsDiv = document.getElementById('wizardSteps');
+      stepsDiv.innerHTML = '';
+      steps.forEach((step, idx) => {
+        const stepDiv = document.createElement('div');
+        stepDiv.className = 'wizard-step' + (idx === currentStep ? ' active' : idx < currentStep ? ' completed' : '');
+        stepDiv.innerHTML = `<div class="wizard-icon">${step.icon}</div><div class="wizard-label">${step.label}</div>`;
+        stepsDiv.appendChild(stepDiv);
+      });
+      // Content
+      document.getElementById('wizardContent').innerHTML = steps[currentStep].content;
+    }
+    renderWizard();
+  </script>
 </main>
