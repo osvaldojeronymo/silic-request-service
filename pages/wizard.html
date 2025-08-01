@@ -8,6 +8,22 @@
       { label: 'Licitação', icon: '<i class="fas fa-gavel"></i>', content: `
         <form id="licitForm" style="display:flex;flex-direction:column;gap:18px;">
           <div>
+          <div>
+            <label for="parteRelacionadaDoc" style="font-weight:600;">Existe Parte Relacionada?</label><br>
+            <select id="parteRelacionadaDoc" name="parteRelacionadaDoc" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
+              <option value="">Selecione</option>
+              <option value="Sim">Sim</option>
+              <option value="Não">Não</option>
+            </select>
+          </div>
+          <div>
+            <label for="parteRelacionadaDoc" style="font-weight:600;">Existe Parte Relacionada?</label><br>
+            <select id="parteRelacionadaDoc" name="parteRelacionadaDoc" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
+              <option value="">Selecione</option>
+              <option value="Sim">Sim</option>
+              <option value="Não">Não</option>
+            </select>
+          </div>
             <label for="tipoUnidade" style="font-weight:600;">Tipo de Unidade</label><br>
             <select id="tipoUnidade" name="tipoUnidade" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
               <option value="">Selecione</option>
@@ -61,25 +77,44 @@
       { label: 'Documentação', icon: '<i class="fas fa-file-alt"></i>', content: `
         <form id="docForm" style="display:flex;flex-direction:column;gap:18px;">
           <div>
-            <label for="tipoContratacaoDoc" style="font-weight:600;">Tipo de Contratação</label><br>
-            <select id="tipoContratacaoDoc" name="tipoContratacaoDoc" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
+            <label for="tipoUnidadeDoc" style="font-weight:600;">Tipo de unidade</label><br>
+            <select id="tipoUnidadeDoc" name="tipoUnidadeDoc" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
               <option value="">Selecione</option>
-              <option value="Nova Unidade">Nova Unidade</option>
-              <option value="Mudança de Endereço">Mudança de Endereço</option>
-              <option value="Reforma">Reforma</option>
+              <option value="Varejo">Varejo</option>
+              <option value="Demais unidades CAIXA">Demais unidades CAIXA</option>
+            </select>
+          </div>
+          <div>
+            <label for="nomeUnidadeDoc" style="font-weight:600;">Nome da unidade</label><br>
+            <input type="text" id="nomeUnidadeDoc" name="nomeUnidadeDoc" placeholder="Digite o nome da unidade..." style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
+          </div>
+          <div>
+            <label for="tipoNecessidadeDoc" style="font-weight:600;">Tipo de necessidade</label><br>
+            <input type="text" id="tipoNecessidadeDoc" name="tipoNecessidadeDoc" value="Nova unidade" readonly style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;background:#f5f5f5;color:#888;">
+          </div>
+          <div>
+            <label for="reformaDoc" style="font-weight:600;">Necessita reforma ou ampliação?</label><br>
+            <select id="reformaDoc" name="reformaDoc" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
+              <option value="">Selecione</option>
+              <option value="Sim">Sim</option>
+              <option value="Não">Não</option>
             </select>
           </div>
           <div>
             <label for="tipoLocadorDoc" style="font-weight:600;">Tipo de Locador</label><br>
-            <select id="tipoLocadorDoc" name="tipoLocadorDoc" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
-              <option value="">Selecione</option>
-              <option value="Pessoa Física">Pessoa Física</option>
-              <option value="Pessoa Jurídica">Pessoa Jurídica</option>
-            </select>
+            <input type="text" id="tipoLocadorDoc" name="tipoLocadorDoc" value="Pessoa Jurídica" readonly style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;background:#f5f5f5;color:#888;">
           </div>
           <div>
             <label for="terceirosDoc" style="font-weight:600;">Há terceiros beneficiários?</label><br>
             <select id="terceirosDoc" name="terceirosDoc" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
+              <option value="">Selecione</option>
+              <option value="Sim">Sim</option>
+              <option value="Não">Não</option>
+            </select>
+          </div>
+          <div>
+            <label for="parteRelacionadaDoc" style="font-weight:600;">Existe Parte Relacionada?</label><br>
+            <select id="parteRelacionadaDoc" name="parteRelacionadaDoc" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
               <option value="">Selecione</option>
               <option value="Sim">Sim</option>
               <option value="Não">Não</option>
@@ -251,11 +286,46 @@
                           <span style='color:#888;font-size:0.97rem;'>${doc.descricao || ''}</span>
                           ${doc.obrigatorio ? `<span style='color:#c00;font-size:0.97rem;'>(obrigatório)</span>` : '<span style="color:#888;font-size:0.97rem;">(opcional)</span>'}
                         </label>
+                        <div class="upload-container" id="upload-${doc.id}" style="display:none;margin-left:28px;margin-top:4px;">
+                          <input type="file" name="file-${doc.id}" data-doc-id="${doc.id}" accept=".pdf,.doc,.docx,.jpg,.png">
+                          <span class="upload-status" style="font-size:0.95rem;color:#888;margin-left:8px;"></span>
+                        </div>
                       </li>
                     `).join('')}
                   </ul>
                 </div>
               `).join('');
+            // Exibir campo de upload ao marcar checkbox
+            checklistDiv.querySelectorAll('input[type=checkbox][data-doc-id]').forEach(checkbox => {
+              checkbox.addEventListener('change', function() {
+                const uploadDiv = document.getElementById('upload-' + this.dataset.docId);
+                if (this.checked) {
+                  uploadDiv.style.display = 'block';
+                } else {
+                  uploadDiv.style.display = 'none';
+                  uploadDiv.querySelector('input[type=file]').value = '';
+                  uploadDiv.querySelector('.upload-status').textContent = '';
+                }
+              });
+              // Se já estiver marcado (ex: ao reabrir), mostrar upload
+              if (checkbox.checked) {
+                document.getElementById('upload-' + checkbox.dataset.docId).style.display = 'block';
+              }
+            });
+
+            // Handler de upload (simulação de status)
+            checklistDiv.querySelectorAll('input[type=file][data-doc-id]').forEach(fileInput => {
+              fileInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (!file) return;
+                const statusSpan = this.nextElementSibling;
+                statusSpan.textContent = 'Enviando...';
+                // Simulação de envio
+                setTimeout(() => {
+                  statusSpan.textContent = 'Pendente de análise (' + new Date().toLocaleString('pt-BR') + ')';
+                }, 1000);
+              });
+            });
             }
 
             tipoContratacao.addEventListener('change', renderChecklist);
