@@ -760,4 +760,222 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    
+    // Inicializar wizard financeiro se estiver presente
+    initWizardFinanceiro();
 });
+
+// =================================================================== 
+// WIZARD FINANCEIRO FUNCTIONS
+// ===================================================================
+
+function initWizardFinanceiro() {
+    // Função para adicionar novo locador
+    const addLocadorBtn = document.getElementById('adicionar-locador');
+    if (addLocadorBtn) {
+        addLocadorBtn.addEventListener('click', function() {
+            const container = document.getElementById('dados-bancarios-container');
+            const novoLocador = document.createElement('div');
+            novoLocador.classList.add('banco-block');
+            
+            // Contador para identificar o número do locador
+            const locadores = container.querySelectorAll('.banco-block');
+            const numeroLocador = locadores.length + 1;
+            
+            novoLocador.innerHTML = `
+              <input type="text" placeholder="Agência" class="agencia" name="agencia_${numeroLocador}">
+              <input type="text" placeholder="Número e nome da agência" class="agencia-nome" name="agencia_nome_${numeroLocador}">
+              <input type="text" placeholder="Conta" class="conta" name="conta_${numeroLocador}">
+              <select class="tipo-conta" name="tipo_conta_${numeroLocador}">
+                <option value="corrente">Corrente</option>
+                <option value="poupanca">Poupança</option>
+              </select>
+              <button type="button" class="remover-locador" onclick="removerLocador(this)">
+                <i class="fas fa-trash"></i> Remover Locador
+              </button>
+            `;
+            
+            container.appendChild(novoLocador);
+            
+            // Adiciona animação de entrada
+            novoLocador.style.opacity = '0';
+            novoLocador.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+              novoLocador.style.transition = 'all 0.3s ease';
+              novoLocador.style.opacity = '1';
+              novoLocador.style.transform = 'translateY(0)';
+            }, 10);
+        });
+    }
+    
+    // Eventos dos botões de navegação do wizard financeiro
+    const anteriorBtn = document.getElementById('anterior');
+    const proximoBtn = document.getElementById('proximo');
+    
+    if (anteriorBtn) {
+        anteriorBtn.addEventListener('click', function() {
+            console.log('Voltando ao passo anterior...');
+            // Aqui você pode implementar a navegação entre steps
+        });
+    }
+    
+    if (proximoBtn) {
+        proximoBtn.addEventListener('click', function() {
+            if (validarFormularioFinanceiro()) {
+                const dadosFinanceiros = coletarDadosFormularioFinanceiro();
+                console.log('Dados financeiros coletados:', dadosFinanceiros);
+                console.log('Avançando ao próximo passo...');
+                // Aqui você pode implementar a navegação entre steps
+            } else {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+            }
+        });
+    }
+    
+    // Aplicar máscaras e validações em tempo real
+    document.addEventListener('input', function(e) {
+        if (e.target.classList.contains('agencia') || e.target.classList.contains('conta')) {
+            aplicarMascaraNumerica(e.target);
+        }
+    });
+    
+    // Efeitos visuais para campos do wizard financeiro
+    const financeiroInputs = document.querySelectorAll('#wizard-modal-inner input, #wizard-modal-inner select');
+    financeiroInputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.style.borderColor = '#4a90e2';
+            this.style.boxShadow = '0 0 0 3px rgba(74, 144, 226, 0.1)';
+        });
+        
+        input.addEventListener('blur', function() {
+            if (!this.value) {
+                this.style.borderColor = '#ddd';
+                this.style.boxShadow = 'none';
+            }
+        });
+    });
+}
+
+// Validação do formulário financeiro
+function validarFormularioFinanceiro() {
+    const formaPagamento = document.getElementById('forma-pagamento');
+    const agencias = document.querySelectorAll('.agencia');
+    const contas = document.querySelectorAll('.conta');
+    
+    let valido = true;
+    
+    if (formaPagamento && !formaPagamento.value) {
+        valido = false;
+    }
+    
+    agencias.forEach(agencia => {
+        if (!agencia.value.trim()) {
+            agencia.style.borderColor = '#dc3545';
+            valido = false;
+        } else {
+            agencia.style.borderColor = '#ddd';
+        }
+    });
+    
+    contas.forEach(conta => {
+        if (!conta.value.trim()) {
+            conta.style.borderColor = '#dc3545';
+            valido = false;
+        } else {
+            conta.style.borderColor = '#ddd';
+        }
+    });
+    
+    return valido;
+}
+
+// Função para coletar dados do formulário financeiro
+function coletarDadosFormularioFinanceiro() {
+    const formaPagamento = document.getElementById('forma-pagamento');
+    const locadores = [];
+    
+    document.querySelectorAll('.banco-block').forEach((block, index) => {
+        const agencia = block.querySelector('.agencia')?.value;
+        const agenciaNome = block.querySelector('.agencia-nome')?.value;
+        const conta = block.querySelector('.conta')?.value;
+        const tipoConta = block.querySelector('.tipo-conta')?.value;
+        
+        if (agencia && conta) {
+            locadores.push({
+                id: index + 1,
+                agencia: agencia,
+                agenciaNome: agenciaNome,
+                conta: conta,
+                tipoConta: tipoConta
+            });
+        }
+    });
+    
+    return {
+        formaPagamento: formaPagamento ? formaPagamento.value : '',
+        locadores: locadores,
+        resumo: {
+            valorAluguel: 'R$ 3.000,00',
+            parcelas: 12,
+            vencimento: '15 de cada mês'
+        }
+    };
+}
+
+// Máscara para campos numéricos
+function aplicarMascaraNumerica(input) {
+    let value = input.value.replace(/\D/g, '');
+    input.value = value;
+}
+
+// Atualização do progresso do wizard financeiro
+function atualizarProgressoFinanceiro(step) {
+    const steps = document.querySelectorAll('.progress .step');
+    steps.forEach((s, index) => {
+        if (index < step) {
+            s.classList.add('active');
+        } else {
+            s.classList.remove('active');
+        }
+    });
+}
+
+// Função global para remover locador
+function removerLocador(button) {
+    const bancoBlock = button.closest('.banco-block');
+    
+    // Animação de saída
+    bancoBlock.style.transition = 'all 0.3s ease';
+    bancoBlock.style.opacity = '0';
+    bancoBlock.style.transform = 'translateY(-10px)';
+    
+    setTimeout(() => {
+        bancoBlock.remove();
+    }, 300);
+}
+
+// API pública do Wizard Financeiro
+window.WizardFinanceiro = {
+    validarFormulario: function() {
+        return document.querySelector('.wizard-financeiro-container') !== null;
+    },
+    
+    coletarDados: function() {
+        return coletarDadosFormularioFinanceiro();
+    },
+    
+    limparFormulario: function() {
+        const formaPagamento = document.getElementById('forma-pagamento');
+        if (formaPagamento) formaPagamento.value = '';
+        
+        document.querySelectorAll('.banco-block').forEach((block, index) => {
+            if (index > 0) { // Mantém o primeiro locador
+                block.remove();
+            } else {
+                block.querySelectorAll('input').forEach(input => input.value = '');
+                const select = block.querySelector('select');
+                if (select) select.selectedIndex = 0;
+            }
+        });
+    }
+};

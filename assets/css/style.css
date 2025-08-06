@@ -1,20 +1,47 @@
-/* Forçar padding e centralização no overlay do modal wizard */
-#wizard-modal-overlay {
-  padding: 32px !important;
-  box-sizing: border-box;
+/* Forçar padding e centralização no overlay do modal wizard - APENAS quando visível */
+#wizard-modal-overlay:not([style*="display:none"]) {
+  display: flex !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0,0,0,0.5) !important;
+  z-index: 2000 !important;
   align-items: center !important;
   justify-content: center !important;
+  overflow-y: auto !important;
+  padding: 20px !important;
+  box-sizing: border-box !important;
 }
- #wizard-modal-content {
-   max-width: 800px;
-   width: 100%;
-   box-sizing: border-box;
-   border-radius: 20px;
-   padding: 0 !important;
-   margin: 0 auto;
-   display: flex;
-   flex-direction: column;
-   align-items: stretch;
+
+#wizard-modal-overlay[style*="display:none"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+#wizard-modal-overlay[style*="display:none"] #wizard-modal-content {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Regra adicional para garantir fechamento completo */
+#wizard-modal-overlay[style*="display:none"] * {
+  display: none !important;
+}
+
+#wizard-modal-content {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 900px !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  background: white !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2) !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 /* --- Wizard Modal Styles --- */
 .wizard-container {
@@ -76,7 +103,7 @@
 }
 .wizard-label {
   font-size: 1.08rem;
-  color: rgba(255,255,255,0.88);
+  color: #333;
   text-align: center;
   font-weight: 500;
   margin: 8px 0 0 0;
@@ -86,13 +113,13 @@
   transition: color 0.2s, font-weight 0.2s;
 }
 .wizard-step.active .wizard-label {
-  color: #fff;
+  color: #333;
   font-weight: 700;
   font-size: 1.13rem;
   margin-top: 10px;
 }
 .wizard-step.completed .wizard-label {
-  color: rgba(255,255,255,0.65);
+  color: rgba(51, 51, 51, 0.65);
   font-weight: 500;
 }
 .wizard-container {
@@ -108,7 +135,7 @@
   flex-direction: column;
   min-height: 340px;
 }
-}
+
 .wizard-form-row {
   display: flex;
   gap: 12px;
@@ -288,17 +315,10 @@ body {
 
 /* --- WIZARD CAIXA --- */
 .wizard-content {
-  background: #0056b3;
-  color: #fff;
+  background: #f8f9fa;
+  color: #333;
   font-size: 1.08rem;
   padding: 24px;
-/* Overlay do modal wizard: garantir distância mínima da borda da tela */
-#wizard-modal-overlay {
-  padding: 32px;
-  box-sizing: border-box;
-  align-items: center !important;
-  justify-content: center !important;
-}
   border-radius: 0 0 18px 18px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   margin: 24px 0 0 0;
@@ -309,10 +329,9 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
   align-items: stretch;
-  justify-content: flex-start;
 }
+
 #wizard-modal-content {
   background: #F0F4F8;
   border-radius: 18px;
@@ -328,7 +347,7 @@ body {
   box-sizing: border-box;
   margin: 0 auto;
 }
-}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -1160,4 +1179,713 @@ body {
 /* Quando mostrado via JavaScript, aplicar estes estilos */
 #voltarPortalBtn.show {
     display: inline-flex !important;
+}
+
+/* =================================================================== */
+/* WIZARD FINANCEIRO STYLES */
+/* =================================================================== */
+
+/* Estilos específicos para o wizard financeiro */
+.wizard-financeiro-container {
+  background: #fff;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 24px;
+  width: 100%;
+  min-height: auto;
+  margin: 0;
+  max-width: none;
+}
+
+.wizard-financeiro-container .wizard-header {
+  margin-bottom: 24px;
+}
+
+.wizard-financeiro-container .wizard-header h2 {
+  margin: 0 0 8px 0;
+  color: #222;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.wizard-financeiro-container .wizard-header p {
+  font-size: 14px;
+  color: #555;
+  margin: 0 0 16px 0;
+  line-height: 1.4;
+}
+
+.wizard-financeiro-container .progress {
+  margin: 16px 0;
+  display: flex;
+  gap: 6px;
+}
+
+.wizard-financeiro-container .progress .step {
+  flex: 1;
+  height: 6px;
+  background: #ddd;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+
+.wizard-financeiro-container .progress .step.active {
+  background: #4a90e2;
+}
+
+.wizard-financeiro-container .wizard-body {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.wizard-financeiro-container .form-section {
+  flex: 2;
+}
+
+.wizard-financeiro-container .form-section label {
+  font-weight: 500;
+  color: #333;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.wizard-financeiro-container .form-section select,
+.wizard-financeiro-container .form-section input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0 16px 0;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wizard-financeiro-container .form-section select:focus,
+.wizard-financeiro-container .form-section input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.wizard-financeiro-container #dados-bancarios-container {
+  margin-top: 20px;
+}
+
+.wizard-financeiro-container #dados-bancarios-container h4 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.wizard-financeiro-container .banco-block {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 12px;
+}
+
+.wizard-financeiro-container .banco-block input,
+.wizard-financeiro-container .banco-block select {
+  margin: 0;
+}
+
+.wizard-financeiro-container .banco-block .agencia {
+  grid-column: 1;
+}
+
+.wizard-financeiro-container .banco-block .agencia-nome {
+  grid-column: 2;
+}
+
+.wizard-financeiro-container .banco-block .conta {
+  grid-column: 1;
+}
+
+.wizard-financeiro-container .banco-block .tipo-conta {
+  grid-column: 2;
+}
+
+.wizard-financeiro-container #adicionar-locador {
+  margin-top: 8px;
+  background: none;
+  border: 2px dashed #4a90e2;
+  color: #4a90e2;
+  cursor: pointer;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+}
+
+.wizard-financeiro-container #adicionar-locador:hover {
+  background: rgba(74, 144, 226, 0.05);
+  border-color: #357abd;
+}
+
+.wizard-financeiro-container .resumo-section {
+  flex: 1;
+  background: #f1f4f9;
+  border-radius: 8px;
+  padding: 16px;
+  height: fit-content;
+}
+
+.wizard-financeiro-container .resumo-section h4 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.wizard-financeiro-container .resumo-card {
+  background: white;
+  border-radius: 6px;
+  padding: 16px;
+  border: 1px solid #e1e8ed;
+}
+
+.wizard-financeiro-container .resumo-card p {
+  margin: 8px 0;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.wizard-financeiro-container .resumo-card p strong {
+  color: #222;
+}
+
+.wizard-financeiro-container .wizard-footer {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+}
+
+.wizard-financeiro-container .wizard-footer button {
+  padding: 12px 24px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  background: white;
+  color: #666;
+}
+
+.wizard-financeiro-container .wizard-footer button:hover {
+  border-color: #ccc;
+  background: #f8f9fa;
+}
+
+.wizard-financeiro-container .wizard-footer button.primary {
+  background: #4a90e2;
+  color: white;
+  border-color: #4a90e2;
+}
+
+.wizard-financeiro-container .wizard-footer button.primary:hover {
+  background: #357abd;
+  border-color: #357abd;
+}
+
+.wizard-financeiro-container .remover-locador {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.wizard-financeiro-container .remover-locador:hover {
+  background: #c82333;
+}
+
+/* Responsividade para wizard financeiro */
+@media (max-width: 768px) {
+  .wizard-financeiro-container {
+    padding: 16px;
+    min-height: auto;
+  }
+  
+  .wizard-financeiro-container .wizard-body {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .wizard-financeiro-container .banco-block {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .wizard-financeiro-container .banco-block .agencia,
+  .wizard-financeiro-container .banco-block .agencia-nome,
+  .wizard-financeiro-container .banco-block .conta,
+  .wizard-financeiro-container .banco-block .tipo-conta {
+    grid-column: 1;
+  }
+  
+  .wizard-financeiro-container .wizard-footer {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .wizard-financeiro-container .wizard-footer button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* =================================================================== */
+/* WIZARD PRINCIPAL MELHORADO (Baseado no wizard financeiro) */
+/* =================================================================== */
+
+/* Estilos específicos para o wizard principal quando carregado no modal */
+#wizard-modal-inner .wizard-container {
+  background: #fff;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 24px;
+  width: 100%;
+  min-height: auto;
+  margin: 0;
+  max-width: none;
+}
+
+/* Header moderno para o wizard principal */
+#wizard-modal-inner .wizard-header {
+  margin-bottom: 32px;
+  padding: 0 0 24px 0;
+}
+
+#wizard-modal-inner .wizard-header h2 {
+  margin: 0 0 8px 8px;
+  color: #222;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+#wizard-modal-inner .wizard-header p {
+  font-size: 14px;
+  color: #555;
+  margin: 0 0 16px 8px;
+  line-height: 1.4;
+}
+
+/* Aprimoramento dos steps do wizard principal - Estilo inspirado no wizard financeiro */
+#wizard-modal-inner .wizard-steps {
+  padding: 0 0 24px 0;
+  margin-bottom: 32px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+/* Sistema de progress moderno */
+#wizard-modal-inner .wizard-progress {
+  display: flex;
+  gap: 4px;
+  margin: 0 0 8px 8px;
+}
+
+#wizard-modal-inner .wizard-progress .progress-step {
+  flex: 1;
+  height: 4px;
+  background: #ddd;
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+}
+
+#wizard-modal-inner .wizard-progress .progress-step.active {
+  background: #4a90e2;
+}
+
+#wizard-modal-inner .wizard-progress .progress-step.completed {
+  background: #28a745;
+}
+
+/* Steps com visual mais limpo */
+#wizard-modal-inner .wizard-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  padding: 16px 8px;
+  margin: 0 4px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+#wizard-modal-inner .wizard-step:hover {
+  background: rgba(74, 144, 226, 0.05);
+}
+
+#wizard-modal-inner .wizard-step.active {
+  background: rgba(74, 144, 226, 0.08);
+  border: 1px solid rgba(74, 144, 226, 0.2);
+}
+
+#wizard-modal-inner .wizard-step.completed {
+  background: rgba(40, 167, 69, 0.08);
+  border: 1px solid rgba(40, 167, 69, 0.2);
+}
+
+#wizard-modal-inner .wizard-step-icon {
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+#wizard-modal-inner .wizard-step.active .wizard-step-icon {
+  color: #4a90e2;
+}
+
+#wizard-modal-inner .wizard-step.completed .wizard-step-icon {
+  color: #28a745;
+}
+
+#wizard-modal-inner .wizard-step-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #333;
+  text-align: center;
+  transition: color 0.3s ease;
+  margin-top: 4px;
+}
+
+#wizard-modal-inner .wizard-step.active .wizard-step-label {
+  color: #4a90e2;
+  font-weight: 600;
+}
+
+#wizard-modal-inner .wizard-step.completed .wizard-step-label {
+  color: #28a745;
+  font-weight: 600;
+}
+
+/* Conteúdo do wizard */
+#wizard-modal-inner .wizard-content {
+  flex: 1;
+  margin-bottom: 24px;
+}
+
+/* Melhorias nos formulários do wizard */
+#wizard-modal-inner form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#wizard-modal-inner label {
+  font-weight: 500;
+  color: #333;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+#wizard-modal-inner input,
+#wizard-modal-inner select,
+#wizard-modal-inner textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 0 0 16px 0;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background: white;
+}
+
+#wizard-modal-inner input:focus,
+#wizard-modal-inner select:focus,
+#wizard-modal-inner textarea:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+#wizard-modal-inner .wizard-form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 0;
+}
+
+#wizard-modal-inner .wizard-form-row > div {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Botões de navegação do wizard */
+#wizard-modal-inner .wizard-nav {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+  gap: 12px;
+}
+
+#wizard-modal-inner .wizard-nav button {
+  padding: 12px 24px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  background: white;
+  color: #666;
+  min-width: 120px;
+  justify-content: center;
+}
+
+#wizard-modal-inner .wizard-nav button:hover {
+  border-color: #ccc;
+  background: #f8f9fa;
+}
+
+#wizard-modal-inner .wizard-nav button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#wizard-modal-inner .wizard-nav button.primary {
+  background: #4a90e2;
+  color: white;
+  border-color: #4a90e2;
+}
+
+#wizard-modal-inner .wizard-nav button.primary:hover:not(:disabled) {
+  background: #357abd;
+  border-color: #357abd;
+}
+
+#wizard-modal-inner .wizard-nav button.success {
+  background: #28a745;
+  color: white;
+  border-color: #28a745;
+}
+
+/* Melhorias específicas nos formulários do wizard principal */
+#wizard-modal-inner .wizard-form-section {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+#wizard-modal-inner .wizard-form-section h4 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Grid layout para campos lado a lado (similar ao wizard financeiro) */
+#wizard-modal-inner .wizard-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+#wizard-modal-inner .wizard-form-grid.three-cols {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+#wizard-modal-inner .wizard-form-grid.full-width {
+  grid-template-columns: 1fr;
+}
+
+/* Melhora estética dos botões de adicionar */
+#wizard-modal-inner button[onclick*="adicionar"], 
+#wizard-modal-inner button[id*="adicionar"] {
+  background: none;
+  border: 2px dashed #4a90e2;
+  color: #4a90e2;
+  cursor: pointer;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+#wizard-modal-inner button[onclick*="adicionar"]:hover,
+#wizard-modal-inner button[id*="adicionar"]:hover {
+  background: rgba(74, 144, 226, 0.05);
+  border-color: #357abd;
+}
+
+#wizard-modal-inner .wizard-nav button.success:hover:not(:disabled) {
+  background: #218838;
+  border-color: #1e7e34;
+}
+
+/* Estilos para seções específicas do wizard */
+#wizard-modal-inner .form-section {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+#wizard-modal-inner .form-section h3 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+  border-bottom: 2px solid #4a90e2;
+  padding-bottom: 8px;
+}
+
+#wizard-modal-inner .validation-message {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  color: #856404;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+#wizard-modal-inner .success-message {
+  background: #d1edff;
+  border: 1px solid #bee5eb;
+  color: #0c5460;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+#wizard-modal-inner .error-message {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+/* Responsividade para o wizard principal */
+@media (max-width: 768px) {
+  #wizard-modal-overlay {
+    padding: 10px !important;
+  }
+  
+  #wizard-modal-content {
+    max-height: 95vh !important;
+    max-width: 100% !important;
+  }
+  
+  #wizard-modal-inner .wizard-container {
+    padding: 16px;
+    min-height: auto;
+  }
+  
+  #wizard-modal-inner .wizard-steps {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  #wizard-modal-inner .wizard-step {
+    min-width: 100px;
+  }
+  
+  #wizard-modal-inner .wizard-step-icon {
+    font-size: 20px;
+  }
+  
+  #wizard-modal-inner .wizard-step-label {
+    font-size: 11px;
+  }
+  
+  #wizard-modal-inner .wizard-form-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  #wizard-modal-inner .wizard-nav {
+    flex-direction: column;
+  }
+  
+  #wizard-modal-inner .wizard-nav button {
+    width: 100%;
+  }
+}
+
+/* Botão de fechar wizard - alta prioridade */
+#close-wizard-modal {
+  position: absolute !important;
+  top: 20px !important;
+  right: 20px !important;
+  background: rgba(255,255,255,0.95) !important;
+  border: none !important;
+  font-size: 2rem !important;
+  color: #d32f2f !important;
+  cursor: pointer !important;
+  z-index: 99999 !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+  transition: all 0.2s ease !important;
+  font-family: Arial, sans-serif !important;
+  line-height: 1 !important;
+}
+
+#close-wizard-modal:hover {
+  background: rgba(255,255,255,1) !important;
+  color: #b71c1c !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+}
+
+#close-wizard-modal:active {
+  transform: scale(0.95) !important;
 }

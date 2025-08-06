@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SILIC 2.0 - Stepper Genérico</title>
+</head>
+<body>
+    <main class="stepper-container">
+        <div class="stepper-header">
+            <h2>SILIC 2.0 - Solicitação de Serviços</h2>
+            <p>Preencha as informações necessárias para sua solicitação.</p>
+            <div class="stepper-progress">
+                <span class="progress-step active"></span>
+                <span class="progress-step"></span>
+                <span class="progress-step"></span>
+            </div>
+        </div>
+
+        <div class="stepper-content">
+            <div class="stepper-step active" id="step-1">
+                <h3>Informações Básicas</h3>
+                <div class="form-group">
+                    <label for="stepper-nome">Nome Completo</label>
+                    <input type="text" id="stepper-nome" name="nome" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="stepper-documento">CPF/CNPJ</label>
+                        <input type="text" id="stepper-documento" name="documento" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="stepper-email">E-mail</label>
+                        <input type="email" id="stepper-email" name="email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="stepper-telefone">Telefone</label>
+                    <input type="tel" id="stepper-telefone" name="telefone" required>
+                </div>
+            </div>
+
+            <div class="stepper-step" id="step-2">
+                <h3>Dados da Solicitação</h3>
+                <div class="form-group">
+                    <label for="stepper-modalidade">Modalidade</label>
+                    <select id="stepper-modalidade" name="modalidade" required>
+                        <option value="">Selecione a modalidade</option>
+                        <option value="locacao">Locação</option>
+                        <option value="cessao">Cessão</option>
+                        <option value="comodato">Comodato</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="stepper-acao">Ação</label>
+                    <select id="stepper-acao" name="acao" required>
+                        <option value="">Selecione a ação</option>
+                        <option value="contratar">Contratação</option>
+                        <option value="regularizar">Regularização</option>
+                        <option value="formalizar">Formalização</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="stepper-observacoes">Observações</label>
+                    <textarea id="stepper-observacoes" name="observacoes" rows="4" placeholder="Descreva detalhes adicionais sobre sua solicitação..."></textarea>
+                </div>
+            </div>
+
+            <div class="stepper-step" id="step-3">
+                <h3>Revisão e Confirmação</h3>
+                <div class="review-section">
+                    <h4>Dados Informados:</h4>
+                    <div class="review-item">
+                        <strong>Nome:</strong> <span id="review-nome">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>Documento:</strong> <span id="review-documento">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>E-mail:</strong> <span id="review-email">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>Telefone:</strong> <span id="review-telefone">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>Modalidade:</strong> <span id="review-modalidade">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>Ação:</strong> <span id="review-acao">-</span>
+                    </div>
+                    <div class="review-item">
+                        <strong>Observações:</strong> <span id="review-observacoes">-</span>
+                    </div>
+                </div>
+                
+                <div class="success-message" id="success-message" style="display: none;">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h4 style="color: #28a745;">Solicitação Enviada com Sucesso!</h4>
+                    <p>Sua solicitação foi registrada e será processada em breve. Você receberá atualizações por e-mail.</p>
+                    <p><strong>Protocolo:</strong> <span id="protocolo-numero"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stepper-navigation">
+            <button type="button" id="btn-anterior" class="btn-secondary" onclick="stepperAnterior()" style="display: none;">
+                <i class="fas fa-arrow-left"></i>
+                Anterior
+            </button>
+            <button type="button" id="btn-proximo" class="btn-primary" onclick="stepperProximo()">
+                Próximo
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <button type="button" id="btn-enviar" class="btn-primary" onclick="stepperEnviar()" style="display: none;">
+                <i class="fas fa-paper-plane"></i>
+                Enviar Solicitação
+            </button>
+        </div>
+    </main>
+
+    <script>
+        let currentStepperStep = 1;
+        const totalStepperSteps = 3;
+
+        function updateStepperProgress() {
+            // Atualiza progress bar
+            const progressSteps = document.querySelectorAll('.stepper-progress .progress-step');
+            progressSteps.forEach((step, index) => {
+                if (index < currentStepperStep) {
+                    step.classList.add('completed');
+                    step.classList.remove('active');
+                } else if (index === currentStepperStep - 1) {
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                } else {
+                    step.classList.remove('active', 'completed');
+                }
+            });
+
+            // Atualiza steps
+            const steps = document.querySelectorAll('.stepper-step');
+            steps.forEach((step, index) => {
+                if (index === currentStepperStep - 1) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+
+            // Atualiza botões
+            const btnAnterior = document.getElementById('btn-anterior');
+            const btnProximo = document.getElementById('btn-proximo');
+            const btnEnviar = document.getElementById('btn-enviar');
+
+            btnAnterior.style.display = currentStepperStep > 1 ? 'inline-flex' : 'none';
+            btnProximo.style.display = currentStepperStep < totalStepperSteps ? 'inline-flex' : 'none';
+            btnEnviar.style.display = currentStepperStep === totalStepperSteps ? 'inline-flex' : 'none';
+        }
+
+        function validateStepperStep() {
+            const currentStep = document.getElementById(`step-${currentStepperStep}`);
+            const requiredFields = currentStep.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.classList.add('error');
+                    isValid = false;
+                } else {
+                    field.classList.remove('error');
+                }
+            });
+
+            return isValid;
+        }
+
+        function stepperProximo() {
+            if (!validateStepperStep()) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+
+            if (currentStepperStep === 2) {
+                updateReviewData();
+            }
+
+            if (currentStepperStep < totalStepperSteps) {
+                currentStepperStep++;
+                updateStepperProgress();
+            }
+        }
+
+        function stepperAnterior() {
+            if (currentStepperStep > 1) {
+                currentStepperStep--;
+                updateStepperProgress();
+            }
+        }
+
+        function updateReviewData() {
+            document.getElementById('review-nome').textContent = document.getElementById('stepper-nome').value || '-';
+            document.getElementById('review-documento').textContent = document.getElementById('stepper-documento').value || '-';
+            document.getElementById('review-email').textContent = document.getElementById('stepper-email').value || '-';
+            document.getElementById('review-telefone').textContent = document.getElementById('stepper-telefone').value || '-';
+            
+            const modalidadeSelect = document.getElementById('stepper-modalidade');
+            const acaoSelect = document.getElementById('stepper-acao');
+            
+            document.getElementById('review-modalidade').textContent = modalidadeSelect.options[modalidadeSelect.selectedIndex]?.text || '-';
+            document.getElementById('review-acao').textContent = acaoSelect.options[acaoSelect.selectedIndex]?.text || '-';
+            document.getElementById('review-observacoes').textContent = document.getElementById('stepper-observacoes').value || '-';
+        }
+
+        function stepperEnviar() {
+            // Simula envio da solicitação
+            const protocolo = 'SILIC' + Date.now().toString().slice(-6);
+            document.getElementById('protocolo-numero').textContent = protocolo;
+            
+            // Esconde o review e mostra a mensagem de sucesso
+            document.querySelector('.review-section').style.display = 'none';
+            document.getElementById('success-message').style.display = 'block';
+            document.getElementById('btn-enviar').style.display = 'none';
+            document.getElementById('btn-anterior').style.display = 'none';
+        }
+
+        // Formatação de documentos (CPF/CNPJ)
+        document.getElementById('stepper-documento').addEventListener('input', function() {
+            let value = this.value.replace(/\D/g, '');
+            
+            if (value.length <= 11) {
+                // Formato CPF
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            } else {
+                // Formato CNPJ
+                value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+                value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+                value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+                value = value.replace(/(\d{4})(\d)/, '$1-$2');
+            }
+            
+            this.value = value;
+        });
+
+        // Formatação de telefone
+        document.getElementById('stepper-telefone').addEventListener('input', function() {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length <= 10) {
+                value = value.replace(/(\d{2})(\d)/, '($1) $2');
+                value = value.replace(/(\d{4})(\d)/, '$1-$2');
+            } else {
+                value = value.replace(/(\d{2})(\d)/, '($1) $2');
+                value = value.replace(/(\d{5})(\d)/, '$1-$2');
+            }
+            this.value = value;
+        });
+
+        // Inicializa o stepper
+        updateStepperProgress();
+    </script>
+</body>
+</html>
