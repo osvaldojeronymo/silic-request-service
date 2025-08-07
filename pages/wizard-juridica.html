@@ -185,10 +185,86 @@
             <label for="valorAdjudicado" style="font-weight:600;">Valor monetário adjudicado</label><br>
             <input type="text" id="valorAdjudicado" name="valorAdjudicado" placeholder="Ex: R$ 100.000,00" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
           </div>
+          
+          <!-- Seção de Dados Bancários integrada da Pessoa Física -->
+          <div style="border-top: 2px solid #f0f0f0; padding-top: 18px; margin-top: 12px;">
+            <h4 style="margin-bottom: 16px; color: #003366; display: flex; align-items: center;">
+              <i class="fas fa-university" style="margin-right: 8px;"></i>
+              Dados de Pagamento
+            </h4>
+            
+            <div style="margin-bottom: 16px;">
+              <label for="formaPagamentoJuridica" style="font-weight:600;">Forma de Pagamento</label><br>
+              <select id="formaPagamentoJuridica" name="formaPagamentoJuridica" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
+                <option value="">Selecione a forma de pagamento</option>
+                <option value="deposito">Depósito em Conta</option>
+                <option value="pix">PIX</option>
+                <option value="ted">TED</option>
+                <option value="doc">DOC</option>
+              </select>
+            </div>
+
+            <div id="dadosBancariosJuridica" style="background: #f8f9fa; padding: 16px; border-radius: 8px; border: 1px solid #e9ecef;">
+              <h5 style="margin-bottom: 12px; color: #003366;">Dados Bancários do Locador</h5>
+              
+              <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 12px; margin-bottom: 12px;">
+                <div>
+                  <label style="font-weight: 500; font-size: 0.95rem; color: #495057;">Agência</label>
+                  <input type="text" id="agenciaJuridica" name="agenciaJuridica" placeholder="Ex: 1234" style="width:100%;padding:6px 8px;border-radius:6px;border:1.5px solid #e7e7e7;font-size:0.95rem;margin-top:4px;">
+                </div>
+                <div>
+                  <label style="font-weight: 500; font-size: 0.95rem; color: #495057;">Nome da Agência</label>
+                  <input type="text" id="agenciaNomeJuridica" name="agenciaNomeJuridica" placeholder="Ex: Agência Centro" style="width:100%;padding:6px 8px;border-radius:6px;border:1.5px solid #e7e7e7;font-size:0.95rem;margin-top:4px;">
+                </div>
+              </div>
+              
+              <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 12px;">
+                <div>
+                  <label style="font-weight: 500; font-size: 0.95rem; color: #495057;">Número da Conta</label>
+                  <input type="text" id="contaJuridica" name="contaJuridica" placeholder="Ex: 56789-0" style="width:100%;padding:6px 8px;border-radius:6px;border:1.5px solid #e7e7e7;font-size:0.95rem;margin-top:4px;">
+                </div>
+                <div>
+                  <label style="font-weight: 500; font-size: 0.95rem; color: #495057;">Tipo de Conta</label>
+                  <select id="tipoContaJuridica" name="tipoContaJuridica" style="width:100%;padding:6px 8px;border-radius:6px;border:1.5px solid #e7e7e7;font-size:0.95rem;margin-top:4px;">
+                    <option value="">Selecione</option>
+                    <option value="corrente">Conta Corrente</option>
+                    <option value="poupanca">Poupança</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label style="font-weight: 500; font-size: 0.95rem; color: #495057;">CNPJ do Titular da Conta</label>
+                <input type="text" id="cnpjTitularConta" name="cnpjTitularConta" placeholder="Ex: 12.345.678/0001-90" style="width:100%;padding:6px 8px;border-radius:6px;border:1.5px solid #e7e7e7;font-size:0.95rem;margin-top:4px;">
+              </div>
+            </div>
+
+            <button type="button" id="adicionarLocadorJuridica" style="background:#28a745;color:white;font-weight:600;padding:8px 16px;border:none;border-radius:6px;font-size:0.95rem;cursor:pointer;margin-top:12px;display:flex;align-items:center;gap:6px;">
+              <i class="fas fa-plus"></i> Adicionar Locador
+            </button>
+          </div>
+
+          <!-- Resumo de Valores -->
+          <div style="background: #e8f4fd; padding: 16px; border-radius: 8px; border-left: 4px solid #0066cc; margin-top: 12px;">
+            <h5 style="margin-bottom: 12px; color: #003366; display: flex; align-items: center;">
+              <i class="fas fa-calculator" style="margin-right: 8px;"></i>
+              Resumo Financeiro
+            </h5>
+            <div id="resumoValoresJuridica">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.95rem;">
+                <div><strong>Valor do Aluguel:</strong> <span id="valorAluguelResumo">R$ 0,00</span></div>
+                <div><strong>Periodicidade:</strong> <span id="periodicidadeResumo">Mensal</span></div>
+                <div><strong>Reajuste:</strong> <span id="reajusteResumo">Anual (IGPM)</span></div>
+                <div><strong>Vencimento:</strong> <span id="vencimentoResumo">Todo dia 15</span></div>
+              </div>
+            </div>
+          </div>
+          
           <div>
             <label for="detalhesFinanceiros" style="font-weight:600;">Detalhes financeiros da proposta vencedora</label><br>
-            <textarea id="detalhesFinanceiros" name="detalhesFinanceiros" rows="4" placeholder="Registre os detalhes financeiros da proposta vencedora..." style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;"></textarea>
+            <textarea id="detalhesFinanceiros" name="detalhesFinanceiros" rows="3" placeholder="Registre os detalhes financeiros da proposta vencedora..." style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;"></textarea>
           </div>
+          
           <div style="display:flex;justify-content:space-between;margin-top:18px;gap:12px;">
             <button type="button" id="btnPrevStepFinanceiro" style="background:#eee;color:#003366;font-weight:600;padding:10px 24px;border:none;border-radius:8px;font-size:1.08rem;cursor:pointer;">Voltar</button>
             <button type="button" id="btnNextStepFinanceiro" style="background:#F39200;color:#003366;font-weight:700;padding:10px 28px;border:none;border-radius:8px;font-size:1.08rem;cursor:pointer;">Avançar</button>
@@ -428,6 +504,132 @@
           if (currentStep > 0) {
             currentStep--;
             renderWizard();
+          }
+        };
+      }
+
+      // Funcionalidades específicas do step Financeiro
+      const formaPagamentoSelect = document.getElementById('formaPagamentoJuridica');
+      const dadosBancariosDiv = document.getElementById('dadosBancariosJuridica');
+      const adicionarLocadorBtn = document.getElementById('adicionarLocadorJuridica');
+      const valorAdjudicadoInput = document.getElementById('valorAdjudicado');
+
+      // Mostrar/esconder dados bancários baseado na forma de pagamento
+      if (formaPagamentoSelect && dadosBancariosDiv) {
+        formaPagamentoSelect.onchange = function() {
+          if (this.value && this.value !== '') {
+            dadosBancariosDiv.style.display = 'block';
+          } else {
+            dadosBancariosDiv.style.display = 'none';
+          }
+        };
+      }
+
+      // Formatação CNPJ
+      const cnpjInput = document.getElementById('cnpjTitularConta');
+      if (cnpjInput) {
+        cnpjInput.oninput = function() {
+          let value = this.value.replace(/\D/g, '');
+          value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+          value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+          value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+          value = value.replace(/(\d{4})(\d)/, '$1-$2');
+          this.value = value;
+        };
+      }
+
+      // Formatação do valor adjudicado
+      if (valorAdjudicadoInput) {
+        valorAdjudicadoInput.oninput = function() {
+          let value = this.value.replace(/\D/g, '');
+          value = (value / 100).toFixed(2);
+          value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+          value = value.replace('.', ',');
+          this.value = 'R$ ' + value;
+          
+          // Atualiza o resumo
+          const resumoValor = document.getElementById('valorAluguelResumo');
+          if (resumoValor) {
+            resumoValor.textContent = this.value || 'R$ 0,00';
+          }
+        };
+      }
+
+      // Funcionalidade de adicionar múltiplos locadores
+      if (adicionarLocadorBtn) {
+        let contadorLocadores = 1;
+        
+        adicionarLocadorBtn.onclick = function() {
+          contadorLocadores++;
+          const novoLocador = document.createElement('div');
+          novoLocador.style.cssText = 'background: #f8f9fa; padding: 16px; border-radius: 8px; border: 1px solid #e9ecef; margin-top: 12px;';
+          novoLocador.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h5 style="margin: 0; color: #003366;">Locador ${contadorLocadores}</h5>
+              <button type="button" class="remover-locador" style="background: #dc3545; color: white; border: none; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 0.8rem;">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 12px; margin-bottom: 12px;">
+              <div>
+                <label style="font-weight: 500; font-size: 0.95rem; color: #495057;">Agência</label>
+                <input type="text" placeholder="Ex: 1234" style="width:100%;padding:6px 8px;border-radius:6px;border:1.5px solid #e7e7e7;font-size:0.95rem;margin-top:4px;">
+              </div>
+              <div>
+                <label style="font-weight: 500; font-size: 0.95rem; color: #495057;">Nome da Agência</label>
+                <input type="text" placeholder="Ex: Agência Centro" style="width:100%;padding:6px 8px;border-radius:6px;border:1.5px solid #e7e7e7;font-size:0.95rem;margin-top:4px;">
+              </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 12px;">
+              <div>
+                <label style="font-weight: 500; font-size: 0.95rem; color: #495057;">Número da Conta</label>
+                <input type="text" placeholder="Ex: 56789-0" style="width:100%;padding:6px 8px;border-radius:6px;border:1.5px solid #e7e7e7;font-size:0.95rem;margin-top:4px;">
+              </div>
+              <div>
+                <label style="font-weight: 500; font-size: 0.95rem; color: #495057;">Tipo de Conta</label>
+                <select style="width:100%;padding:6px 8px;border-radius:6px;border:1.5px solid #e7e7e7;font-size:0.95rem;margin-top:4px;">
+                  <option value="">Selecione</option>
+                  <option value="corrente">Conta Corrente</option>
+                  <option value="poupanca">Poupança</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label style="font-weight: 500; font-size: 0.95rem; color: #495057;">CNPJ do Titular da Conta</label>
+              <input type="text" placeholder="Ex: 12.345.678/0001-90" class="cnpj-input" style="width:100%;padding:6px 8px;border-radius:6px;border:1.5px solid #e7e7e7;font-size:0.95rem;margin-top:4px;">
+            </div>
+          `;
+          
+          dadosBancariosDiv.appendChild(novoLocador);
+          
+          // Adiciona funcionalidade de remoção
+          const btnRemover = novoLocador.querySelector('.remover-locador');
+          btnRemover.onclick = function() {
+            novoLocador.remove();
+            // Reajusta numeração dos locadores
+            const locadores = dadosBancariosDiv.querySelectorAll('h5');
+            locadores.forEach((h5, index) => {
+              if (index > 0) {
+                h5.textContent = `Locador ${index + 1}`;
+              }
+            });
+            contadorLocadores--;
+          };
+          
+          // Adiciona formatação CNPJ ao novo campo
+          const novoCnpjInput = novoLocador.querySelector('.cnpj-input');
+          if (novoCnpjInput) {
+            novoCnpjInput.oninput = function() {
+              let value = this.value.replace(/\D/g, '');
+              value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+              value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+              value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+              value = value.replace(/(\d{4})(\d)/, '$1-$2');
+              this.value = value;
+            };
           }
         };
       }
