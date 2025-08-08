@@ -305,7 +305,7 @@ function getDynamicWizardHeader(tab, acao, tipo, tipoContratacao, url) {
             title: `${acao.charAt(0).toUpperCase() + acao.slice(1)} de ${tab.charAt(0).toUpperCase() + tab.slice(1)} - Pessoa Física`,
             description: "Preencha os dados financeiros necessários para processar sua solicitação de nova unidade."
         },
-        'wizard.html': {
+        'wizard-juridica.html': {
             title: `${acao.charAt(0).toUpperCase() + acao.slice(1)} de ${tab.charAt(0).toUpperCase() + tab.slice(1)} - Pessoa Jurídica`,
             description: "Complete o processo de contratação com todas as informações corporativas necessárias."
         }
@@ -681,7 +681,6 @@ const dados = window.WizardFinanceiro.coletarDados();
 
 ## 📖 Documentação Adicional
 
-- `WIZARD-FINANCEIRO-README.md` - Detalhes específicos do wizard financeiro
 - `ANEXO II - CHECKLIST DOCUMENTAÇÃO...docx` - Documentação CAIXA
 
 ## 🧪 Funcionalidades Avançadas
@@ -731,8 +730,8 @@ silic-request-service/
 │       └── logo-caixa.svg       # ✅ Assets necessários
 └── pages/                        # ✅ Componentes modulares
     ├── stepper.html             # ✅ Modal stepper
-    ├── wizard.html              # ✅ Wizard PJ
-    └── wizard-financeiro.html   # ✅ Wizard PF
+    ├── wizard-juridica.html     # ✅ Wizard PJ
+    └── wizard-fisica.html       # ✅ Wizard PF
 ```
 
 **🎯 Resultado:** Estrutura limpa seguindo padrões internacionais - apenas arquivos essenciais!
