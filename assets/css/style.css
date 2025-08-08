@@ -1508,23 +1508,48 @@ body {
 #wizard-modal-inner .wizard-progress {
   display: flex;
   gap: 4px;
-  margin: 0 0 8px 8px;
+  margin: 0 8px 8px 8px;
 }
 
-#wizard-modal-inner .wizard-progress .progress-step {
-  flex: 1;
+/* Força TODOS os spans em wizard-progress a terem tamanho igual */
+#wizard-modal-inner .wizard-progress span {
+  flex: 1 1 0% !important;
+  height: 4px !important;
+  background: #ddd;
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+}
+
+/* Padronização de tamanho para todos os progress-steps */
+.progress-step {
+  flex: 1 1 0%;
   height: 4px;
   background: #ddd;
   border-radius: 2px;
   transition: background-color 0.3s ease;
 }
 
-#wizard-modal-inner .wizard-progress .progress-step.active {
-  background: #4a90e2;
+/* Estados dos spans - mantém tamanho igual */
+#wizard-modal-inner .wizard-progress span.active,
+#wizard-modal-inner .wizard-progress span.progress-step.active {
+  background: #4a90e2 !important;
+  flex: 1 1 0% !important;
 }
 
-#wizard-modal-inner .wizard-progress .progress-step.completed {
+#wizard-modal-inner .wizard-progress span.completed,
+#wizard-modal-inner .wizard-progress span.progress-step.completed {
+  background: #28a745 !important;
+  flex: 1 1 0% !important;
+}
+
+.progress-step.active {
+  background: #4a90e2;
+  flex: 1 1 0% !important;
+}
+
+.progress-step.completed {
   background: #28a745;
+  flex: 1 1 0% !important;
 }
 
 /* Steps com visual mais limpo */
