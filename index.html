@@ -56,60 +56,68 @@
 
                     <div class="search-container">
                         <div class="search-fields">
-                            <div class="field-group contratar">
-                                <label for="contratar">Solicitar</label>
-                                <select id="contratar" class="search-input">
-                                    <option value="">Selecione a ação</option>
-                                    <option value="contratar">Contratação</option>
-                                    <option value="regularizar">Regularização</option>
-                                    <option value="formalizar">Formalização</option>
-                                </select>
-                                <div class="suggestions" id="contratar-suggestions"></div>
-                            </div>
-                            
-                            <div class="field-group formalizar">
-                                <label for="formalizar">Tipo</label>
-                                <select id="formalizar" class="search-input">
-                                    <option value="">Selecione o tipo</option>
-                                    <option value="pessoa-fisica">Pessoa Física</option>
-                                    <option value="pessoa-juridica">Pessoa Jurídica</option>
-                                </select>
-                            </div>
-
-                            <div class="field-group valor" id="campo-valor" style="display: none;">
-                                <label for="valor">Valor</label>
-                                <input type="text" id="valor" placeholder="R$ 0,00" class="search-input money-input">
-                            </div>
-
-                            <div class="field-group ato-formal" id="campo-ato-formal" style="display: none;">
-                                <label for="ato-formal">Ato Formal</label>
-                                <select id="ato-formal" class="search-input">
-                                    <option value="">Selecione o ato</option>
-                                    <option value="prorrogacao">Prorrogação</option>
-                                    <option value="rescisao">Rescisão</option>
-                                    <option value="alteracao-titularidade">Alteração de Titularidade</option>
-                                    <option value="acrescimo-supressao-area">Acréscimo/Supressão de Área</option>
-                                    <option value="recebimento-imovel">Recebimento de Imóvel</option>
-                                    <option value="antecipacao-parcela">Antecipação de Parcela</option>
-                                    <option value="revisao-aluguel">Revisão do Aluguel</option>
-                                    <option value="reajuste-aluguel">Reajuste do Aluguel</option>
-                                    <option value="apostilamento">Apostilamento</option>
-                                </select>
-                            </div>
-
-                            <div class="field-group tipo-contratacao" id="campo-tipo-contratacao" style="display: none;">
-                                <label for="tipo-contratacao">Tipo de Contratação</label>
-                                <select id="tipo-contratacao" class="search-input">
-                                    <option value="">Selecione o tipo</option>
-                                    <option value="nova-unidade">Nova unidade</option>
-                                    <option value="mudanca-endereco">Mudança de endereço</option>
-                                </select>
-                            </div>
-
-                            <button class="search-button" type="button" onclick="acaoIniciarWizard()">
-                                <i class="fas fa-play"></i>
-                                <span>Iniciar</span>
-                            </button>
+                            <form class="form-grid">
+                                <div class="group">
+                                    <label for="contratar">Solicitar</label>
+                                    <select id="contratar" class="search-input">
+                                        <option value="">Selecione a ação</option>
+                                        <option value="contratar">Contratação</option>
+                                        <option value="regularizar">Regularização</option>
+                                        <option value="formalizar">Formalização</option>
+                                    </select>
+                                    <div class="suggestions" id="contratar-suggestions"></div>
+                                </div>
+                                <div class="group">
+                                    <label for="formalizar">Tipo</label>
+                                    <select id="formalizar" class="search-input">
+                                        <option value="">Selecione o tipo</option>
+                                        <option value="pessoa-fisica">Pessoa Física</option>
+                                        <option value="pessoa-juridica">Pessoa Jurídica</option>
+                                    </select>
+                                </div>
+                                <div class="group is-hidden" id="campo-valor">
+                                    <label for="valor">Valor</label>
+                                    <input type="text" id="valor" placeholder="R$ 0,00" class="search-input money-input">
+                                </div>
+                                <div class="group is-hidden" id="campo-ato-formal">
+                                    <label for="ato-formal">Ato Formal</label>
+                                    <select id="ato-formal" class="search-input">
+                                        <option value="">Selecione o ato</option>
+                                        <option value="prorrogacao">Prorrogação</option>
+                                        <option value="rescisao">Rescisão</option>
+                                        <option value="alteracao-titularidade">Alteração de Titularidade</option>
+                                        <option value="acrescimo-supressao-area">Acréscimo/Supressão de Área</option>
+                                        <option value="recebimento-imovel">Recebimento de Imóvel</option>
+                                        <option value="antecipacao-parcela">Antecipação de Parcela</option>
+                                        <option value="revisao-aluguel">Revisão do Aluguel</option>
+                                        <option value="reajuste-aluguel">Reajuste do Aluguel</option>
+                                        <option value="apostilamento">Apostilamento</option>
+                                    </select>
+                                </div>
+                                <div class="group" id="campo-tipo-contratacao">
+                                    <label for="tipo-contratacao">Tipo de Contratação</label>
+                                    <select id="tipo-contratacao" class="search-input">
+                                        <option value="">Selecione o tipo</option>
+                                        <option value="nova-unidade">Nova unidade</option>
+                                        <option value="mudanca-endereco">Mudança de endereço</option>
+                                    </select>
+                                </div>
+                                <!-- Switch de Licitação -->
+                                <div id="bloco-licitacao" class="group compact is-hidden">
+                                <label for="lic-switch">Precedida de licitação?</label>
+                                <div class="switch-wrap">
+                                    <div id="lic-switch" class="switch" role="switch" aria-checked="false" tabindex="0"></div>
+                                    <span id="lic-state" class="state">Não</span>
+                                </div>
+                                <input type="hidden" id="licitacao" name="licitacao" value="nao">
+                                </div>
+                                <div class="actions-inline">
+                                    <button class="btn btn-primary" type="button" onclick="acaoIniciarWizard()">
+                                        <i class="fas fa-play btn-ico"></i>
+                                        <span>Iniciar</span>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -152,7 +160,7 @@
         </section>
 
         <!-- Search Results Section -->
-        <section class="search-results-section" id="search-results-section" style="display: none;">
+        <section class="results-section is-hidden" id="search-results-section">
             <div class="container">
                 <div class="search-results-header">
                     <h2><i class="fas fa-search"></i> Buscar e Filtrar Imóveis</h2>
@@ -184,12 +192,12 @@
                 </div>
 
                 <div class="results-info">
-                    <div class="loading-indicator" id="loading-indicator" style="display: none;">
+                    <div id="loading-indicator" class="loading-indicator is-hidden">
                         <i class="fas fa-spinner fa-spin"></i>
                         Carregando dados...
                     </div>
                     
-                    <div class="results-meta" id="results-meta" style="display: none;">
+                    <div id="results-meta" class="results-meta is-hidden">
                         <span>Itens por página: 
                             <select id="items-per-page" onchange="changeItemsPerPage()">
                                 <option value="10" selected>10</option>
@@ -201,7 +209,7 @@
                     </div>
                 </div>
 
-                <div class="table-container" id="table-container" style="display: none;">
+                <div id="table-container" class="table-container is-hidden">
                     <table class="results-table">
                         <thead>
                             <tr>
@@ -219,7 +227,7 @@
                     </table>
                 </div>
 
-                <div class="no-results" id="no-results" style="display: none;">
+                <div id="no-results" class="no-results is-hidden">
                     <div class="no-results-content">
                         <i class="fas fa-search"></i>
                         <h3>Nenhum resultado encontrado</h3>
@@ -227,7 +235,7 @@
                     </div>
                 </div>
 
-                <div class="pagination" id="pagination" style="display: none;">
+                <div id="pagination" class="pagination is-hidden">
                     <button class="btn-pagination" id="btn-prev" onclick="previousPage()" disabled>
                         <i class="fas fa-chevron-left"></i>
                         Anterior
@@ -247,7 +255,7 @@
         </section>
 
         <!-- Form Section -->
-        <section class="form-section" id="form-section" style="display: none;">
+        <section class="is-hidden" id="form-section">
             <div class="container">
                 <div class="form-container">
                     <h2>Solicitar Modalidade</h2>
@@ -331,8 +339,7 @@
         <div id="documentation-modal-inner"></div>
       </div>
     </div>
-
-    <script src="assets/js/main.js"></script>
+    
     <script>
 // --- Ação customizada do botão Iniciar ---
 function acaoIniciarWizard() {
@@ -423,85 +430,106 @@ function abrirStepper() {
 }
 
 // Função para abrir wizard jurídico no modal
-function abrirWizardHtml(url) {
+function abrirWizardHtml(url){
     const overlay = document.getElementById('wizard-modal-overlay');
-    const inner = document.getElementById('wizard-modal-inner');
-    
-    // Limpa estados anteriores e força exibição
-    overlay.style.display = 'flex';
-    overlay.style.visibility = 'visible';
-    overlay.style.opacity = '1';
-    overlay.removeAttribute('aria-hidden');
-    
-    inner.innerHTML = '<div style="padding:48px;text-align:center;"><i class="fas fa-spinner fa-spin fa-2x"></i><br>Carregando...</div>';
-    
-    // Captura as seleções do usuário para personalizar o header
-    const tab = document.querySelector('.tab-button.active')?.getAttribute('data-tab');
+    const inner    = document.getElementById('wizard-modal-inner');
+    const content  = document.getElementById('wizard-modal-content');
+
+    // 1) abre o modal imediatamente
+    if (overlay){
+      overlay.style.display = 'flex';
+      overlay.style.visibility = 'visible';
+      overlay.style.opacity = '1';
+      overlay.removeAttribute('aria-hidden');
+    }
+    if (inner) inner.innerHTML = '<div style="padding:48px;text-align:center;color:#666"><i class="fas fa-spinner fa-spin fa-2x"></i><br>Carregando...</div>';
+
+    // Captura seleções para header dinâmico
+    const tab  = document.querySelector('.tab-button.active')?.getAttribute('data-tab');
     const acao = document.getElementById('contratar')?.value;
     const tipo = document.getElementById('formalizar')?.value;
     const tipoContratacao = document.getElementById('tipo-contratacao')?.value;
-    
-    fetch(url)
-      .then(r => {
-        if (!r.ok) throw new Error('Arquivo não encontrado');
-        return r.text();
-      })
-      .then(html => {
+
+    (async () => {
+      try {
+        // 2) busca HTML do wizard
+        const resp = await fetch(url, { cache: 'no-store' });
+        if (!resp.ok) throw new Error('Arquivo não encontrado');
+        const html = await resp.text();
+
+        // 3) parse com base relativa ao arquivo do wizard
+        const base = new URL(url, window.location.href);
         const temp = document.createElement('div');
         temp.innerHTML = html;
-        // Tenta pegar o conteúdo principal do wizard
-        let main = temp.querySelector('main') || temp.querySelector('.wizard-container');
-        if (!main) {
-          // Se não encontrar, tenta pegar o body do HTML importado
-          main = temp.querySelector('body');
-        }
-        if (!main) {
-          // Se ainda não encontrar, insere todo o conteúdo
-          main = temp;
-        }
-        inner.innerHTML = '';
-        if (main && main.innerHTML.trim()) {
-          // Para qualquer wizard, adiciona um header moderno e dinâmico
-          if (url.includes('wizard-juridica.html') || url.includes('wizard-fisica.html')) {
-            const wizardHeader = document.createElement('div');
-            wizardHeader.className = 'wizard-header';
-            wizardHeader.innerHTML = getDynamicWizardHeader(tab, acao, tipo, tipoContratacao, url);
-            inner.appendChild(wizardHeader);
-          }
-          
-          // Insere o conteúdo mantendo as classes e estrutura
-          inner.appendChild(main.cloneNode(true));
-          
-          // Para o wizard jurídica, adiciona funcionalidade de sincronização do progress
-          if (url.includes('wizard-juridica.html')) {
-            setTimeout(() => {
-              syncWizardProgress();
-              // Observa mudanças nos steps para atualizar o progress
-              const observer = new MutationObserver(() => syncWizardProgress());
-              const wizardSteps = inner.querySelector('.wizard-steps');
-              if (wizardSteps) {
-                observer.observe(wizardSteps, { childList: true, subtree: true, attributes: true });
-              }
-            }, 100);
-          }
-          
-          // Executa scripts do wizard
-          const scripts = temp.querySelectorAll('script');
-          scripts.forEach(s => {
-            if (s.textContent) {
-              try { eval(s.textContent); } catch(e){}
-            }
-          });
-        } else {
-          inner.innerHTML = '<div style="padding:48px;text-align:center;color:#c00;">Erro: Conteúdo do wizard não encontrado.</div>';
-        }
-      })
-      .catch(err => {
-        inner.innerHTML = '<div style="padding:48px;text-align:center;color:#c00;">Erro ao carregar o wizard: ' + err.message + '</div>';
-      });
-}
 
-// Função para gerar header dinâmico baseado nas escolhas do usuário
+        // 3.1) injeta <link rel="stylesheet"> externos do wizard (se existirem)
+        temp.querySelectorAll('link[rel="stylesheet"][href]').forEach(link => {
+          const abs = new URL(link.getAttribute('href'), base).href;
+          if (![...document.head.querySelectorAll('link[rel="stylesheet"]')].some(l => l.href === abs)){
+            const tag = document.createElement('link'); tag.rel='stylesheet'; tag.href=abs; document.head.appendChild(tag);
+          }
+        });
+        // 3.2) injeta <style> inline (se houver)
+        temp.querySelectorAll('style').forEach(st => document.head.appendChild(st.cloneNode(true)));
+
+        // 4) conteúdo principal do wizard
+        let main = temp.querySelector('main') || temp.querySelector('.wizard-container') || temp;
+        if (!main) throw new Error('Conteúdo do wizard não encontrado.');
+
+        // 4.1) monta header dinâmico
+        if (inner){
+          inner.innerHTML = '';
+          const wizardHeader = document.createElement('div');
+          wizardHeader.className = 'wizard-header';
+          wizardHeader.innerHTML = getDynamicWizardHeader(tab, acao, tipo, tipoContratacao, url);
+          inner.appendChild(wizardHeader);
+          inner.appendChild(main.cloneNode(true));
+        }
+
+        // 5) executa scripts do wizard (inline + externos)
+        const scripts = temp.querySelectorAll('script');
+        const loads = [];
+        scripts.forEach(s => {
+          if (s.src){
+            const abs = new URL(s.getAttribute('src'), base).href;
+            const tag = document.createElement('script');
+            tag.src = abs; tag.defer = true; if (s.type) tag.type = s.type;
+            const p = new Promise((resolve, reject) => {
+              tag.addEventListener('load', resolve, { once:true });
+              tag.addEventListener('error', () => reject(new Error('Falha ao carregar '+abs)), { once:true });
+            });
+            loads.push(p);
+            document.body.appendChild(tag);
+          } else if (s.textContent.trim()){
+            try { eval(s.textContent); } catch(e){ /* ignora falha de inline */ }
+          }
+        });
+        if (loads.length){ try { await Promise.allSettled(loads); } catch {} }
+
+        // 6) pós-carregamento: sincroniza progress no wizard jurídico e focus
+        if (url.includes('wizard-juridica.html')){
+          setTimeout(() => {
+            try { syncWizardProgress(); } catch {}
+            const wizardSteps = inner?.querySelector('.wizard-steps');
+            if (wizardSteps){
+              const observer = new MutationObserver(() => { try { syncWizardProgress(); } catch {} });
+              observer.observe(wizardSteps, { childList:true, subtree:true, attributes:true });
+            }
+          }, 100);
+        }
+        if (content){
+          const FOCUSABLE = 'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])';
+          const nodes = Array.from(content.querySelectorAll(FOCUSABLE)).filter(n=>!n.disabled && n.offsetParent!==null);
+          if (nodes.length) (content.querySelector('[autofocus]') || nodes[0]).focus();
+        }
+
+        // 7) evento para hooks
+        window.dispatchEvent(new CustomEvent('wizard:host:mounted'));
+      } catch (err) {
+        if (inner) inner.innerHTML = '<div style="padding:48px;text-align:center;color:#c00;">Erro: ' + err.message + '</div>';
+      }
+    })();
+}
 function getDynamicWizardHeader(tab, acao, tipo, tipoContratacao, url) {
     // Mapeamento das modalidades
     const modalidades = {
@@ -727,11 +755,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
-
-// --- Exemplo de como chamar o wizard ---
-// Para abrir o wizard, chame abrirWizard() em um botão ou ação desejada.
-// Para abrir a documentação, chame abrirDocumentationModal().
     </script>
-    
+
+<!-- js scripts -->
+<script src="assets/js/main.js"></script>
+
+
 </body>
 </html>

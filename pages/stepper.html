@@ -41,6 +41,10 @@
             </div>
 
             <div class="stepper-step" id="step-2">
+                <div id="stepper-licitacao" style="display:none; margin-bottom:18px;">
+                    <label><strong>Licitação:</strong></label>
+                    <span id="licitacao-valor">-</span>
+                </div>
                 <h3>Dados da Solicitação</h3>
                 <div class="form-group">
                     <label for="stepper-modalidade">Modalidade</label>
@@ -93,7 +97,7 @@
                     </div>
                 </div>
                 
-                <div class="success-message" id="success-message" style="display: none;">
+                <div id="success-message" class="success-message is-hidden">
                     <div class="success-icon">
                         <i class="fas fa-check-circle"></i>
                     </div>
@@ -105,23 +109,21 @@
         </div>
 
         <div class="stepper-navigation">
-            <button type="button" id="btn-anterior" class="btn-secondary" onclick="stepperAnterior()" style="display: none;">
-                <i class="fas fa-arrow-left"></i>
-                Anterior
+            <button type="button" id="btn-anterior" class="btn-secondary is-hidden" onclick="stepperAnterior()">
+                <i class="fas fa-arrow-left"></i> Anterior
             </button>
             <button type="button" id="btn-proximo" class="btn-primary" onclick="stepperProximo()">
                 Próximo
                 <i class="fas fa-arrow-right"></i>
             </button>
-            <button type="button" id="btn-enviar" class="btn-primary" onclick="stepperEnviar()" style="display: none;">
-                <i class="fas fa-paper-plane"></i>
-                Enviar Solicitação
+            <button type="button" id="btn-enviar" class="btn-primary is-hidden" onclick="stepperEnviar()">
+                <i class="fas fa-paper-plane"></i> Enviar Solicitação
             </button>
         </div>
     </main>
 
     <script>
-        let currentStepperStep = 1;
+    let currentStepperStep = 1;
         const totalStepperSteps = 3;
 
         function updateStepperProgress() {
@@ -148,6 +150,22 @@
                     step.classList.remove('active');
                 }
             });
+            // Exibe/oculta passo licitação conforme localStorage
+            const licitacao = localStorage.getItem('licitacao');
+            const licitacaoDiv = document.getElementById('stepper-licitacao');
+            const licitacaoValor = document.getElementById('licitacao-valor');
+            if (licitacaoDiv && licitacaoValor) {
+                if (licitacao === 'sim') {
+                    licitacaoDiv.style.display = '';
+                    licitacaoValor.textContent = 'Sim';
+                } else if (licitacao === 'nao') {
+                    licitacaoDiv.style.display = 'none';
+                    licitacaoValor.textContent = 'Não';
+                } else {
+                    licitacaoDiv.style.display = 'none';
+                    licitacaoValor.textContent = '-';
+                }
+            }
 
             // Atualiza botões
             const btnAnterior = document.getElementById('btn-anterior');
@@ -184,6 +202,8 @@
 
             if (currentStepperStep === 2) {
                 updateReviewData();
+                // Atualiza passo licitação
+                updateStepperProgress();
             }
 
             if (currentStepperStep < totalStepperSteps) {
