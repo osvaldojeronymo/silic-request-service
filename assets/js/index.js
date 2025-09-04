@@ -5,7 +5,11 @@ function acaoIniciarWizard() {
     const acao = document.getElementById('contratar')?.value;
     const tipo = document.getElementById('formalizar')?.value;
     const tipoContratacao = document.getElementById('tipo-contratacao')?.value;
-    
+    // Corrige o valor global do switch de licitação antes de abrir o wizard
+    const licSwitch = document.getElementById('switch-licitacao');
+    if (licSwitch) {
+      window._licitacaoSim = licSwitch.getAttribute('aria-pressed') === 'true';
+    }
     // Condição para abrir o wizard física (Pessoa Física)
     if (
         tab === 'locacao' &&
@@ -151,40 +155,46 @@ function abrirWizardHtml(url){
         // 5) executa scripts do wizard (inline + externos)
         const scripts = temp.querySelectorAll('script');
         const loads = [];
-        scripts.forEach(s => {
-          if (s.src){
-            const abs = new URL(s.getAttribute('src'), base).href;
-            const tag = document.createElement('script');
-            tag.src = abs; tag.defer = true; if (s.type) tag.type = s.type;
-            const p = new Promise((resolve, reject) => {
-              tag.addEventListener('load', resolve, { once:true });
-              tag.addEventListener('error', () => reject(new Error('Falha ao carregar '+abs)), { once:true });
-            });
-            loads.push(p);
-            document.body.appendChild(tag);
-          } else if (s.textContent.trim()){
-            try { eval(s.textContent); } catch(e){ /* ignora falha de inline */ }
-          }
-        });
-        if (loads.length){ try { await Promise.allSettled(loads); } catch {} }
-
-        // 6) pós-carregamento: sincroniza progress no wizard jurídico e focus
-        if (url.includes('wizard-juridica.html')){
-          setTimeout(() => {
-            try { syncWizardProgress(); } catch {}
-            const wizardSteps = inner?.querySelector('.wizard-steps');
-            if (wizardSteps){
-              const observer = new MutationObserver(() => { try { syncWizardProgress(); } catch {} });
-              observer.observe(wizardSteps, { childList:true, subtree:true, attributes:true });
+        // Carregamento dinâmico do wizard-juridica.js e inicialização
+        if (url.includes('wizard-juridica.html')) {
+          const tag = document.createElement('script');
+          tag.src = '../assets/js/wizard-juridica.js';
+          tag.defer = true;
+          tag.onload = function() {
+            if (typeof initWizardJuridica === 'function') initWizardJuridica();
+            setTimeout(() => {
+              try { syncWizardProgress(); } catch {}
+              const wizardSteps = inner?.querySelector('.wizard-steps');
+              if (wizardSteps){
+                const observer = new MutationObserver(() => { try { syncWizardProgress(); } catch {} });
+                observer.observe(wizardSteps, { childList:true, subtree:true, attributes:true });
+              }
+            }, 100);
+          };
+          document.body.appendChild(tag);
+        } else {
+          scripts.forEach(s => {
+            if (s.src){
+              const abs = new URL(s.getAttribute('src'), base).href;
+              const tag = document.createElement('script');
+              tag.src = abs; tag.defer = true; if (s.type) tag.type = s.type;
+              const p = new Promise((resolve, reject) => {
+                tag.addEventListener('load', resolve, { once:true });
+                tag.addEventListener('error', () => reject(new Error('Falha ao carregar '+abs)), { once:true });
+              });
+              loads.push(p);
+              document.body.appendChild(tag);
+            } else if (s.textContent.trim()){
+              try { eval(s.textContent); } catch(e){ /* ignora falha de inline */ }
             }
-          }, 100);
+          });
+          if (loads.length){ try { await Promise.allSettled(loads); } catch {} }
         }
         if (content){
           const FOCUSABLE = 'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])';
           const nodes = Array.from(content.querySelectorAll(FOCUSABLE)).filter(n=>!n.disabled && n.offsetParent!==null);
           if (nodes.length) (content.querySelector('[autofocus]') || nodes[0]).focus();
         }
-
         // 7) evento para hooks
         window.dispatchEvent(new CustomEvent('wizard:host:mounted'));
       } catch (err) {
@@ -230,31 +240,43 @@ function getDynamicWizardHeader(tab, acao, tipo, tipoContratacao, url) {
     if (tipoTexto) {
         titulo += ` - ${tipoTexto}`;
     }
-    
+
     // Descrição personalizada
-    let descricao = `Preencha os dados necessários para `;
-    
-    if (acao === 'contratar') {
-        if (tipoContratacao === 'nova-unidade') {
-            descricao += `contratar uma nova unidade para ${modalidade.toLowerCase()}`;
-        } else if (tipoContratacao === 'mudanca-endereco') {
-            descricao += `solicitar mudança de endereço na ${modalidade.toLowerCase()}`;
-        } else {
-            descricao += `realizar a contratação de ${modalidade.toLowerCase()}`;
-        }
-    } else if (acao === 'regularizar') {
-        descricao += `regularizar sua ${modalidade.toLowerCase()}`;
-    } else if (acao === 'formalizar') {
-        descricao += `formalizar sua ${modalidade.toLowerCase()}`;
+    let descricao = '';
+    // Caso especial: contratação de locação precedida de licitação
+    if (
+      tab === 'locacao' &&
+      acao === 'contratar' &&
+      tipo === 'pessoa-juridica' &&
+      tipoContratacao === 'nova-unidade'
+    ) {
+      if (window._licitacaoSim === true) {
+        descricao = 'Preencha os dados necessários para contratar à locação de uma nova unidade precedida de licitação.';
+      } else {
+        descricao = 'Preencha os dados necessários para contratar à locação de uma nova unidade.';
+      }
     } else {
+      descricao = `Preencha os dados necessários para `;
+      if (acao === 'contratar') {
+        if (tipoContratacao === 'nova-unidade') {
+          descricao += `contratar uma nova unidade para ${modalidade.toLowerCase()}`;
+        } else if (tipoContratacao === 'mudanca-endereco') {
+          descricao += `solicitar mudança de endereço na ${modalidade.toLowerCase()}`;
+        } else {
+          descricao += `realizar a contratação de ${modalidade.toLowerCase()}`;
+        }
+      } else if (acao === 'regularizar') {
+        descricao += `regularizar sua ${modalidade.toLowerCase()}`;
+      } else if (acao === 'formalizar') {
+        descricao += `formalizar sua ${modalidade.toLowerCase()}`;
+      } else {
         descricao += `processar sua solicitação de ${modalidade.toLowerCase()}`;
-    }
-    
-    if (tipoTexto) {
+      }
+      if (tipoTexto) {
         descricao += ` como ${tipoTexto.toLowerCase()}`;
+      }
+      descricao += '.';
     }
-    
-    descricao += '.';
     
     // Determina o número de steps baseado no tipo de processo e wizard
     let numSteps = 3; // padrão
