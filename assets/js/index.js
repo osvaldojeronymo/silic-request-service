@@ -157,8 +157,12 @@ function abrirWizardHtml(url){
         const loads = [];
         // Carregamento dinâmico do wizard-juridica.js e inicialização
         if (url.includes('wizard-juridica.html')) {
+          // Corrige caminho para ambiente local e GitHub Pages
+          let basePath = window.location.pathname.split('/').slice(0, -1).join('/');
+          if (!basePath.endsWith('/')) basePath += '/';
+          const scriptPath = window.location.origin + basePath + 'assets/js/wizard-juridica.js';
           const tag = document.createElement('script');
-          tag.src = '../assets/js/wizard-juridica.js';
+          tag.src = scriptPath;
           tag.defer = true;
           tag.onload = function() {
             if (typeof initWizardJuridica === 'function') initWizardJuridica();
