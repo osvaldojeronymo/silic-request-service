@@ -13,25 +13,25 @@
         },
                 {
           "id": "Nova_Unidade_Demais",
-          "titulo": "Instalação de demaisnovas unidades",
+          "titulo": "Instalação de demais novas unidades",
           "descricao": "Possui parecer GELOG favorável justificando a escolha do imóvel do ponto de vista econômico-financeiro",
           "obrigatorio": true,
           "aplica": ["Nova Unidade", "Mudança de Endereço"]
-        },
+  },
         {
           "id": "Parecer_GEFIC",
           "titulo": "Mudança de endereço",
           "descricao": "Possui parecer GEFIC favorável à mudança de endereço/reforma e/ou ampliação",
           "obrigatorio": true,
           "aplica": ["Mudança de Endereço", "Reforma e/ou Ampliação"]
-        },
+  }
         {
           "id": "Parecer_GEFIC_economico",
-          "titulo": "Econômico-financeiro",
+          "titulo": "Parecer econômico-financeiro",
           "descricao": "Possui parecer GEFIC favorável justificando a escolha do imóvel do ponto de vista econômico-financeiro",
           "obrigatorio": true,
           "aplica": ["Mudança de Endereço", "Reforma e/ou Ampliação"]
-        },
+  },
         {
           "id": "Manifestacao_GELOG",
           "titulo": "Necessidade de locação devido aspectos de infraestrutura",
@@ -40,8 +40,9 @@
           "aplica": ["Nova Unidade", "Mudança de Endereço", "Reforma e/ou Ampliação"]
         },
         {
-          "id": "RTA",          "titulo": "Econômico-financeiro",
-          "descricao": "Possui parecer GEFIC favorável justificando a escolha do imóvel do ponto de vista econômico-financeiro",
+          "id": "RTA",
+          "titulo": "RTA - Relatório Técnico de Avaliação",
+          "descricao": "Relatório técnico de avaliação do imóvel, detalhando aspectos econômicos e financeiros conforme critérios do GEFIC",
           "obrigatorio": true,
           "aplica": ["Mudança de Endereço", "Reforma e/ou Ampliação"]
         },
@@ -128,7 +129,7 @@
         {
           "id": "Dados_Bancarios_Locador",
           "titulo": "Dados Bancários para Crédito do Aluguel",
-          "descricao": "Conta em agência da CAIXA, nome da agência e número da conta",
+          "descricao": "Conta em agência da CAIXA (agência com 4 dígitos), nome da agência e número da conta (formato CAIXA)",
           "obrigatorio": true
         },
         {

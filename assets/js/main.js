@@ -1,3 +1,34 @@
+// Slider Switch funcionalidade
+document.addEventListener('DOMContentLoaded', function() {
+  var slider = document.getElementById('switch-licitacao');
+  if (slider) {
+    var sliderText = document.getElementById('slider-text');
+    var licitacaoInput = document.getElementById('licitacao');
+    function updateSliderState(pressed) {
+      slider.setAttribute('aria-pressed', String(pressed));
+      if (sliderText) sliderText.textContent = pressed ? 'Sim' : 'Não';
+      if (licitacaoInput) licitacaoInput.value = pressed ? 'sim' : 'nao';
+    }
+    slider.addEventListener('click', function() {
+      var pressed = slider.getAttribute('aria-pressed') === 'true';
+      updateSliderState(!pressed);
+    });
+    slider.addEventListener('keydown', function(e) {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        var pressed = slider.getAttribute('aria-pressed') === 'true';
+        updateSliderState(!pressed);
+      }
+    });
+    // Inicializa estado
+    updateSliderState(false);
+  }
+});
+/**
+ * Arquivo: main.js
+ * Responsável por funções utilitárias, manipulação de elementos fixos, navegação, acessibilidade e integração com o portal.
+ * Mantém compatibilidade com IDs/classes do HTML e organiza helpers e eventos globais.
+ */
 
 // app.optimized.js — SILIC 2.0 (consolidado)
 // Este arquivo substitui duplicações, organiza responsabilidades e evita reflows desnecessários.
@@ -66,9 +97,10 @@
   }
   function initPortalButton(){
     const btn = els.voltarPortalBtn;
-    if(!btn) return;
-    if (veioDoPortal()) btn.classList.add('show');
-    btn.onclick = voltarAoPortal;
+  if(!btn) return;
+  if (veioDoPortal()) btn.classList.add('show');
+  else btn.classList.remove('show');
+  btn.onclick = voltarAoPortal;
   }
 
   // =====================
@@ -125,16 +157,14 @@
       sw.setAttribute('aria-checked', on ? 'true' : 'false');
       txt.textContent = on ? 'Sim' : 'Não';
       hid.value = v;
-      try { localStorage.setItem('licitacao', v); } catch {}
+  txt.classList.remove('ativo'); // remove efeito visual, ambos iguais
       // pulso visual opcional
       sw.classList.add('pulse'); setTimeout(()=> sw.classList.remove('pulse'), 450);
     };
     const get = () => sw.getAttribute('aria-checked') === 'true';
     const toggle = () => set(!get());
     const init = () => {
-      const stored = (()=>{ try { return localStorage.getItem('licitacao'); } catch { return null; }})();
-      const base = stored ?? hid.value;
-      set(base === 'sim');
+      set(false); // sempre inicia em 'Não'
     };
     on(sw, 'click', (e)=>{ e.preventDefault(); toggle(); }, { passive: true });
     on(sw, 'keydown', (e)=>{
@@ -168,7 +198,8 @@
 
     const showLic = mustShowLicitacao();
     setHidden(els.blocoLic, !showLic);
-    if(!showLic) lic.set('nao');
+    if(showLic) lic.set('nao'); // reforça reset ao exibir
+    else lic.set('nao'); // reforça reset ao ocultar
   }
   // listens
   on(document, 'change', (e)=>{
@@ -195,27 +226,56 @@
     els.wizOverlay.setAttribute('aria-hidden','true');
     if (els.wizInner) els.wizInner.innerHTML = '';
   }
-  on(els.wizOverlay, 'click', (e)=> { if (e.target === els.wizOverlay) closeWizardModal(); });
+  // Removido: não fecha o modal ao clicar fora do conteúdo
+  // on(els.wizOverlay, 'click', (e)=> { if (e.target === els.wizOverlay) closeWizardModal(); });
   on(els.wizClose,   'click', closeWizardModal);
 
   async function abrirWizardHtml(url){
-    if (!url || !els.wizInner) return;
-    openWizardModal();
-    els.wizInner.innerHTML = '<div style="padding:32px;text-align:center;color:#666">Carregando…</div>';
-    try{
-      const resp = await fetch(url, { cache: 'no-store' });
-      if(!resp.ok) throw new Error(`HTTP ${resp.status}`);
-      const html = await resp.text();
-      const temp = document.createElement('div');
-      temp.innerHTML = html;
-      const main = temp.querySelector('main, .wizard-financeiro-container, .wizard-container') || temp;
-      els.wizInner.innerHTML = '';
-      els.wizInner.appendChild(main.cloneNode(true));
-      // Sinaliza que o host montou o wizard (para hooks externos)
-      window.dispatchEvent(new CustomEvent('wizard:host:mounted'));
-    }catch(err){
-      els.wizInner.innerHTML = '<div style="padding:48px;text-align:center;color:#c00;">Erro ao carregar o wizard: ' + err.message + '</div>';
+  if (!url || !els.wizInner) return;
+  els.wizInner.innerHTML = '';
+  document.querySelectorAll('script[data-wizard-script]').forEach(s => s.remove());
+  openWizardModal();
+  els.wizInner.innerHTML = '<div style="padding:32px;text-align:center;color:#666">Carregando…</div>';
+  try{
+    const resp = await fetch(url, { cache: 'no-store' });
+    if(!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const html = await resp.text();
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    const main = temp.querySelector('main, .wizard-financeiro-container, .wizard-container') || temp;
+    els.wizInner.innerHTML = '';
+    els.wizInner.appendChild(main.cloneNode(true));
+    // Para wizard-juridica.html, carrega e executa o JS como texto APÓS inserir o HTML e aguarda DOM
+    if (url.includes('wizard-juridica.html')) {
+      try {
+        const jsResp = await fetch('assets/js/wizard-juridica.js', { cache: 'no-store' });
+        if (jsResp.ok) {
+          const jsCode = await jsResp.text();
+          // Aguarda até que #wizardSteps e #wizardContent estejam disponíveis
+          let tries = 0;
+          function tryInitWizard(){
+            const stepsDiv = document.getElementById('wizardSteps');
+            const contentDiv = document.getElementById('wizardContent');
+            if (stepsDiv && contentDiv) {
+              try { eval(jsCode); } catch(e){}
+            } else if (tries < 10) {
+              tries++;
+              setTimeout(tryInitWizard, 30);
+            }
+          }
+          tryInitWizard();
+        }
+      } catch(e) { els.wizInner.innerHTML = '<div style="padding:48px;text-align:center;color:#c00;">Erro ao carregar o wizard: ' + e.message + '</div>'; return; }
     }
+    temp.querySelectorAll('script').forEach(s => {
+      if (s.textContent.trim()) {
+        try { eval(s.textContent); } catch(e) { /* ignora erro de inline */ }
+      }
+    });
+    window.dispatchEvent(new CustomEvent('wizard:host:mounted'));
+  }catch(err){
+    els.wizInner.innerHTML = '<div style="padding:48px;text-align:center;color:#c00;">Erro ao carregar o wizard: ' + err.message + '</div>';
+  }
   }
   // expõe para HTML existente
   window.abrirWizardHtml = abrirWizardHtml;
@@ -354,10 +414,24 @@
     const noResults      = $('#no-results');
     const pagination     = $('#pagination');
     if (loadingIndicator) loadingIndicator.style.display = 'flex';
-    if (tableContainer) tableContainer.style.display = 'none';
+    if (tableContainer) tableContainer.style.display = 'block';
     if (resultsMeta) resultsMeta.style.display = 'none';
     if (noResults) noResults.style.display = 'none';
     if (pagination) pagination.style.display = 'none';
+    // Skeleton
+    const tbody = $('#results-tbody');
+    if (tbody) {
+      tbody.innerHTML = Array(5).fill().map(() => `
+        <tr class="skeleton-row">
+          <td><div class="skeleton-box"></div></td>
+          <td><div class="skeleton-box"></div></td>
+          <td><div class="skeleton-box"></div></td>
+          <td><div class="skeleton-box"></div></td>
+          <td><div class="skeleton-box"></div></td>
+          <td><div class="skeleton-box"></div></td>
+        </tr>
+      `).join('');
+    }
 
     setTimeout(()=>{
       filteredImoveis = mockImoveis.filter(imovel => {

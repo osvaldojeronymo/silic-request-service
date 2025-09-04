@@ -5,8 +5,8 @@
   const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
 
   const elBlock   = $('#bloco-licitacao');
-  const elSwitch  = $('#lic-switch');
-  const elState   = $('#lic-state');
+  const elSwitch  = $('#switch-licitacao');
+  // Removido elState, pois não existe no HTML
   const elHidden  = $('#licitacao');
   const selAcao   = $('#contratar');
   const selTipo   = $('#formalizar');
@@ -43,18 +43,21 @@
     } else {
       elBlock.classList.add('is-hidden');
       // reset seguro
-      if (elHidden) elHidden.value = 'nao';
-      if (elSwitch) elSwitch.setAttribute('aria-checked', 'false');
-      if (elState)  elState.textContent = 'Não';
+  if (elHidden) elHidden.value = 'nao';
+  if (elSwitch) elSwitch.setAttribute('aria-checked', 'false');
+  // Removido elState
     }
   }
 
   function toggleSwitch() {
-    if (!elSwitch) return;
-    const checked = elSwitch.getAttribute('aria-checked') === 'true';
-    elSwitch.setAttribute('aria-checked', String(!checked));
-    if (elState)  elState.textContent = !checked ? 'Sim' : 'Não';
-    if (elHidden) elHidden.value = !checked ? 'sim' : 'nao';
+  if (!elSwitch) return;
+  const checked = elSwitch.getAttribute('aria-checked') === 'true';
+  elSwitch.setAttribute('aria-checked', String(!checked));
+  elSwitch.setAttribute('aria-checked', String(!checked));
+  elSwitch.setAttribute('role', 'switch');
+  elSwitch.setAttribute('tabindex', '0');
+  // Label já conectada via for="switch-licitacao" no HTML
+  if (elHidden) elHidden.value = !checked ? 'sim' : 'nao';
   }
 
   // Eventos
