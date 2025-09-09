@@ -1,0 +1,67 @@
+[
+  {
+    "id": "pj_nova_unidade",
+    "title": "Documentação",
+    "sections": [
+      {
+        "id": "a",
+        "title": "Justificativas",
+        "items": [
+          { "id": "justificativa_contratacao", "label": "Documentos que justificam a contratação", "proof": true }
+        ]
+      },
+      {
+        "id": "b",
+        "title": "Documentos referentes ao Laudo de Avaliação do Imóvel",
+        "items": [
+          { "id": "laudo_avaliacao", "label": "Laudo de avaliação do imóvel", "proof": true }
+        ]
+      },
+      {
+        "id": "c",
+        "title": "Documentação do imóvel",
+        "items": [
+          { "id": "matricula", "label": "Matrícula atualizada do imóvel", "proof": true },
+          { "id": "certidao_onus", "label": "Certidão de ônus reais", "proof": true },
+          { "id": "iptu", "label": "Comprovante de pagamento do IPTU", "proof": true }
+        ]
+      },
+      {
+        "id": "d",
+        "title": "Documentação do Locador (PJ)",
+        "items": [
+          { "id": "cnpj", "label": "Prova de inscrição no CNPJ", "proof": true, "descricao": "Documento emitido pela Receita Federal." },
+          { "id": "ato_constitutivo", "label": "Ato constitutivo e alterações", "proof": true },
+          { "id": "cnd_conjunta", "label": "CND/CPEND (RFB/PGFN)", "proof": true },
+          { "id": "fgts", "label": "Certidão de regularidade do FGTS", "proof": true }
+        ]
+      },
+      {
+        "id": "e",
+        "title": "Representante Legal",
+        "items": [
+          { "id": "poderes", "label": "Procuração/ato de designação (poderes de representação)", "proof": true },
+          { "id": "doc_identidade", "label": "Documento de identidade do(s) procurador(es)", "proof": true }
+        ]
+      },
+      {
+        "id": "f",
+        "title": "Documentação no caso de crédito do aluguel em favor de terceiros",
+        "conditional": "credito_terceiro",
+        "items": [
+          { "id": "dados_terceiro", "label": "Dados bancários do terceiro beneficiário", "proof": true },
+          { "id": "autorizacao_locador", "label": "Autorização expressa do locador para crédito em favor de terceiro", "proof": true }
+        ]
+      },
+      {
+        "id": "g",
+        "title": "Documentação do terceiro beneficiário",
+        "conditional": "credito_terceiro",
+        "items": [
+          { "id": "doc_terceiro", "label": "Documento de identificação do terceiro beneficiário", "proof": true },
+          { "id": "cpf_cnpj_terceiro", "label": "CPF/CNPJ do terceiro beneficiário", "proof": true }
+        ]
+      }
+    ]
+  }
+]

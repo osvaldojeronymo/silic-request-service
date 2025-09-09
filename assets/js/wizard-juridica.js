@@ -1,3 +1,48 @@
+          // d) Documentação do(s) locador(es)
+          const secaoD = checklist.sections.find(sec => sec.id === 'd');
+          if (secaoD) {
+            const sectionDivD = document.createElement('div');
+            sectionDivD.className = 'checklist-section';
+            sectionDivD.innerHTML = `<h4><b>d)</b> Documentação do(s) locador(es)</h4>`;
+            const orientacaoD = document.createElement('p');
+            orientacaoD.textContent = 'Por favor, insira a documentação do(s) locador(es).';
+            orientacaoD.style.margin = '6px 0 10px 0';
+            orientacaoD.style.fontStyle = 'italic';
+            sectionDivD.appendChild(orientacaoD);
+            const itemDivD = document.createElement('div');
+            itemDivD.className = 'checklist-item';
+            itemDivD.innerHTML = `
+              <textarea placeholder="Justifique ou responda..." rows="2" style="width:98%;margin-bottom:4px;"></textarea><br>
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"/><br>
+              <span class="file-info" style="font-size:0.9em;color:#666"></span>
+              <hr>
+            `;
+            sectionDivD.appendChild(itemDivD);
+            checklistDiv.appendChild(sectionDivD);
+          }
+
+          // e) Documentação para crédito do valor do aluguel
+          const secaoE = checklist.sections.find(sec => sec.id === 'e');
+          if (secaoE) {
+            const sectionDivE = document.createElement('div');
+            sectionDivE.className = 'checklist-section';
+            sectionDivE.innerHTML = `<h4><b>e)</b> Documentação para crédito do valor do aluguel</h4>`;
+            const orientacaoE = document.createElement('p');
+            orientacaoE.textContent = 'Por favor, insira a documentação dos dados bancários.';
+            orientacaoE.style.margin = '6px 0 10px 0';
+            orientacaoE.style.fontStyle = 'italic';
+            sectionDivE.appendChild(orientacaoE);
+            const itemDivE = document.createElement('div');
+            itemDivE.className = 'checklist-item';
+            itemDivE.innerHTML = `
+              <textarea placeholder="Justifique ou responda..." rows="2" style="width:98%;margin-bottom:4px;"></textarea><br>
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"/><br>
+              <span class="file-info" style="font-size:0.9em;color:#666"></span>
+              <hr>
+            `;
+            sectionDivE.appendChild(itemDivE);
+            checklistDiv.appendChild(sectionDivE);
+          }
 function initWizardJuridica() {
   const steps = [];
   if (window._licitacaoSim) {
@@ -73,33 +118,7 @@ function initWizardJuridica() {
       icon: '<i class="fas fa-file-alt"></i>',
       content: `
         <form id="docForm" style="display:flex;flex-direction:column;gap:18px;">
-          <div>
-            <label for="tipoContratacaoDoc" style="font-weight:600;">Tipo de Contratação</label><br>
-            <select id="tipoContratacaoDoc" name="tipoContratacaoDoc" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
-              <option value="">Selecione</option>
-              <option value="Locação">Locação</option>
-              <option value="Cessão">Cessão</option>
-              <option value="Comodato">Comodato</option>
-            </select>
-          </div>
-          <div>
-            <label for="tipoLocadorDoc" style="font-weight:600;">Tipo de Locador</label><br>
-            <select id="tipoLocadorDoc" name="tipoLocadorDoc" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
-              <option value="">Selecione</option>
-              <option value="Pessoa Física">Pessoa Física</option>
-              <option value="Pessoa Jurídica">Pessoa Jurídica</option>
-              <option value="Órgão Público">Órgão Público</option>
-            </select>
-          </div>
-          <div>
-            <label for="terceirosDoc" style="font-weight:600;">Terceiros Beneficiários?</label><br>
-            <select id="terceirosDoc" name="terceirosDoc" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
-              <option value="">Selecione</option>
-              <option value="Sim">Sim</option>
-              <option value="Não">Não</option>
-            </select>
-          </div>
-          <div id="documentosChecklist" style="margin-top:18px;"></div>
+          <div id="documentosChecklist" style="margin-top:0;"></div>
           <div style="display:flex;justify-content:space-between;margin-top:18px;gap:12px;">
             <button type="button" id="btnPrevStepDoc" style="background:#eee;color:#003366;font-weight:600;padding:10px 24px;border:none;border-radius:8px;font-size:1.08rem;cursor:pointer;">Voltar</button>
             <button type="button" id="btnNextStepDoc" style="background:#F39200;color:#003366;font-weight:700;padding:10px 28px;border:none;border-radius:8px;font-size:1.08rem;cursor:pointer;">Avançar</button>
@@ -113,12 +132,16 @@ function initWizardJuridica() {
       content: `
         <form id="complianceForm" style="display:flex;flex-direction:column;gap:18px;">
           <div>
-            <label for="complianceCheck" style="font-weight:600;">Checklist de Compliance</label><br>
-            <ul style="margin:12px 0 0 18px;">
-              <li><input type="checkbox" id="comp1"> <label for="comp1">Documentação regular</label></li>
-              <li><input type="checkbox" id="comp2"> <label for="comp2">Sem pendências legais</label></li>
-              <li><input type="checkbox" id="comp3"> <label for="comp3">Aprovação do setor responsável</label></li>
-            </ul>
+            <label for="compliance1" style="font-weight:600;">Documentação regular</label><br>
+            <textarea id="compliance1" name="compliance1" rows="2" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;"></textarea>
+          </div>
+          <div>
+            <label for="compliance2" style="font-weight:600;">Pendências legais</label><br>
+            <textarea id="compliance2" name="compliance2" rows="2" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;"></textarea>
+          </div>
+          <div>
+            <label for="compliance3" style="font-weight:600;">Aprovação do setor responsável</label><br>
+            <textarea id="compliance3" name="compliance3" rows="2" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;"></textarea>
           </div>
           <div style="display:flex;justify-content:space-between;margin-top:18px;gap:12px;">
             <button type="button" id="btnPrevStepCompliance" style="background:#eee;color:#003366;font-weight:600;padding:10px 24px;border:none;border-radius:8px;font-size:1.08rem;cursor:pointer;">Voltar</button>
@@ -161,18 +184,33 @@ function initWizardJuridica() {
               <option value="pix">PIX</option>
             </select>
           </div>
-          <div id="dadosBancariosJuridica" style="display:none;">
-            <div>
-              <label for="cnpjTitularConta" style="font-weight:600;">CNPJ do Titular da Conta</label><br>
-              <input type="text" id="cnpjTitularConta" name="cnpjTitularConta" placeholder="Ex: 12.345.678/0001-90" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
-            </div>
-            <div>
-              <label for="valorAdjudicado" style="font-weight:600;">Valor Adjudicado</label><br>
-              <input type="text" id="valorAdjudicado" name="valorAdjudicado" placeholder="Ex: R$ 100.000,00" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
-            </div>
-            <div>
-              <button type="button" id="adicionarLocadorJuridica" style="background:#F39200;color:#003366;font-weight:600;padding:8px 18px;border:none;border-radius:8px;font-size:1.05rem;cursor:pointer;margin-top:10px;">Adicionar Locador</button>
-            </div>
+          <div>
+            <label for="valorAluguel" style="font-weight:600;">Valor do Aluguel</label><br>
+            <input type="text" id="valorAluguel" name="valorAluguel" placeholder="Ex: R$ 2.500,00" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
+          </div>
+          <div>
+            <label for="dataVencimento" style="font-weight:600;">Data de Vencimento</label><br>
+            <input type="date" id="dataVencimento" name="dataVencimento" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
+          </div>
+          <div>
+            <label for="banco" style="font-weight:600;">Banco</label><br>
+            <input type="text" id="banco" name="banco" placeholder="Ex: Banco do Brasil" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
+          </div>
+          <div>
+            <label for="agencia" style="font-weight:600;">Agência</label><br>
+            <input type="text" id="agencia" name="agencia" placeholder="Ex: 1234-5" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
+          </div>
+          <div>
+            <label for="conta" style="font-weight:600;">Conta</label><br>
+            <input type="text" id="conta" name="conta" placeholder="Ex: 98765-4" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
+          </div>
+          <div>
+            <label for="beneficiario" style="font-weight:600;">Nome do Beneficiário</label><br>
+            <input type="text" id="beneficiario" name="beneficiario" placeholder="Ex: João da Silva" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
+          </div>
+          <div>
+            <label for="cpfCnpj" style="font-weight:600;">CPF/CNPJ do Beneficiário</label><br>
+            <input type="text" id="cpfCnpj" name="cpfCnpj" placeholder="Ex: 123.456.789-00 ou 12.345.678/0001-90" style="width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #e7e7e7;font-size:1rem;">
           </div>
           <div style="display:flex;justify-content:space-between;margin-top:18px;gap:12px;">
             <button type="button" id="btnPrevStepFinanceiro" style="background:#eee;color:#003366;font-weight:600;padding:10px 24px;border:none;border-radius:8px;font-size:1.08rem;cursor:pointer;">Voltar</button>
@@ -235,44 +273,90 @@ function initWizardJuridica() {
         renderWizard();
       };
 
-      // Checklist dinâmico
-      fetch('../assets/js/documentacao.json')
+      // Preencher selects automaticamente com valores do sessionStorage
+      const tipoContratacaoSalvo = sessionStorage.getItem('tipoContratacao') || '';
+      const tipoLocadorSalvo = sessionStorage.getItem('tipoLocador') || '';
+      const selectTipoContratacao = document.getElementById('tipoContratacaoDoc');
+      const selectTipoLocador = document.getElementById('tipoLocadorDoc');
+      if (selectTipoContratacao) selectTipoContratacao.value = tipoContratacaoSalvo;
+      if (selectTipoLocador) selectTipoLocador.value = tipoLocadorSalvo;
+
+      // Checklist dinâmico: exibe apenas a seção 'a' do checklist oficial
+      fetch('assets/data/checklists/documentacao-pj_nova_unidade.json')
         .then(res => res.json())
         .then(data => {
-          const contexto = {
-            modalidade: document.getElementById('tipoContratacaoDoc').value,
-            tipoPessoa: document.getElementById('tipoLocadorDoc').value,
-            terceiros: document.getElementById('terceirosDoc').value
-          };
+          const checklist = data[0];
           const checklistDiv = document.getElementById('documentosChecklist');
           checklistDiv.innerHTML = '';
-          data.documentacao.forEach(cat => {
-            // Filtra documentos por contexto
-            const docsFiltrados = (cat.documentos || []).filter(doc => {
-              let aplica = doc.aplica || cat.aplicabilidade || [];
-              if (aplica.includes('Todas')) return true;
-              if (aplica.includes(contexto.modalidade)) return true;
-              if (aplica.includes(contexto.tipoPessoa)) return true;
-              if (aplica.includes('Quando houver terceiros beneficiários') && contexto.terceiros === 'Sim') return true;
-              return false;
-            });
-            if (docsFiltrados.length) {
-              // Renderiza acordeon
-              const acc = document.createElement('div');
-              acc.className = 'br-accordion';
-              acc.innerHTML = `<button class="br-accordion-btn" type="button">${cat.categoria}</button><div class="br-accordion-content">${docsFiltrados.map(doc => `
-                <div class="checklist-item">
-                  <div class="checklist-title">${doc.titulo}</div>
-                  <div class="checklist-desc">${doc.descricao}</div>
-                  <div class="checklist-toggle">
-                    <span class="${doc.obrigatorio ? 'obrigatorio' : 'opcional'}">
-                      <i class="fas fa-${doc.obrigatorio ? 'exclamation-circle' : 'check-circle'}"></i> ${doc.obrigatorio ? 'Obrigatório' : 'Opcional'}
-                    </span>
-                  </div>
-                </div>`).join('')}</div>`;
-              checklistDiv.appendChild(acc);
-            }
-          });
+
+          // a) Justificativas
+          const secaoA = checklist.sections.find(sec => sec.id === 'a');
+          if (secaoA) {
+            const sectionDivA = document.createElement('div');
+            sectionDivA.className = 'checklist-section';
+            sectionDivA.innerHTML = `<h4><b>a)</b> Justificativas</h4>`;
+            const orientacaoA = document.createElement('p');
+            orientacaoA.textContent = 'Por favor, insira a documentação que justifica a sua solicitação.';
+            orientacaoA.style.margin = '6px 0 10px 0';
+            orientacaoA.style.fontStyle = 'italic';
+            sectionDivA.appendChild(orientacaoA);
+            const itemDivA = document.createElement('div');
+            itemDivA.className = 'checklist-item';
+            itemDivA.innerHTML = `
+              <textarea placeholder="Justifique ou responda..." rows="2" style="width:98%;margin-bottom:4px;"></textarea><br>
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"/><br>
+              <span class="file-info" style="font-size:0.9em;color:#666"></span>
+              <hr>
+            `;
+            sectionDivA.appendChild(itemDivA);
+            checklistDiv.appendChild(sectionDivA);
+          }
+
+          // b) Laudo de Avaliação do imóvel
+          const secaoB = checklist.sections.find(sec => sec.id === 'b');
+          if (secaoB) {
+            const sectionDivB = document.createElement('div');
+            sectionDivB.className = 'checklist-section';
+            sectionDivB.innerHTML = `<h4><b>b)</b> Laudo de Avaliação do imóvel</h4>`;
+            const orientacaoB = document.createElement('p');
+            orientacaoB.textContent = 'Por favor, insira a documentação pertinente à avaliação do imóvel.';
+            orientacaoB.style.margin = '6px 0 10px 0';
+            orientacaoB.style.fontStyle = 'italic';
+            sectionDivB.appendChild(orientacaoB);
+            const itemDivB = document.createElement('div');
+            itemDivB.className = 'checklist-item';
+            itemDivB.innerHTML = `
+              <textarea placeholder="Justifique ou responda..." rows="2" style="width:98%;margin-bottom:4px;"></textarea><br>
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"/><br>
+              <span class="file-info" style="font-size:0.9em;color:#666"></span>
+              <hr>
+            `;
+            sectionDivB.appendChild(itemDivB);
+            checklistDiv.appendChild(sectionDivB);
+          }
+
+          // c) Documentação do imóvel
+          const secaoC = checklist.sections.find(sec => sec.id === 'c');
+          if (secaoC) {
+            const sectionDivC = document.createElement('div');
+            sectionDivC.className = 'checklist-section';
+            sectionDivC.innerHTML = `<h4><b>c)</b> Documentação do imóvel</h4>`;
+            const orientacaoC = document.createElement('p');
+            orientacaoC.textContent = 'Por favor, insira a documentação do imóvel.';
+            orientacaoC.style.margin = '6px 0 10px 0';
+            orientacaoC.style.fontStyle = 'italic';
+            sectionDivC.appendChild(orientacaoC);
+            const itemDivC = document.createElement('div');
+            itemDivC.className = 'checklist-item';
+            itemDivC.innerHTML = `
+              <textarea placeholder="Justifique ou responda..." rows="2" style="width:98%;margin-bottom:4px;"></textarea><br>
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"/><br>
+              <span class="file-info" style="font-size:0.9em;color:#666"></span>
+              <hr>
+            `;
+            sectionDivC.appendChild(itemDivC);
+            checklistDiv.appendChild(sectionDivC);
+          }
         });
     } else if (currentStep === 2) {
       // Passo 3 - Compliance
