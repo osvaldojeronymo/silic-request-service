@@ -473,3 +473,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+// --- PATCH: sync licitacao switch and lazy-load wizard ---
+(function(){
+  try {
+    const licSwitch = document.querySelector("#switch-licitacao, [data-switch-licitacao]");
+    if (licSwitch){
+      window._licitacaoSim = !!(licSwitch.checked || licSwitch.getAttribute("aria-checked")==="true");
+      licSwitch.addEventListener("change", () => { window._licitacaoSim = !!licSwitch.checked; });
+    }
+    let wizardLoaded = false;
+    function ensureWizardJs(){
+      if (wizardLoaded) return; wizardLoaded = true;
+      const s = document.createElement("script");
+      s.src = "assets/js/wizard-juridica.js";
+      document.head.appendChild(s);
+    }
+    document.addEventListener("click",(e)=>{
+      const b = e.target.closest("[data-open-wizard], #btnIniciar, .open-wizard, [data-action='open-wizard']");
+      if (b) ensureWizardJs();
+    }, true);
+  } catch(e){ console.warn("PATCH licitacao/wizard loader error", e); }
+})();
