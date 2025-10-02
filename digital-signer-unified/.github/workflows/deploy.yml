@@ -30,20 +30,18 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: digital-signer-unified/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
-        working-directory: digital-signer-unified
         run: npm ci
 
       - name: Build
-        working-directory: digital-signer-unified
         run: npm run build
 
       - name: Upload artifact (dist)
         uses: actions/upload-pages-artifact@v3
         with:
-          path: digital-signer-unified/dist
+          path: dist
 
   deploy:
     needs: build
