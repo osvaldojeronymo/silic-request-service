@@ -124,9 +124,10 @@ export class Utils {
     func: T,
     wait: number
   ): (...args: Parameters<T>) => void {
-    let timeout: number;
+    // Use ReturnType para compatibilidade Node/Browser
+    let timeout: ReturnType<typeof setTimeout> | undefined;
     return (...args: Parameters<T>) => {
-      clearTimeout(timeout);
+      if (timeout) clearTimeout(timeout);
       timeout = setTimeout(() => func.apply(this, args), wait);
     };
   }

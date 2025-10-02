@@ -67,6 +67,13 @@ class SilicDigitalSigner {
       
       // Listen for form submission
       form.addEventListener('submit', this.handleFormSubmit.bind(this));
+
+      // Exemplo de trigger de validação inicial para evitar variável não utilizada
+      // Trigger de validação inicial leve (apenas se campo já tiver valor)
+      const nameInput = Utils.getElement<HTMLInputElement>('#signerName');
+      if (nameInput && this.formValidator && nameInput.value) {
+        this.formValidator.validateField('signerName', nameInput.value);
+      }
     }
   }
 
