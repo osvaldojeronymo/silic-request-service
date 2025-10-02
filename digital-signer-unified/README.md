@@ -1,5 +1,7 @@
 # SILIC Digital Signer Unified
 
+![Deploy Status](https://github.com/osvaldojeronymo/silic-digital-signer/actions/workflows/deploy.yml/badge.svg)
+
 Portal unificado de Assinatura Digital SILIC 2.0 - Combinando as melhores práticas dos projetos original e moderno.
 
 ## 🚀 Sobre o Projeto
