@@ -70,6 +70,37 @@ O resultado é uma aplicação moderna com TypeScript + Vite + SCSS, mantendo to
 - `npm run build` - Gera a build de produção
 - `npm run analyze` - Analisa o bundle de produção
 
+## 🌐 Deploy (GitHub Pages)
+
+O deploy é automatizado via GitHub Actions (`.github/workflows/deploy.yml`). Ao fazer push no branch `feature/unified-v3` (durante a fase de migração) ou `main` (após merge), a action:
+
+1. Instala dependências (`npm ci`)
+2. Executa a build (`npm run build`)
+3. Publica o conteúdo de `dist` no GitHub Pages
+
+URL de produção: https://osvaldojeronymo.github.io/silic-digital-signer/
+
+O arquivo `vite.config.ts` define `base: '/silic-digital-signer/'`, garantindo caminhos corretos em produção.
+
+### Testar build localmente
+```bash
+npm run build
+npx serve dist
+```
+
+### Problemas comuns
+- Página sem estilos: verifique se a base está correta e se o deploy apontou para a pasta `dist`.
+- 404 em refresh: usar rotas relativas (SPA simples) ou fallback manual.
+- Cache antigo: forçar refresh (Ctrl+F5) ou rodar novamente o workflow.
+
+### Deploy manual (fallback)
+Gerar build e subir artefato manualmente:
+```bash
+npm run build
+```
+Depois, na aba Pages do repositório, selecionar GitHub Actions como fonte (já configurado pela action).
+
+
 ### Qualidade de Código
 - `npm run lint` - Executa todos os linters
 - `npm run lint:ts` - Linting do TypeScript

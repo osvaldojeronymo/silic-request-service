@@ -4,6 +4,8 @@ import legacy from '@vitejs/plugin-legacy';
 import { resolve } from 'path';
 
 export default defineConfig({
+  // Necessário para GitHub Pages: define caminho base sob /silic-digital-signer/
+  base: '/silic-digital-signer/',
   plugins: [
     legacy({
       targets: ['defaults', 'not IE 11']
@@ -66,7 +68,8 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "@/styles/variables.scss";`
+        // Ajuste: importar partial correto (_variables.scss) usando caminho relativo alias
+        additionalData: `@import "@/styles/_variables.scss";`
       }
     }
   }
