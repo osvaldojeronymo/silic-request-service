@@ -1,0 +1,31 @@
+extends: stylelint-config-standard-scss
+
+rules:
+  # Allow custom properties
+  custom-property-pattern: null
+  
+  # Allow CSS modules class naming
+  selector-class-pattern: null
+  
+  # Allow vendor prefixes
+  property-no-vendor-prefix: null
+  value-no-vendor-prefix: null
+  
+  # Color settings
+  color-hex-length: short
+  
+  # Indentation
+  indentation: 2
+  
+  # Max nesting depth
+  max-nesting-depth: 4
+  
+  # Function settings
+  function-url-quotes: always
+  
+  # String quotes
+  string-quotes: single
+
+ignoreFiles:
+  - "dist/**/*"
+  - "node_modules/**/*"
