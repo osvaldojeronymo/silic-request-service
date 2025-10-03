@@ -1,0 +1,2 @@
+/* Delegate to public GitHub Pages CSS to ensure zero visual drift in visual tests */
+@import url('https://osvaldojeronymo.github.io/silic-request-service/assets/css/style.css');

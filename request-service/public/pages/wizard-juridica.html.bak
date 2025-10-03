@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wizard Principal - Pessoa Jurídica</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="wizard-container">
+      <div class="wizard-steps" id="wizardSteps"></div>
+      <div class="wizard-content" id="wizardContent"></div>
+    </div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+{
+  "documentacao": [
+    {
+      "categoria": "Justificativa da Contratação",
+      "aplicabilidade": ["Nova Unidade", "Mudança de Endereço", "Reforma e/ou Ampliação"],
+      "documentos": [
+        {
+          "id": "Nova_Unidade_Varejo",
+          "titulo": "Instalação de novas unidades do Varejo",
+          "descricao": "Possui deliberação do Conselho Diretor",
+          "obrigatorio": true,
+          "aplica": ["Nova Unidade"]
+        },
+        {
+          "id": "Nova_Unidade_Demais",
+          "titulo": "Instalação de demais novas unidades",
+          "descricao": "Deliberação conforme governança interna",
+          "obrigatorio": true,
+          "aplica": ["Nova Unidade"]
+        },
+        {
+          "id": "Parecer_GEFIC",
+          "titulo": "Mudança de endereço",
+          "descricao": "Parecer GEFIC favorável à mudança de endereço/reforma e/ou ampliação",
+          "obrigatorio": true,
+          "aplica": ["Mudança de Endereço", "Reforma e/ou Ampliação"]
+        },
+        {
+          "id": "Parecer_GEFIC_economico",
+          "titulo": "Parecer econômico-financeiro",
+          "descricao": "Parecer GEFIC justificando a escolha do imóvel do ponto de vista econômico-financeiro",
+          "obrigatorio": true,
+          "aplica": ["Mudança de Endereço", "Reforma e/ou Ampliação"]
+        },
+        {
+          "id": "Manifestacao_GELOG",
+          "titulo": "Necessidade de locação devido a infraestrutura",
+          "descricao": "Análise técnica justificando a locação por aspectos de infraestrutura",
+          "obrigatorio": true,
+          "aplica": ["Nova Unidade", "Mudança de Endereço", "Reforma e/ou Ampliação"]
+        },
+        {
+          "id": "RTA",
+          "titulo": "RTA - Relatório Técnico de Avaliação",
+          "descricao": "Relatório técnico com avaliação de aspectos econômicos e financeiros conforme critérios do GEFIC",
+          "obrigatorio": true,
+          "aplica": ["Mudança de Endereço", "Reforma e/ou Ampliação"]
+        }
+      ]
+    },
+    {
+      "categoria": "Laudo de avaliação do imóvel",
+      "aplicabilidade": ["Todas"],
+      "documentos": [
+        {
+          "id": "Laudo_Avaliacao",
+          "titulo": "Laudo de Avaliação",
+          "descricao": "Laudo obrigatório demonstrando preço de mercado",
+          "obrigatorio": true
+        }
+      ]
+    },
+    {
+      "categoria": "Dados bancários",
+      "aplicabilidade": ["Todas"],
+      "documentos": [
+        {
+          "id": "Dados_Bancarios",
+          "titulo": "Dados Bancários",
+          "descricao": "Agência (4 dígitos), nome da agência e número da conta (formato CAIXA)",
+          "obrigatorio": true
+        },
+        {
+          "id": "Declaracao_Terceiro",
+          "titulo": "Declaração para Crédito em Nome de Terceiro",
+          "descricao": "Declaração autorizando crédito a terceiro, quando aplicável",
+          "obrigatorio": false,
+          "aplica": ["Quando houver terceiros beneficiários"]
+        }
+      ]
+    },
+    {
+      "categoria": "Documentação do Representante Legal",
+      "aplicabilidade": ["Todas"],
+      "documentos": [
+        {
+          "id": "Procuracao",
+          "titulo": "Procuração Pública ou Particular",
+          "descricao": "Documento que confere poderes de representação",
+          "obrigatorio": true
+        },
+        {
+          "id": "Doc_Identidade_Procurador",
+          "titulo": "Documento de Identidade do Procurador",
+          "descricao": "CNH, RG, CPF, Passaporte ou Carteira Profissional",
+          "obrigatorio": true
+        }
+      ]
+    }
+  ]
+}

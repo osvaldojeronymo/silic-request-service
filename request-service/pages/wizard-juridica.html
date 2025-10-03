@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wizard Principal - Pessoa Jurídica</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="wizard-container">
+      <div class="wizard-steps" id="wizardSteps"></div>
+      <div class="wizard-content" id="wizardContent"></div>
+    </div>
+    
+    <!-- Scripts necessários -->
+    <script src="./assets/js/wizard-juridica.js"></script>
+    <script>
+    (function () {
+      const params = new URLSearchParams(location.search);
+      const licitMode = params.get('licitacao') === 'sim' ? 'com' : 'sem';
+
+      // esconde/mostra partes específicas
+      document.querySelectorAll('[data-when]').forEach(el => {
+        el.hidden = (el.getAttribute('data-when') !== licitMode);
+      });
+
+      // Inicializar o wizard após carregar
+      if (typeof window.initWizardJuridica === 'function') {
+        window.initWizardJuridica();
+      }
+    })();
+    </script>
+  </body>
+</html>
