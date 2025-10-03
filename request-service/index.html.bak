@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <base href="./" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SILIC 2.0 - Solicitações</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@govbr-ds/core/dist/core.min.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <nav class="navbar">
+        <div class="nav-container">
+          <div class="nav-logo">
+            <img src="assets/images/logo-caixa.svg" alt="Caixa" class="logo" />
+          </div>
+          <div class="nav-text">
+            <h1 class="system-title">SILIC 2.0</h1>
+            <p class="system-subtitle">Protótipo - Solicitações de Serviços</p>
+          </div>
+          <div class="nav-actions">
+            <button
+              id="voltarPortalBtn"
+              class="btn-voltar-portal"
+              onclick="voltarAoPortal()"
+              style="display: none"
+            >
+              <i class="fas fa-arrow-left"></i>
+              Voltar ao Portal
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-content">
+          <h1 class="hero-title">Encontre a modalidade ideal para suas necessidades</h1>
+          <p class="hero-subtitle">
+            Soluções completas para locação, cessão e comodato de imóveis de uso
+          </p>
+
+          <!-- Search Form -->
+          <div class="search-form">
+            <div class="search-tabs">
+              <button class="tab-button active" data-tab="locacao">
+                <i class="fas fa-home"></i>
+                Locação
+              </button>
+              <button class="tab-button" data-tab="cessao">
+                <i class="fas fa-handshake"></i>
+                Cessão
+              </button>
+              <button class="tab-button" data-tab="comodato">
+                <i class="fas fa-exchange-alt"></i>
+                Comodato
+              </button>
+            </div>
+
+            <div class="search-container">
+              <div class="search-fields">
+                <form class="form-grid">
+                  <div class="group">
+                    <label for="contratar">Solicitação</label>
+                    <select id="contratar" class="search-input">
+                      <option value="">Selecione</option>
+                      <option value="contratar">Contratação</option>
+                      <option value="regularizar">Ato Formal</option>
+                    </select>
+                  </div>
+                  <div class="group">
+                    <label for="formalizar">Pessoa</label>
+                    <select id="formalizar" class="search-input">
+                      <option value="">Selecione</option>
+                      <option value="pessoa-fisica">Física</option>
+                      <option value="pessoa-juridica">Jurídica</option>
+                    </select>
+                  </div>
+                  <div class="group" id="campo-tipo-contratacao">
+                    <label for="tipo-contratacao">Finalidade</label>
+                    <select id="tipo-contratacao" class="search-input">
+                      <option value="">Selecione</option>
+                      <option value="nova-unidade">Nova unidade</option>
+                      <option value="mudanca-endereco">Mudança de endereço</option>
+                      <option value="regularizar">Regularização</option>
+                    </select>
+                  </div>
+                  <!-- Switch de Licitação -->
+                  <div id="bloco-licitacao" class="group compact is-hidden">
+                    <label class="slider-label" for="switch-licitacao"
+                      >Precedida de licitação?</label
+                    >
+                    <button
+                      id="switch-licitacao"
+                      class="slider-switch"
+                      type="button"
+                      aria-pressed="false"
+                      aria-label="Precedida de licitação?"
+                    >
+                      <span class="slider-track"></span>
+                      <span class="slider-thumb"></span>
+                      <span class="slider-text" id="slider-text">Não</span>
+                    </button>
+                    <input type="hidden" id="licitacao" name="licitacao" value="nao" />
+                  </div>
+                  <div class="actions-inline">
+                    <button class="btn btn-primary" type="button" onclick="acaoIniciarWizard()">
+                      <i class="fas fa-play btn-ico"></i>
+                      <span>Iniciar</span>
+                    </button>
+                    <button
+                      class="btn btn-secondary"
+                      type="button"
+                      id="abrir-wizard-button"
+                      data-dev-only
+                      hidden
+                    >
+                      Abrir Wizard
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Section -->
+      <section class="services-section">
+        <div class="container">
+          <h2 class="section-title">Nossas Modalidades</h2>
+          <div class="services-grid">
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-home"></i>
+              </div>
+              <h3>Locação</h3>
+              <p>Escolha as melhores condições para suas necessidades.</p>
+              <button class="btn-service">Saiba Mais</button>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-handshake"></i>
+              </div>
+              <h3>Cessão</h3>
+              <p>Processo simplificado e seguro para suas necessidades.</p>
+              <button class="btn-service">Saiba Mais</button>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-exchange-alt"></i>
+              </div>
+              <h3>Comodato</h3>
+              <p>Soluções em comodato com toda a segurança e confiabilidade.</p>
+              <button class="btn-service">Saiba Mais</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Search Results Section -->
+      <section class="results-section is-hidden" id="search-results-section">
+        <div class="container">
+          <div class="search-results-header">
+            <h2><i class="fas fa-search"></i> Buscar e Filtrar Imóveis</h2>
+            <button class="btn-clear-filters" onclick="limparFiltros()">
+              <i class="fas fa-times"></i>
+              Limpar Filtros
+            </button>
+          </div>
+          <div class="search-filters">
+            <div class="filter-row">
+              <div class="filter-group">
+                <input
+                  type="text"
+                  id="search-imovel"
+                  placeholder="Digite código, denominação ou local do imóvel..."
+                  class="search-input-filter"
+                  autocomplete="on"
+                />
+              </div>
+              <div class="filter-group">
+                <select id="status-filter" class="search-input-filter">
+                  <option value="">Todos os status</option>
+                  <option value="disponivel">Disponível</option>
+                  <option value="ocupado">Ocupado</option>
+                  <option value="manutencao">Em Manutenção</option>
+                  <option value="reservado">Reservado</option>
+                </select>
+              </div>
+              <button class="btn-search-table" onclick="buscarImoveis()">
+                <i class="fas fa-search"></i>
+                Buscar
+              </button>
+            </div>
+          </div>
+          <div class="results-info">
+            <div id="loading-indicator" class="loading-indicator is-hidden">
+              <i class="fas fa-spinner fa-spin"></i>
+              Carregando dados...
+            </div>
+            <div id="results-meta" class="results-meta is-hidden">
+              <span
+                >Itens por página:
+                <select id="items-per-page" onchange="changeItemsPerPage()">
+                  <option value="10" selected>10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </select>
+              </span>
+              <span id="pagination-info">Página 1 de 1</span>
+            </div>
+          </div>
+          <div id="table-container" class="table-container is-hidden">
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Denominação</th>
+                  <th>Local</th>
+                  <th>Status</th>
+                  <th>Locadores</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="results-tbody">
+                <!-- Os resultados serão inseridos aqui dinamicamente -->
+              </tbody>
+            </table>
+          </div>
+          <div id="no-results" class="no-results is-hidden">
+            <div class="no-results-content">
+              <i class="fas fa-search"></i>
+              <h3>Nenhum resultado encontrado</h3>
+              <p>Tente ajustar os filtros de pesquisa ou verifique os termos utilizados.</p>
+            </div>
+          </div>
+          <div id="pagination" class="pagination is-hidden">
+            <button class="btn-pagination" id="btn-prev" onclick="previousPage()" disabled>
+              <i class="fas fa-chevron-left"></i>
+              Anterior
+            </button>
+            <div class="pagination-tags" id="pagination-tags">
+              <span class="tag">Primeira</span>
+              <span class="tag">Anterior</span>
+              <span class="tag">Próxima</span>
+              <span class="tag">Última</span>
+            </div>
+            <button class="btn-pagination" id="btn-next" onclick="nextPage()">
+              Próxima
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Form Section -->
+      <section class="is-hidden" id="form-section">
+        <div class="container">
+          <div class="form-container">
+            <h2>Solicitar Modalidade</h2>
+            <form id="service-form" class="service-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="nome">Nome Completo</label>
+                  <input type="text" id="nome" name="nome" required />
+                </div>
+                <div class="form-group">
+                  <label for="cpf">CPF</label>
+                  <input type="text" id="cpf" name="cpf" required />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="email">E-mail</label>
+                  <input type="email" id="email" name="email" required />
+                </div>
+                <div class="form-group">
+                  <label for="telefone">Telefone</label>
+                  <input type="tel" id="telefone" name="telefone" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="servico-detalhes">Detalhes da Modalidade</label>
+                <textarea
+                  id="servico-detalhes"
+                  name="servico-detalhes"
+                  rows="4"
+                  placeholder="Descreva detalhadamente a modalidade que você precisa..."
+                ></textarea>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="btn-secondary" onclick="cancelarSolicitacao()">
+                  Cancelar
+                </button>
+                <button type="submit" class="btn-primary">Enviar Solicitação</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>SILIC 2.0</h3>
+            <p>Soluções para todos os momentos.</p>
+          </div>
+          <div class="footer-section">
+            <h4>Modalidades</h4>
+            <ul>
+              <li><a href="#">Locação</a></li>
+              <li><a href="#">Cessão</a></li>
+              <li><a href="#">Comodato</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Contato</h4>
+            <ul>
+              <li><a href="#">silic@caixa.gov.br</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Stepper Modal -->
+    <!-- Wizard Modal (carrega wizard-preview.html dinamicamente) -->
+    <div
+      id="wizard-modal-overlay"
+      data-testid="wizard-overlay"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+        overflow-y: auto;
+        padding: 20px;
+        box-sizing: border-box;
+      "
+    >
+      <div
+        id="wizard-modal-content"
+        style="
+          position: relative;
+          width: 100%;
+          max-width: 900px;
+          max-height: 90vh;
+          overflow-y: auto;
+          background: white;
+          border-radius: 12px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        "
+      >
+        <button
+          id="close-wizard-modal"
+          style="
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            font-size: 2rem;
+            color: #d32f2f;
+            cursor: pointer;
+            z-index: 9999;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            transition: all 0.2s ease;
+          "
+          title="Fechar"
+        >
+          &times;
+        </button>
+        <div id="wizard-modal-inner"></div>
+      </div>
+    </div>
+    <!-- Documentation Modal (carrega documentation-modal.html dinamicamente) -->
+    <div
+      id="documentation-modal-overlay"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 2100;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div
+        id="documentation-modal-content"
+        style="
+          background: white;
+          border-radius: 18px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+          max-width: 680px;
+          width: 96vw;
+          max-height: 94vh;
+          overflow: auto;
+          position: relative;
+        "
+      >
+        <button
+          id="close-documentation-modal"
+          style="
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #888;
+            cursor: pointer;
+            z-index: 10;
+          "
+          title="Fechar"
+        >
+          &times;
+        </button>
+        <div id="documentation-modal-inner"></div>
+      </div>
+    </div>
+    <!-- js scripts -->
+    <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/index.js" defer></script>
+    <!-- scripts do wizard: modal antes, depois a página específica -->
+    <script src="assets/js/wizard-modal.js" defer></script>
+    <script>
+      function voltarAoPortal() {
+        window.location.href = 'https://osvaldojeronymo.github.io/';
+      }
+      // Exibe o botão apenas se ?from=portal estiver na URL
+      if (window.location.search.includes('from=portal')) {
+        document.getElementById('voltarPortalBtn').style.display = 'inline-flex';
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        var licSwitch = document.getElementById('lic-switch');
+        var licState = document.getElementById('lic-state');
+        if (licSwitch && licState) {
+          licSwitch.style.cursor = 'pointer';
+          licSwitch.addEventListener('click', function () {
+            var checked = licSwitch.getAttribute('aria-checked') === 'true';
+            licSwitch.setAttribute('aria-checked', String(!checked));
+            if (!checked) {
+              licState.textContent = 'Sim';
+              licState.classList.remove('btn-nao');
+              licState.classList.add('btn-sim');
+            } else {
+              licState.textContent = 'Não';
+              licState.classList.remove('btn-sim');
+              licState.classList.add('btn-nao');
+            }
+          });
+        }
+
+        // Wizard mínimo para testes E2E
+        (function setupWizardTest() {
+          var total = 6;
+          var current = 1;
+          var overlay = document.getElementById('wizard-modal-overlay');
+          var inner = document.getElementById('wizard-modal-inner');
+          var openBtn = document.getElementById('abrir-wizard-button');
+          var closeBtn = document.getElementById('close-wizard-modal');
+
+          function render() {
+            // Limpa e recria conteúdo para evitar duplicações no header
+            inner.innerHTML = '';
+            var container = document.createElement('div');
+            container.style.padding = '24px';
+
+            var header = document.createElement('div');
+            header.setAttribute('data-testid', 'wizard-header');
+            header.style.fontWeight = '600';
+            header.style.fontSize = '1.125rem';
+            header.style.marginBottom = '16px';
+            header.textContent = 'Etapa ' + current + ' de ' + total;
+
+            var actions = document.createElement('div');
+            actions.style.display = 'flex';
+            actions.style.gap = '8px';
+
+            var nextBtn = document.createElement('button');
+            nextBtn.type = 'button';
+            nextBtn.className = 'btn btn-primary';
+            nextBtn.textContent = 'Avançar';
+
+            var cancelBtn = document.createElement('button');
+            cancelBtn.type = 'button';
+            cancelBtn.className = 'btn btn-secondary';
+            cancelBtn.textContent = 'Cancelar';
+
+            actions.appendChild(nextBtn);
+            actions.appendChild(cancelBtn);
+            container.appendChild(header);
+            container.appendChild(actions);
+            inner.appendChild(container);
+
+            nextBtn.addEventListener('click', function () {
+              if (current < total) {
+                current += 1;
+                render();
+              }
+            });
+
+            function cancel() {
+              current = 1;
+              overlay.style.display = 'none';
+              overlay.style.visibility = 'hidden';
+              overlay.style.opacity = '0';
+              overlay.style.pointerEvents = 'none';
+              overlay.style.width = '0px';
+              overlay.style.height = '0px';
+              overlay.setAttribute('hidden', '');
+              overlay.setAttribute('aria-hidden', 'true');
+            }
+            cancelBtn.addEventListener('click', cancel);
+            if (closeBtn) closeBtn.addEventListener('click', cancel);
+          }
+
+          function openWizard() {
+            current = 1;
+            overlay.style.display = 'flex';
+            overlay.style.visibility = '';
+            overlay.style.opacity = '';
+            overlay.style.pointerEvents = '';
+            overlay.style.width = '';
+            overlay.style.height = '';
+            overlay.removeAttribute('hidden');
+            overlay.removeAttribute('aria-hidden');
+            render();
+          }
+
+          if (openBtn) {
+            openBtn.addEventListener('click', openWizard);
+          }
+
+          // Delegação: garantir cancelamento ao clicar no botão "Cancelar" dentro do overlay
+          document.addEventListener('click', function (ev) {
+            var t = ev.target;
+            if (!(t instanceof Element)) return;
+            if (overlay && overlay.style.display !== 'none' && overlay.contains(t)) {
+              var btn = t.closest('button');
+              if (btn && /cancelar/i.test(btn.textContent || '')) {
+                // Esconde o overlay caso o listener específico não tenha sido anexado
+                overlay.style.display = 'none';
+                overlay.style.visibility = 'hidden';
+                overlay.style.opacity = '0';
+                overlay.style.pointerEvents = 'none';
+                overlay.style.width = '0px';
+                overlay.style.height = '0px';
+                overlay.setAttribute('hidden', '');
+                overlay.setAttribute('aria-hidden', 'true');
+              }
+            }
+          });
+        })();
+      });
+    </script>
+    <style>
+      .switch-label {
+        display: inline-block;
+        min-width: 40px;
+        text-align: center;
+        background: none !important;
+        color: inherit !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+    </style>
+    <script>
+      (function () {
+        try {
+          var params = new URLSearchParams(location.search);
+          var isDev = params.get('dev') === '1';
+          document.querySelectorAll('[data-dev-only]').forEach(function (el) {
+            el.hidden = !isDev;
+            if (isDev) el.removeAttribute('hidden');
+          });
+        } catch (e) {}
+      })();
+    </script>
+  </body>
+</html>

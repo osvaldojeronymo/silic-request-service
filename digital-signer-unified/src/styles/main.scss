@@ -1,0 +1,185 @@
+/**
+ * SILIC Digital Signer - Main SCSS
+ * Unified styles combining original and modern approaches
+ */
+
+// Import CSS reset
+@import 'normalize.css';
+
+// Import design system variables and base styles
+@import 'variables';
+@import 'base';
+
+// Import component styles
+@import 'components/header';
+@import 'components/form';
+@import 'components/button';
+@import 'components/upload';
+@import 'components/modal';
+@import 'components/footer';
+
+// Layout styles
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+  
+  @media (min-width: 768px) {
+    padding: 0 var(--space-6);
+  }
+}
+
+.main-content {
+  padding: var(--space-8) 0;
+  min-height: calc(100vh - 160px); // Account for header and footer
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+  
+  h1 {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-700);
+    margin-bottom: var(--space-4);
+  }
+  
+  p {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-600);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+// Grid layout
+.form-grid {
+  display: grid;
+  gap: var(--space-8);
+  
+  @media (min-width: 1024px) {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+  }
+}
+
+.form-section {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-gray-200);
+  
+  h2 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-4);
+    
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 20px;
+      background: var(--color-primary-600);
+      margin-right: var(--space-3);
+      vertical-align: middle;
+    }
+  }
+  
+  p {
+    color: var(--color-gray-600);
+    margin-bottom: var(--space-6);
+  }
+}
+
+// Footer
+.footer {
+  background: var(--color-gray-900);
+  color: var(--color-gray-300);
+  padding: var(--space-6) 0;
+  margin-top: auto;
+  text-align: center;
+  
+  p {
+    margin: 0;
+    font-size: var(--font-size-sm);
+  }
+  
+  .footer-version {
+    margin-top: var(--space-2);
+    font-size: var(--font-size-xs);
+    opacity: 0.7;
+  }
+}
+
+// Utility classes
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--space-1); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-6 { margin-top: var(--space-6); }
+.mt-8 { margin-top: var(--space-8); }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--space-1); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-6 { margin-bottom: var(--space-6); }
+.mb-8 { margin-bottom: var(--space-8); }
+
+// High contrast mode
+.high-contrast {
+  --color-primary-700: #000000;
+  --color-gray-600: #000000;
+  --color-gray-300: #666666;
+  --color-gray-50: #ffffff;
+  
+  * {
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+  
+  .form-section {
+    border: 2px solid #000000;
+  }
+  
+  input, select, textarea {
+    border: 2px solid #000000 !important;
+  }
+}
+
+// Print styles
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .form-section {
+    border: 1px solid #ccc;
+    box-shadow: none;
+    page-break-inside: avoid;
+  }
+}

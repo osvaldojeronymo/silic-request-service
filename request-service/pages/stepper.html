@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SILIC 2.0 - Stepper Genérico</title>
+  </head>
+  <body>
+    <main class="stepper-container">
+      <div class="stepper-header">
+        <h2>SILIC 2.0 - Solicitação de Serviços</h2>
+        <p>Preencha as informações necessárias para sua solicitação.</p>
+        <div class="wizard-progress stepper-progress">
+          <span class="progress-step active"></span>
+          <span class="progress-step"></span>
+          <span class="progress-step"></span>
+        </div>
+      </div>
+
+      <div class="stepper-content">
+        <div class="stepper-step active" id="step-1">
+          <h3>Informações Básicas</h3>
+          <div class="form-group">
+            <label for="stepper-nome">Nome Completo</label>
+            <input type="text" id="stepper-nome" name="nome" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="stepper-documento">CPF/CNPJ</label>
+              <input type="text" id="stepper-documento" name="documento" required />
+            </div>
+            <div class="form-group">
+              <label for="stepper-email">E-mail</label>
+              <input type="email" id="stepper-email" name="email" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="stepper-telefone">Telefone</label>
+            <input type="tel" id="stepper-telefone" name="telefone" required />
+          </div>
+        </div>
+
+        <div class="stepper-step" id="step-2">
+          <div id="stepper-licitacao" style="display: none; margin-bottom: 18px">
+            <label><strong>Licitação:</strong></label>
+            <span id="licitacao-valor">-</span>
+          </div>
+          <h3>Dados da Solicitação</h3>
+          <div class="form-group">
+            <label for="stepper-modalidade">Modalidade</label>
+            <select id="stepper-modalidade" name="modalidade" required>
+              <option value="">Selecione a modalidade</option>
+              <option value="locacao">Locação</option>
+              <option value="cessao">Cessão</option>
+              <option value="comodato">Comodato</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="stepper-acao">Ação</label>
+            <select id="stepper-acao" name="acao" required>
+              <option value="">Selecione a ação</option>
+              <option value="contratar">Contratação</option>
+              <option value="regularizar">Regularização</option>
+              <option value="formalizar">Formalização</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="stepper-observacoes">Observações</label>
+            <textarea
+              id="stepper-observacoes"
+              name="observacoes"
+              rows="4"
+              placeholder="Descreva detalhes adicionais sobre sua solicitação..."
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="stepper-step" id="step-3">
+          <h3>Revisão e Confirmação</h3>
+          <div class="review-section">
+            <h4>Dados Informados:</h4>
+            <div class="review-item"><strong>Nome:</strong> <span id="review-nome">-</span></div>
+            <div class="review-item">
+              <strong>Documento:</strong> <span id="review-documento">-</span>
+            </div>
+            <div class="review-item"><strong>E-mail:</strong> <span id="review-email">-</span></div>
+            <div class="review-item">
+              <strong>Telefone:</strong> <span id="review-telefone">-</span>
+            </div>
+            <div class="review-item">
+              <strong>Modalidade:</strong> <span id="review-modalidade">-</span>
+            </div>
+            <div class="review-item"><strong>Ação:</strong> <span id="review-acao">-</span></div>
+            <div class="review-item">
+              <strong>Observações:</strong> <span id="review-observacoes">-</span>
+            </div>
+          </div>
+
+          <div id="success-message" class="success-message is-hidden">
+            <div class="success-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <h4 style="color: #28a745">Solicitação Enviada com Sucesso!</h4>
+            <p>
+              Sua solicitação foi registrada e será processada em breve. Você receberá atualizações
+              por e-mail.
+            </p>
+            <p><strong>Protocolo:</strong> <span id="protocolo-numero"></span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stepper-navigation">
+        <button
+          type="button"
+          id="btn-anterior"
+          class="btn-secondary is-hidden"
+          onclick="stepperAnterior()"
+        >
+          <i class="fas fa-arrow-left"></i> Anterior
+        </button>
+        <button type="button" id="btn-proximo" class="btn-primary" onclick="stepperProximo()">
+          Próximo
+          <i class="fas fa-arrow-right"></i>
+        </button>
+        <button
+          type="button"
+          id="btn-enviar"
+          class="btn-primary is-hidden"
+          onclick="stepperEnviar()"
+        >
+          <i class="fas fa-paper-plane"></i> Enviar Solicitação
+        </button>
+      </div>
+    </main>
+    <script src="../assets/js/stepper.js"></script>
+  </body>
+</html>

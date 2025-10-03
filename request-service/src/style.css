@@ -1,0 +1,56 @@
+/* SILIC 2.0 - Estilos específicos do módulo */
+
+/* --- PATCH: wizard layout improvements --- */
+.wizard-header { 
+    position: sticky; 
+    top: 0; 
+    z-index: 3; 
+    background: #fff; 
+    padding: 12px 16px; 
+    border-bottom: 1px solid #e5e7eb; 
+}
+
+.wizard-steps { 
+    position: sticky; 
+    top: 64px; 
+    z-index: 2; 
+    background: #fff; 
+}
+
+#wizard-modal-content { 
+    overflow: hidden; 
+}
+
+#wizard-modal-inner { 
+    display: flex; 
+    gap: 16px; 
+}
+
+.wizard-sidebar { 
+    max-width: 280px; 
+    min-width: 220px; 
+    padding: 12px; 
+    border-right: 1px solid #eee; 
+}
+
+.wizard-main { 
+    flex: 1; 
+    padding: 16px; 
+}
+
+.wizard-footer { 
+    position: sticky; 
+    bottom: 0; 
+    background: #fff; 
+    padding: 12px 16px; 
+    border-top: 1px solid #e5e7eb; 
+    display: flex; 
+    gap: 8px; 
+    justify-content: flex-end; 
+}
+
+.wizard-close-btn { 
+    position: absolute; 
+    right: 8px; 
+    top: 8px; 
+}

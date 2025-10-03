@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Financeiro - Wizard</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="wizard-financeiro-container">
+      <!-- Header dinâmico será inserido automaticamente pelo sistema -->
+
+      <div class="wizard-body">
+        <div class="form-section">
+          <label for="forma-pagamento">Forma de Pagamento</label>
+          <select id="forma-pagamento">
+            <option value="deposito">Depósito</option>
+            <option value="pix">PIX</option>
+            <option value="ted">TED</option>
+          </select>
+
+          <div id="dados-bancarios-container">
+            <h4>Dados Bancários</h4>
+            <div class="banco-block">
+              <input type="text" placeholder="Agência" class="agencia" />
+              <input type="text" placeholder="Número e nome da agência" class="agencia-nome" />
+              <input type="text" placeholder="Conta" class="conta" />
+              <select class="tipo-conta">
+                <option value="corrente">Corrente</option>
+                <option value="poupanca">Poupança</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="button" id="adicionar-locador">
+            <i class="fas fa-plus"></i> Adicionar
+          </button>
+        </div>
+
+        <div class="resumo-section">
+          <h4>Resumo de Valores</h4>
+          <div class="resumo-card">
+            <p><strong>Valor de Aluguel:</strong> R$ 3.000,00</p>
+            <p><strong>Parcelas:</strong> 12</p>
+            <p><strong>Vencimento:</strong> 15 de cada mês</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="wizard-footer">
+        <button id="anterior"><i class="fas fa-chevron-left"></i> Anterior</button>
+        <button id="proximo" class="primary">Próximo <i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+
+  <!-- main.js removido: lógica central está em assets/js/index.js -->
+  </body>
+</html>
