@@ -70,8 +70,45 @@ test.describe('Fluxos com/sem licitação (Locação > Contratação > Jurídica
 
     await expect(steps).toHaveCount(7);
     await expect(workflow.getByRole('button', { name: /propostas e consulta pública/i })).toHaveCount(0);
+
+    const heading = workflow.getByRole('heading', { name: 'Solicitação de Locação' });
+    await expect(heading).toBeVisible();
+    await expect(heading).toHaveCSS('color', 'rgb(255, 255, 255)');
+    await expect(workflow.locator('.hu-request-number')).toHaveText(/^Solicitação nº \d{5}\/\d{4}$/);
+    await expect(workflow.locator('.hu-request-context')).toHaveText(
+      'Locação · Contratação · Nova unidade · precedida de licitação'
+    );
+
+    const profile = workflow.locator('#hu-profile');
+    await expect(profile.locator('option')).toHaveText([
+      'Administrador',
+      'Analista',
+      'Auditor',
+      'Consulta',
+      'Coordenador',
+      'Demandante',
+      'Demandante Gerente',
+    ]);
+    await expect(profile).toHaveValue('DEMANDANTE');
   });
 
+  test('Numeração sequencial usa cinco dígitos e o ano corrente', async ({ page }) => {
+    await gotoHome(page);
+    await selectLocacaoContratacaoPJNova(page);
+    const switchBtn = page.locator('#switch-licitacao[role="switch"]');
+    await switchBtn.click();
+
+    const { workflow } = await openWizard(page);
+    const year = new Date().getFullYear();
+    await expect(workflow.locator('.hu-request-number')).toHaveText(`Solicitação nº 00001/${year}`);
+
+    await workflow.getByRole('button', { name: 'Fechar' }).click();
+    await page.evaluate(() => localStorage.removeItem('silic.hu.locacao.v1'));
+    await page.getByRole('button', { name: /iniciar/i }).click();
+    await expect(page.getByTestId('hu-workflow').locator('.hu-request-number')).toHaveText(
+      `Solicitação nº 00002/${year}`
+    );
+  });
   test('Qualificação obrigatória e rascunho persistente', async ({ page }) => {
     await gotoHome(page);
     await selectLocacaoContratacaoPJNova(page);

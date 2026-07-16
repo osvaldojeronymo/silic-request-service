@@ -201,14 +201,16 @@
 (function () {
   'use strict';
   const KEY = 'silic.hu.locacao.v1';
+  const SEQUENCE_KEY = 'silic.hu.locacao.sequence.v1';
   const LIMIT = 2 * 1024 * 1024;
   const PROFILES = {
-    ANALISTA_OPERACIONAL: 'Analista Operacional',
-    GESTAO_OPERACIONAL: 'Gestão Operacional',
-    ANALISTA_CONTRATOS: 'Analista Contratos',
-    GESTOR_CONTRATOS: 'Gestor Contratos',
-    JURIDICO: 'Área Jurídica',
-    TECNICA: 'Área Técnica'
+    ADMINISTRADOR: 'Administrador',
+    ANALISTA: 'Analista',
+    AUDITOR: 'Auditor',
+    CONSULTA: 'Consulta',
+    COORDENADOR: 'Coordenador',
+    DEMANDANTE: 'Demandante',
+    DEMANDANTE_GERENTE: 'Demandante Gerente'
   };
   const META = {
     qualificacao: ['Visão geral e qualificação', 'Complete os dados que qualificam a demanda.'],
@@ -231,19 +233,41 @@
   const stamp = () => new Date().toISOString();
   const bytesLabel = (n) => n < 1024 ? `${n} B` : `${(n / 1024).toFixed(1)} KB`;
 
+  function nextRequestNumber() {
+    const year = new Date().getFullYear();
+    let value = 1;
+    try {
+      const stored = JSON.parse(localStorage.getItem(SEQUENCE_KEY) || 'null');
+      value = stored?.year === year ? Number(stored.value || 0) + 1 : 1;
+      localStorage.setItem(SEQUENCE_KEY, JSON.stringify({year, value}));
+    } catch (e) {
+      console.warn('[HU] Não foi possível persistir a sequência simulada', e);
+    }
+    return `${String(value).padStart(5, '0')}/${year}`;
+  }
+
   function fresh(config) {
     return {
-      version: 1, id: `SILIC-${Date.now().toString().slice(-8)}`, profile: 'ANALISTA_OPERACIONAL',
+      version: 1, id: nextRequestNumber(), profile: 'DEMANDANTE',
       status: 'Em rascunho', config, fields: {}, attachments: [], landlords: [], proposals: [],
       adjustment: '', notification: '',
-      history: [{at: stamp(), actor: 'Analista Operacional', action: 'Solicitação criada', detail: 'Em rascunho'}]
+      history: [{at: stamp(), actor: 'Demandante', action: 'Solicitação criada', detail: 'Em rascunho'}]
     };
   }
   function load(config) {
     try {
       const found = JSON.parse(localStorage.getItem(KEY) || 'null');
       if (found?.version === 1 && found.config?.finalidade === config.finalidade) {
+        const legacyProfiles = {
+          ANALISTA_OPERACIONAL: 'DEMANDANTE',
+          GESTAO_OPERACIONAL: 'DEMANDANTE_GERENTE',
+          ANALISTA_CONTRATOS: 'ANALISTA',
+          GESTOR_CONTRATOS: 'COORDENADOR'
+        };
         found.fields ||= {}; found.attachments ||= []; found.landlords ||= []; found.proposals ||= []; found.history ||= [];
+        found.profile = legacyProfiles[found.profile] || (PROFILES[found.profile] ? found.profile : 'DEMANDANTE');
+        if (!/^\d{5}\/\d{4}$/.test(found.id || '')) found.id = nextRequestNumber();
+        localStorage.setItem(KEY, JSON.stringify(found));
         return found;
       }
     } catch (e) { console.warn('[HU] Rascunho inválido', e); }
@@ -333,10 +357,10 @@
   }
   function availableActions() {
     const p = state.profile, s = state.status;
-    if (p === 'ANALISTA_OPERACIONAL' && s === 'Em rascunho') return '<button class="hu-btn primary" data-action="request-approval" type="button">Solicitar aprovação</button>';
-    if (p === 'ANALISTA_OPERACIONAL' && s === 'Pendente Ajuste') return '<button class="hu-btn primary" data-action="confirm-adjustment" type="button">Confirmar ajuste</button>';
-    if (p === 'GESTAO_OPERACIONAL' && ['Aguardando aprovação','Aguardando envio','Pendente Ajuste'].includes(s)) return '<button class="hu-btn" data-action="request-adjustment" type="button">Ajustar</button> <button class="hu-btn primary" data-action="manager-send" type="button">Enviar solicitação</button>';
-    if (['ANALISTA_CONTRATOS','GESTOR_CONTRATOS'].includes(p) && s === 'Enviada pelo gestor') return '<button class="hu-btn primary" data-action="start-analysis" type="button">Iniciar análise</button>';
+    if (p === 'DEMANDANTE' && s === 'Em rascunho') return '<button class="hu-btn primary" data-action="request-approval" type="button">Solicitar aprovação</button>';
+    if (p === 'DEMANDANTE' && s === 'Pendente Ajuste') return '<button class="hu-btn primary" data-action="confirm-adjustment" type="button">Confirmar ajuste</button>';
+    if (p === 'DEMANDANTE_GERENTE' && ['Aguardando aprovação','Aguardando envio','Pendente Ajuste'].includes(s)) return '<button class="hu-btn" data-action="request-adjustment" type="button">Ajustar</button> <button class="hu-btn primary" data-action="manager-send" type="button">Enviar solicitação</button>';
+    if (['ANALISTA','COORDENADOR'].includes(p) && s === 'Enviada pelo gestor') return '<button class="hu-btn primary" data-action="start-analysis" type="button">Iniciar análise</button>';
     return '<span class="hu-hint">Nenhuma transição disponível para este perfil e situação.</span>';
   }
   function approval() {
@@ -355,7 +379,7 @@
     current = Math.max(0, Math.min(current, list.length - 1));
     const key = list[current], [title,lead] = META[key];
     root.style.maxWidth = '1180px'; root.style.width = '96vw'; root.style.padding = '0';
-    root.innerHTML = `<div class="hu-modal" data-testid="hu-workflow"><header class="hu-header"><div class="hu-header-top"><div><h2>Solicitação de locação</h2><p>${esc(state.id)} · ${esc(state.config.finalidadeLabel)}</p></div><span class="hu-status">${esc(state.status)}</span></div></header>
+    root.innerHTML = `<div class="hu-modal" data-testid="hu-workflow"><header class="hu-header"><div class="hu-header-top"><div><h2>Solicitação de Locação</h2><p class="hu-request-number">Solicitação nº ${esc(state.id)}</p><p class="hu-request-context">Locação · Contratação · ${esc(state.config.finalidadeLabel)} · ${state.config.licitacao ? 'precedida de licitação' : 'sem licitação'}</p></div><span class="hu-status">${esc(state.status)}</span></div></header>
       <div class="hu-toolbar"><label>Perfil em simulação <select id="hu-profile">${Object.entries(PROFILES).map(x => opt(x[0],x[1],state.profile)).join('')}</select></label><span class="hu-saved">${savedAt ? `Salvo às ${savedAt}` : 'Rascunho com salvamento automático'}</span><button class="hu-btn small" data-action="close" type="button">Fechar</button></div>
       <div class="hu-layout"><ol class="hu-steps">${list.map((s,i) => `<li><button class="hu-step-button${i === current ? ' is-active' : ''}${errors.has(s) ? ' has-error' : ''}" data-action="goto" data-index="${i}" type="button"><span class="hu-step-number">${i+1}</span><span>${esc(META[s][0])}</span></button></li>`).join('')}</ol>
       <section class="hu-panel" data-step="${key}"><h3>${esc(title)}</h3><p class="hu-lead">${esc(lead)}</p><div id="hu-errors"></div>${panels[key]()}<footer class="hu-footer-actions"><div class="hu-action-group"><button class="hu-btn" data-action="save-draft" type="button">Salvar rascunho</button></div><div class="hu-action-group"><button class="hu-btn" data-action="prev" type="button"${current === 0 ? ' disabled' : ''}>Anterior</button>${current < list.length - 1 ? '<button class="hu-btn primary" data-action="next" type="button">Próximo</button>' : ''}</div></footer></section></div></div>`;
