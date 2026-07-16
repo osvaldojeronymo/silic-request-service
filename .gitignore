@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Development files
 *.log
 *.tmp
@@ -37,6 +36,3 @@ build/
 temp/
 tmp/
 CAIXA/
-=======
-docs
->>>>>>> feature/unified-v3

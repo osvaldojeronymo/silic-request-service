@@ -17,7 +17,7 @@
     "vitest": "^3.2.4"
   },
   "scripts": {
-    "prebuild": "mkdir -p public/assets && rsync -a --delete assets/ public/assets/",
+    "prebuild": "node -e \"require('fs').cpSync('assets','public/assets',{recursive:true,force:true})\"",
     "build": "vite build",
     "preview": "vite preview",
     "visual:baseline": "env BASE_URL=https://osvaldojeronymo.github.io/silic-request-service/ npx playwright test e2e/visual.spec.ts --update-snapshots",
