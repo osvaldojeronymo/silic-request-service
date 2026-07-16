@@ -243,7 +243,7 @@
     } catch (e) {
       console.warn('[HU] Não foi possível persistir a sequência simulada', e);
     }
-    return `${String(value).padStart(5, '0')}/${year}`;
+    return `${String(value).padStart(6, '0')}/${year}`;
   }
 
   function fresh(config) {
@@ -266,7 +266,7 @@
         };
         found.fields ||= {}; found.attachments ||= []; found.landlords ||= []; found.proposals ||= []; found.history ||= [];
         found.profile = legacyProfiles[found.profile] || (PROFILES[found.profile] ? found.profile : 'DEMANDANTE');
-        if (!/^\d{5}\/\d{4}$/.test(found.id || '')) found.id = nextRequestNumber();
+        if (!/^\d{6}\/\d{4}$/.test(found.id || '')) found.id = nextRequestNumber();
         localStorage.setItem(KEY, JSON.stringify(found));
         return found;
       }
