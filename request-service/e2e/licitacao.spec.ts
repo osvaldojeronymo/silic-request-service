@@ -26,10 +26,11 @@ async function openWizard(page: Page) {
   // Overlay deve aparecer
   const overlay = page.locator('#wizard-modal-overlay');
   await expect(overlay).toBeVisible();
-  // Conteúdo do wizard deve existir
-  const steps = overlay.locator('#wizardSteps .wizard-step');
-  await expect(steps.first()).toBeVisible({ timeout: 8000 });
-  return { overlay, steps };
+  const workflow = overlay.getByTestId('hu-workflow');
+  await expect(workflow).toBeVisible({ timeout: 8000 });
+  const steps = workflow.locator('.hu-step-button');
+  await expect(steps.first()).toBeVisible();
+  return { overlay, workflow, steps };
 }
 
 test.describe('Fluxos com/sem licitação (Locação > Contratação > Jurídica > Nova unidade)', () => {
@@ -41,12 +42,17 @@ test.describe('Fluxos com/sem licitação (Locação > Contratação > Jurídica
     const switchBtn = page.locator('#switch-licitacao[role="switch"]');
     await expect(switchBtn).toHaveAttribute('aria-checked', /^(false|0)$/);
 
-    const { overlay } = await openWizard(page);
+    const { workflow, steps } = await openWizard(page);
     // Não deve existir etapa com label "Licitação"
-    await expect(overlay.locator('#wizardSteps .wizard-label', { hasText: 'Licitação' })).toHaveCount(0);
+    await expect(workflow.getByRole('button', { name: /licitação/i })).toHaveCount(0);
 
-    // Deve ter 5 etapas (Documentação, Compliance, Jurídico, Financeiro, Confirmação)
-    await expect(overlay.locator('#wizardSteps .wizard-step')).toHaveCount(5);
+    await expect(steps).toHaveCount(7);
+    await expect(workflow.getByRole('button', { name: /propostas e consulta pública/i })).toHaveCount(1);
+    await expect(workflow.getByRole('button', { name: /documentação do imóvel/i })).toHaveCount(1);
+    await expect(workflow.getByRole('button', { name: /documentação do locador/i })).toHaveCount(1);
+    await expect(workflow.getByRole('button', { name: /autorizações e laudo/i })).toHaveCount(1);
+    await expect(workflow.getByRole('button', { name: /jurídico/i })).toHaveCount(1);
+    await expect(workflow.getByRole('button', { name: /solicitar aprovação/i })).toHaveCount(1);
   });
 
   test('Com licitação: abre wizard com etapa "Licitação"', async ({ page }) => {
@@ -58,11 +64,30 @@ test.describe('Fluxos com/sem licitação (Locação > Contratação > Jurídica
     await switchBtn.click();
     await expect(switchBtn).toHaveAttribute('aria-checked', 'true');
 
-    const { overlay } = await openWizard(page);
+    const { workflow, steps } = await openWizard(page);
     // Deve existir etapa com label "Licitação"
-    await expect(overlay.locator('#wizardSteps .wizard-label', { hasText: 'Licitação' })).toHaveCount(1);
+    await expect(workflow.getByRole('button', { name: /licitação/i })).toHaveCount(1);
 
-    // Deve ter 6 etapas (inclui Licitação)
-    await expect(overlay.locator('#wizardSteps .wizard-step')).toHaveCount(6);
+    await expect(steps).toHaveCount(7);
+    await expect(workflow.getByRole('button', { name: /propostas e consulta pública/i })).toHaveCount(0);
+  });
+
+  test('Qualificação obrigatória e rascunho persistente', async ({ page }) => {
+    await gotoHome(page);
+    await selectLocacaoContratacaoPJNova(page);
+    const { workflow } = await openWizard(page);
+
+    await workflow.getByRole('button', { name: /próximo/i }).click();
+    await expect(workflow.getByRole('alert')).toContainText('Favor preencher');
+
+    await workflow.locator('[data-field="unidade"]').fill('Agência Piloto');
+    await workflow.locator('[data-field="endereco"]').fill('SBS, Brasília/DF');
+    await workflow.locator('[data-field="valorGlobal"]').fill('250000');
+    await workflow.locator('[data-field="responsavel"]').fill('Analista Piloto');
+    await workflow.getByRole('button', { name: /salvar rascunho/i }).click();
+    await workflow.getByRole('button', { name: /fechar/i }).click();
+
+    await page.getByRole('button', { name: /iniciar/i }).click();
+    await expect(page.getByTestId('hu-workflow').locator('[data-field="unidade"]')).toHaveValue('Agência Piloto');
   });
 });
